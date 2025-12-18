@@ -1,395 +1,184 @@
-// Main Portfolio JavaScript
-class PortfolioApp {
-    constructor() {
-        this.initialized = false;
-        this.init();
+// Portfolio JavaScript
+document.addEventListener('DOMContentLoaded', () => {
+    // Set current year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+   
+    // Initialize particles
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#3b82f6" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#3b82f6",
+                opacity: 0.2,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: "none",
+                random: true,
+                straight: false,
+                out_mode: "out",
+                bounce: false
+            }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: true, mode: "push" }
+            }
+        },
+        retina_detect: true
+    });
+   
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+   
+    // Check for saved theme or prefer-color-scheme
+    const savedTheme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+   
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+   
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+       
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+   
+    function updateThemeIcon(theme) {
+        themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
-
-    init() {
-        if (this.initialized) return;
-        
-        // Set current year
-        this.setCurrentYear();
-        
-        // Initialize components
-        this.initThemeToggle();
-        this.initNavigation();
-        this.initAnimations();
-        this.initContactForm();
-        this.initTypewriter();
-        this.initScrollAnimations();
-        
-        // Initial animations
-        setTimeout(() => {
-            this.animateStats();
-            this.animateSkillBars();
-        }, 1000);
-        
-        this.initialized = true;
-    }
-
-    setCurrentYear() {
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-    }
-
-    initThemeToggle() {
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = themeToggle.querySelector('i');
-        
-        // Check for saved theme or prefer-color-scheme
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-        const savedTheme = localStorage.getItem('theme') || 
-            (prefersDark.matches ? 'dark' : 'light');
-        
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        this.updateThemeIcon(savedTheme, themeIcon);
-        
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            this.updateThemeIcon(newTheme, themeIcon);
-        });
-        
-        // Listen for system theme changes
-        prefersDark.addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                const newTheme = e.matches ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                this.updateThemeIcon(newTheme, themeIcon);
+   
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+           
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+           
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+               
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
             }
         });
-    }
-
-    updateThemeIcon(theme, icon) {
-        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    }
-
-    initNavigation() {
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
-                const href = anchor.getAttribute('href');
-                if (href === '#' || href === '#hero') return;
-                
-                e.preventDefault();
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update active nav link
-                    document.querySelectorAll('.nav-link').forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    anchor.classList.add('active');
-                    
-                    // Close mobile menu if open
-                    this.closeMobileMenu();
-                }
-            });
-        });
-        
-        // Update active nav on scroll
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        const updateActiveNav = () => {
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                const sectionHeight = section.clientHeight;
-                
-                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href === `#${current}` || (current === 'hero' && href === '#')) {
-                    link.classList.add('active');
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', updateActiveNav);
-        updateActiveNav(); // Initial call
-    }
-
-    initAnimations() {
-        // Add scroll-triggered animation class
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements
-        document.querySelectorAll('.timeline-item, .project-card, .skill-category').forEach(el => {
-            observer.observe(el);
-        });
-    }
-
-    initContactForm() {
-        const form = document.getElementById('quickContactForm');
-        if (!form) return;
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(form);
-            const formValues = Object.fromEntries(formData);
-            
-            // Here you would typically send the data to a server
-            console.log('Form submitted:', formValues);
-            
-            // Show success message
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                form.reset();
-            }, 3000);
-        });
-    }
-
-    initTypewriter() {
-        const typewriterElements = document.querySelectorAll('.typewriter, .typewriter-delay, .typewriter-delay-2');
-        
-        typewriterElements.forEach((el, index) => {
-            const text = el.getAttribute('data-text') || el.textContent;
-            el.textContent = '';
-            el.style.borderRight = '2px solid var(--accent-primary)';
-            
-            let i = 0;
-            const speed = 50;
-            const delay = index * 1000; // Stagger animations
-            
-            setTimeout(() => {
-                const type = () => {
-                    if (i < text.length) {
-                        el.textContent += text.charAt(i);
-                        i++;
-                        setTimeout(type, speed);
-                    } else {
-                        // Remove cursor after typing
-                        setTimeout(() => {
-                            el.style.borderRight = 'none';
-                        }, 1000);
-                    }
-                };
-                type();
-            }, delay);
-        });
-    }
-
-    animateStats() {
-        const statNumbers = document.querySelectorAll('.stat-number[data-target]');
-        
-        statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target'));
-            const suffix = stat.textContent.includes('%') ? '%' : '';
-            const duration = 2000;
-            const startTime = Date.now();
-            
-            const animate = () => {
-                const currentTime = Date.now();
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                // Easing function
-                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-                
-                const currentValue = Math.floor(easeOutQuart * target);
-                stat.textContent = currentValue + suffix;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                }
-            };
-            
-            animate();
-        });
-    }
-
-    animateSkillBars() {
-        const skillProgresses = document.querySelectorAll('.skill-progress');
-        
-        skillProgresses.forEach(progress => {
-            const level = parseInt(progress.getAttribute('data-level'));
-            const duration = 1500;
-            const startTime = Date.now();
-            
-            const animate = () => {
-                const currentTime = Date.now();
-                const elapsed = currentTime - startTime;
-                const currentProgress = Math.min(elapsed / duration, 1);
-                
-                // Easing function
-                const easeOutCubic = 1 - Math.pow(1 - currentProgress, 3);
-                
-                const currentWidth = easeOutCubic * level;
-                progress.style.width = `${currentWidth}%`;
-                
-                if (currentProgress < 1) {
-                    requestAnimationFrame(animate);
-                }
-            };
-            
-            // Start animation when element is in view
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    animate();
-                    observer.unobserve(progress);
-                }
-            });
-            
-            observer.observe(progress);
-        });
-    }
-
-    initScrollAnimations() {
-        // Add fade-in animation for sections
-        const fadeElements = document.querySelectorAll('.section');
-        
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        });
-        
-        fadeElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            fadeObserver.observe(el);
-        });
-        
-        // Animate project metrics
-        const metricValues = document.querySelectorAll('.metric-value[data-target]');
-        
-        metricValues.forEach(metric => {
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    const target = parseFloat(metric.getAttribute('data-target'));
-                    const suffix = metric.textContent.includes('%') ? '%' : 'x';
-                    const duration = 1500;
-                    const startTime = Date.now();
-                    
-                    const animate = () => {
-                        const currentTime = Date.now();
-                        const elapsed = currentTime - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        
-                        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-                        const currentValue = easeOutCubic * target;
-                        
-                        metric.textContent = currentValue.toFixed(1) + suffix;
-                        
-                        if (progress < 1) {
-                            requestAnimationFrame(animate);
-                        }
-                    };
-                    
-                    animate();
-                    observer.unobserve(metric);
-                }
-            });
-            
-            observer.observe(metric);
-        });
-    }
-
-    closeMobileMenu() {
-        // If you add a mobile menu later, implement this
-        const mobileMenu = document.querySelector('.mobile-menu');
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-        }
-    }
-}
-
-// Initialize the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    window.portfolioApp = new PortfolioApp();
-});
-
-// Handle page visibility changes
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && window.portfolioApp) {
-        // Refresh animations when page becomes visible
-        window.portfolioApp.init();
-    }
-});
-
-// Add keyboard navigation support
-document.addEventListener('keydown', (e) => {
-    // Escape key closes any modals (if added later)
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.active').forEach(modal => {
-            modal.classList.remove('active');
-        });
-    }
-});
-
-// Performance optimization: Debounce scroll events
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-        // Update active navigation
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-        
+    });
+   
+    // Active navigation on scroll
+    const sections = document.querySelectorAll('section[id], .hero-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+   
+    function updateActiveNav() {
         let current = '';
+       
         sections.forEach(section => {
             const sectionTop = section.offsetTop - 100;
             const sectionHeight = section.clientHeight;
-            
-            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+           
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
                 current = section.getAttribute('id');
             }
         });
-        
+       
         navLinks.forEach(link => {
             link.classList.remove('active');
-            const href = link.getAttribute('href');
-            if (href === `#${current}` || (current === 'hero' && href === '#')) {
+            if (link.getAttribute('href') === `#${current}`) {
                 link.classList.add('active');
             }
         });
-    }, 100);
+    }
+   
+    window.addEventListener('scroll', updateActiveNav);
+   
+    // Contact form submission
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+           
+            // Get form data
+            const formData = new FormData(this);
+            const formValues = Object.fromEntries(formData);
+           
+            // Here you would typically send the data to a server
+            console.log('Form submitted:', formValues);
+           
+            // Show success message
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+           
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+            submitBtn.disabled = true;
+           
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                contactForm.reset();
+            }, 3000);
+        });
+    }
+   
+    // Typewriter effect
+    function initializeTypewriter() {
+        const elements = document.querySelectorAll('.typewriter');
+        elements.forEach((el, index) => {
+            const text = el.textContent;
+            el.textContent = '';
+           
+            let i = 0;
+            const speed = 50;
+           
+            function typeWriter() {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+           
+            setTimeout(typeWriter, index * 1000);
+        });
+    }
+   
+    setTimeout(initializeTypewriter, 500);
+   
+    // Scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+   
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, observerOptions);
+   
+    document.querySelectorAll('.experience-item, .education-item, .skill-category, .project-card, .certification-item, .content-card, .about-highlights, .floating-card').forEach(el => {
+        observer.observe(el);
+    });
 });
-
-// Add smooth scrolling polyfill for older browsers
-if (!('scrollBehavior' in document.documentElement.style)) {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js';
-    script.onload = () => smoothscroll.polyfill();
-    document.head.appendChild(script);
-}
