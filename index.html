@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Prabhat Karlekar | Software Engineer & Data Scientist</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Optional: modern, clean font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="bg-orbit"></div>
+  <div class="bg-orbit bg-orbit--alt"></div>
+
   <div class="page">
+    <!-- Top navigation -->
     <header class="nav">
       <div class="nav-left">
         <span class="logo-dot"></span>
@@ -26,96 +32,165 @@
     </header>
 
     <main>
+      <!-- Hero -->
       <section class="hero">
         <div class="hero-text">
           <p class="hero-kicker">Software Developer • Data Scientist • Researcher</p>
-          <h1 class="hero-title">Building secure, data-driven systems.</h1>
+          <h1 class="hero-title">
+            Building secure, data‑driven systems that ship.
+          </h1>
           <p class="hero-subtitle">
-            3+ years of experience across software engineering, time-series machine learning,
-            applied cryptography, and system-level analysis. Focused on reliable, research-informed solutions.
+            3+ years working across software engineering, time‑series ML, applied cryptography,
+            and system‑level analysis. Focused on turning research into reliable, production‑ready solutions.
           </p>
           <div class="hero-actions">
             <a href="#projects" class="btn primary">View projects</a>
             <a href="#contact" class="btn ghost">Get in touch</a>
           </div>
         </div>
+
         <div class="hero-meta">
           <div class="meta-card">
             <p class="meta-label">Current focus</p>
-            <p class="meta-value">Time-series ML • Secure systems</p>
+            <p class="meta-value">Time‑series ML • Secure systems</p>
           </div>
           <div class="meta-card">
             <p class="meta-label">Experience</p>
             <p class="meta-value">3+ years</p>
           </div>
+          <div class="meta-card meta-card--pill">
+            <span class="pill-dot"></span>
+            <span class="pill-text">Open to roles in backend, data, and research engineering</span>
+          </div>
         </div>
       </section>
 
+      <!-- About -->
       <section id="about" class="section">
-        <h2>About</h2>
+        <div class="section-header">
+          <h2>About</h2>
+        </div>
         <p>
-          Software Developer and Data Scientist with 3+ years of experience building, testing,
-          and analyzing data-driven systems. Work spans production-grade software engineering,
-          time-series forecasting, applied cryptography, and system-level performance analysis.
+          Software Developer and Data Scientist with hands‑on experience designing, building,
+          and evaluating data‑driven systems end‑to‑end. Work spans production software engineering,
+          time‑series forecasting, applied cryptography, and performance analysis.
         </p>
         <p>
-          Enjoy working in Agile teams, collaborating across functions, and turning research ideas into
-          secure, scalable, and maintainable engineering solutions.
+          Enjoy collaborating in Agile teams, shaping technical direction, and turning research ideas
+          into secure, scalable, and well‑tested engineering solutions.
         </p>
       </section>
 
+      <!-- Projects -->
       <section id="projects" class="section">
         <div class="section-header">
           <h2>Featured projects</h2>
-          <a class="section-link" href="https://github.com/PrabhatKarlekar">View all on GitHub →</a>
+          <a class="section-link" href="https://github.com/PrabhatKarlekar">
+            View all on GitHub →
+          </a>
         </div>
+
         <div class="grid">
-          <article class="card">
-            <h3>Comparative Analysis of Time-Series ML Models</h3>
+          <article class="card card--primary">
+            <div class="card-top">
+              <h3>Comparative Analysis of Time‑Series ML Models</h3>
+              <span class="card-chip">Research • ML</span>
+            </div>
             <p>
-              Evaluated how feature engineering and hyperparameter optimization influence prediction
-              performance across multiple time-series models, with reproducible experiments and benchmarks.
+              Evaluated how feature engineering and hyperparameter optimization affect predictive
+              performance across multiple time‑series models, with reproducible experiments and benchmarks.
             </p>
             <div class="card-footer">
-              <span class="tag">Time-series ML</span>
-              <span class="tag">Model tuning</span>
+              <div class="tag-row">
+                <span class="tag">Time‑series ML</span>
+                <span class="tag">Model tuning</span>
+                <span class="tag">Experiment design</span>
+              </div>
               <a class="card-link" href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/">
                 View project →
               </a>
             </div>
           </article>
-          <!-- Add more project cards here -->
+
+          <!-- Replace these placeholders with real work when ready -->
+          <article class="card">
+            <div class="card-top">
+              <h3>Secure data pipeline (In progress)</h3>
+              <span class="card-chip card-chip--ghost">Systems</span>
+            </div>
+            <p>
+              Designing an end‑to‑end streaming pipeline with encryption, observability, and
+              reproducible analytics to support low‑latency, trustworthy insights.
+            </p>
+            <div class="card-footer">
+              <div class="tag-row">
+                <span class="tag">Security</span>
+                <span class="tag">Streaming</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <h3>Experiment tracking toolkit</h3>
+              <span class="card-chip card-chip--ghost">MLOps</span>
+            </div>
+            <p>
+              Lightweight framework to track configurations, runs, and metrics for ML experiments,
+              making model comparison and collaboration repeatable.
+            </p>
+            <div class="card-footer">
+              <div class="tag-row">
+                <span class="tag">Tooling</span>
+                <span class="tag">Reproducibility</span>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
+      <!-- Writing -->
       <section id="writing" class="section">
         <div class="section-header">
           <h2>Writing</h2>
-          <a class="section-link" href="https://medium.com/@pritvikarlekar">All articles →</a>
+          <a class="section-link" href="https://medium.com/@pritvikarlekar">
+            All articles →
+          </a>
         </div>
         <p>
           Technical articles on practical machine learning, system design, and engineering practices,
-          with a focus on clarity and reproducible insights.
+          with an emphasis on clarity, trade‑offs, and reproducible insights.
         </p>
       </section>
 
+      <!-- Code -->
       <section id="code" class="section">
-        <h2>Code</h2>
+        <div class="section-header">
+          <h2>Code</h2>
+        </div>
         <p>
-          Open-source and personal projects are available on GitHub, including ML experiments,
-          tooling, and small utilities.
+          Open‑source and personal projects live on GitHub, including ML experiments, small utilities,
+          and tooling around data and experimentation.
         </p>
-        <p><a href="https://github.com/PrabhatKarlekar">GitHub profile →</a></p>
+        <p>
+          <a href="https://github.com/PrabhatKarlekar">GitHub profile →</a>
+        </p>
       </section>
 
+      <!-- Contact -->
       <section id="contact" class="section">
-        <h2>Contact</h2>
+        <div class="section-header">
+          <h2>Contact</h2>
+        </div>
         <p>
-          The fastest way to reach out is via LinkedIn. Open to opportunities in software engineering,
-          data science, and research-driven product teams.
+          Open to opportunities in software engineering, data science, and research‑driven teams.
+          The fastest way to reach out is via LinkedIn.
         </p>
         <p>
-          LinkedIn: <a href="https://www.linkedin.com/in/prabhatkarlekar">Prabhat Vilas Karlekar</a>
+          LinkedIn:
+          <a href="https://www.linkedin.com/in/prabhatkarlekar">
+            Prabhat Vilas Karlekar
+          </a>
         </p>
       </section>
     </main>
@@ -128,6 +203,7 @@
   </div>
 
   <script>
+    // Dynamic year for scalability
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
