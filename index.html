@@ -1,63 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Prabhat Karlekar | Software Engineer & Data Scientist</title>
-  
-  <!-- Link CSS here -->
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prabhat Karlekar | Software Developer & Data Scientist</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <h1>Prabhat Karlekar</h1>
-  <p><em>Software Developer • Data Scientist • Researcher</em></p>
+  <div class="page">
 
-  <h2>About</h2>
-  <p>
-  Software Developer and Data Scientist with 3+ years of experience building,
-  testing, and analyzing data-driven systems. My work spans software engineering,
-  time-series machine learning, applied cryptography, and system-level analysis.
-  I enjoy working in Agile environments and contributing to secure, scalable,
-  and research-informed engineering solutions.
-  </p>
+    <!-- Navigation -->
+    <header class="nav">
+      <div class="nav-left">
+        <span class="logo-dot"></span>
+        <span class="nav-name">Prabhat Karlekar</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#writing">Writing</a>
+        <a href="#code">Code</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-<h2>Featured Projects</h2>
-<ul>
-  <li>
-    <strong>Comparative Analysis of Time-Series ML Models</strong><br>
-    Evaluated the impact of feature engineering and hyperparameter
-    optimization on time-series prediction performance across ML models.<br>
-    <a href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/">
-      View Project →
-    </a>
-  </li>
-</ul>
+    <!-- Hero -->
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <p class="hero-kicker">Software Developer · Data Scientist · Researcher</p>
+          <h1 class="hero-title">
+            Building secure, data-driven systems.
+          </h1>
+          <p class="hero-subtitle">
+            3+ years of experience across software engineering, time-series ML,
+            applied cryptography, and system-level analysis.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn primary">View Projects</a>
+            <a href="#contact" class="btn ghost">Get in Touch</a>
+          </div>
+        </div>
 
-  <h2>Writing</h2>
-  <ul>
-    <li>
-      <a href="https://medium.com/@pritvikarlekar">
-        Medium – Technical Articles
-      </a>
-    </li>
-  </ul>
+        <div class="hero-meta">
+          <div class="meta-card">
+            <p class="meta-label">Focus</p>
+            <p class="meta-value">Time-series ML · Secure Systems</p>
+          </div>
+          <div class="meta-card">
+            <p class="meta-label">Experience</p>
+            <p class="meta-value">3+ years</p>
+          </div>
+        </div>
+      </section>
 
-  <h2>Code</h2>
-  <ul>
-    <li>
-      <a href="https://github.com/PrabhatKarlekar">
-        GitHub Profile
-      </a>
-    </li>
-  </ul>
+      <!-- About -->
+      <section id="about" class="section">
+        <h2>About</h2>
+        <p>
+          Software Developer and Data Scientist with hands-on experience building,
+          testing, and analyzing data-driven systems. My work spans production-grade
+          software engineering, time-series forecasting, applied cryptography,
+          and system-level performance analysis.
+        </p>
+        <p>
+          I enjoy working in Agile teams and turning research ideas into
+          secure, scalable, and maintainable engineering solutions.
+        </p>
+      </section>
 
-  <h2>Contact</h2>
-  <p>
-    LinkedIn:
-    <a href="https://www.linkedin.com/in/prabhatkarlekar">
-    Prabhat Vilas Karlekar
-    </a>
-  </p>
+      <!-- Projects -->
+      <section id="projects" class="section">
+        <div class="section-header">
+          <h2>Featured Projects</h2>
+          <a class="section-link" href="https://github.com/PrabhatKarlekar">
+            View all on GitHub →
+          </a>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Comparative Analysis of Time-Series ML Models</h3>
+            <p>
+              Studied the impact of feature engineering and hyperparameter optimization
+              on prediction accuracy across multiple time-series models using
+              reproducible experiments.
+            </p>
+            <div class="card-footer">
+              <span class="tag">Time-Series ML</span>
+              <span class="tag">Model Optimization</span>
+              <a class="card-link"
+                 href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/">
+                View Project →
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Writing -->
+      <section id="writing" class="section">
+        <div class="section-header">
+          <h2>Writing</h2>
+          <a class="section-link" href="https://medium.com/@pritvikarlekar">
+            All articles →
+          </a>
+        </div>
+        <p>
+          Technical writing on machine learning, systems, and engineering practices
+          with an emphasis on clarity and reproducibility.
+        </p>
+      </section>
+
+      <!-- Code -->
+      <section id="code" class="section">
+        <h2>Code</h2>
+        <p>
+          Open-source and personal projects including ML experiments,
+          tooling, and research prototypes.
+        </p>
+        <p>
+          <a href="https://github.com/PrabhatKarlekar">GitHub Profile →</a>
+        </p>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="section">
+        <h2>Contact</h2>
+        <p>
+          Best way to reach me is via LinkedIn.
+          Open to SDE, data science, and research-driven roles.
+        </p>
+        <p>
+          <a href="https://www.linkedin.com/in/prabhatkarlekar">
+            Prabhat Vilas Karlekar →
+          </a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      © <span id="year"></span> Prabhat Karlekar · Built with HTML & CSS
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 
 </body>
 </html>
