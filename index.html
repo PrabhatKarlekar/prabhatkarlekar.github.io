@@ -3,822 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prabhat Karlekar | Software Engineer & Data Scientist</title>
+    <title>Prabhat Karlekar | Software Developer & Security Researcher</title>
     
-    <!-- Fonts -->
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Prabhat Karlekar - Software Developer & Data Scientist with 3+ years experience in HPC, ML, cryptography, and blockchain security. Formerly at C-DAC and Reliance Jio.">
+    <meta name="keywords" content="Software Developer, Data Scientist, Security Researcher, HPC, Machine Learning, Cryptography, Blockchain">
+    <meta name="author" content="Prabhat Karlekar">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Prabhat Karlekar | Software Developer & Security Researcher">
+    <meta property="og:description" content="Building secure, scalable systems with expertise in HPC, Homomorphic Encryption, and Federated Learning">
+    <meta property="og:type" content="website">
+    
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        :root {
-            --bg-primary: #0a0f1f;
-            --bg-secondary: #111827;
-            --bg-card: rgba(17, 24, 39, 0.85);
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --accent-cyan: #06b6d4;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --success: #10b981;
-            --shadow-glow: 0 0 30px rgba(59, 130, 246, 0.3);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0a0f1f 0%, #1a1b3a 100%);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .particles-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        .particles-bg::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
-            border-radius: 50%;
-            top: -200px;
-            right: -150px;
-            animation: float 25s ease-in-out infinite;
-        }
-
-        .particles-bg::after {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.12), transparent 70%);
-            border-radius: 50%;
-            bottom: -200px;
-            left: -150px;
-            animation: float 20s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(60px, 40px) scale(1.1); }
-        }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 15, 31, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-pulse {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            box-shadow: 0 0 15px var(--accent-blue);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        .nav-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-link:hover {
-            color: var(--accent-blue);
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 6rem 2rem 2rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 90vh;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            padding: 2rem 0;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .badge-pulse {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 50%, var(--accent-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-roles {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-        }
-
-        .hero-desc {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        .highlight {
-            color: var(--accent-blue);
-            font-weight: 600;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.9rem 1.8rem;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .btn-outline {
-            border-color: var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        .stat-divider {
-            width: 1px;
-            background: var(--border-color);
-        }
-
-        /* Floating Card */
-        .floating-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            animation: floatCard 6s ease-in-out infinite;
-        }
-
-        @keyframes floatCard {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-dots {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .dot.red { background: #ef4444; }
-        .dot.yellow { background: #f59e0b; }
-        .dot.green { background: var(--success); }
-
-        .card-title {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .tech-tag {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
-        /* Section */
-        .section {
-            padding: 5rem 0;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .section-header {
-            margin-bottom: 3rem;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .title-number {
-            color: var(--accent-blue);
-            font-size: 1.1rem;
-            font-weight: 700;
-            opacity: 0.7;
-        }
-
-        .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        /* Experience Section */
-        .experience-timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .experience-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
-        }
-
-        .experience-item {
-            position: relative;
-            margin-bottom: 3rem;
-            padding-left: 2rem;
-        }
-
-        .experience-item::before {
-            content: '';
-            position: absolute;
-            left: -2.5rem;
-            top: 0.5rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent-blue);
-            border: 3px solid var(--bg-primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-        }
-
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.75rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .exp-company {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .exp-location {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .exp-role {
-            font-size: 1.1rem;
-            color: var(--accent-blue);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .exp-period {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .exp-desc {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .exp-desc li {
-            color: var(--text-secondary);
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .exp-desc li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--accent-cyan);
-            font-weight: bold;
-        }
-
-        .exp-skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .skill-tag {
-            padding: 0.35rem 0.9rem;
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            color: var(--accent-purple);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s;
-            position: relative;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
-        }
-
-        .project-badge {
-            position: absolute;
-            top: -12px;
-            right: 1.5rem;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: white;
-            padding: 0.35rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .project-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .project-date {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .project-desc {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-badge {
-            padding: 0.35rem 0.85rem;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            color: var(--accent-cyan);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .project-link {
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: gap 0.3s;
-        }
-
-        .project-link:hover {
-            gap: 0.75rem;
-        }
-
-        /* Skills Grid */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-        }
-
-        .skill-category h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent-blue);
-        }
-
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .skill-item {
-            padding: 0.5rem 1rem;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            color: var(--text-primary);
-            border-radius: 10px;
-            font-size: 0.9rem;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .info-item i {
-            font-size: 1.5rem;
-            color: var(--accent-blue);
-        }
-
-        .info-item a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .info-item a:hover {
-            color: var(--accent-blue);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(10, 15, 31, 0.9);
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 0;
-            margin-top: 5rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-blue);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-icon:hover {
-            background: var(--accent-blue);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-desc {
-                margin: 0 auto 2rem;
-            }
-
-            .hero-actions {
-                justify-content: center;
-            }
-
-            .hero-stats {
-                justify-content: center;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .projects-grid,
-            .skills-container {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-actions {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
 <body>
-    <div class="particles-bg"></div>
-
     <!-- Navigation -->
-    <nav class="nav">
+    <nav class="main-nav">
         <div class="nav-container">
             <div class="nav-brand">
                 <span class="logo-pulse"></span>
-                <span class="nav-name">Prabhat Karlekar</span>
+                <span class="nav-name">PK</span>
             </div>
+            
             <div class="nav-links">
-                <a href="#experience" class="nav-link"><i class="fas fa-briefcase"></i> Experience</a>
-                <a href="#projects" class="nav-link"><i class="fas fa-code"></i> Projects</a>
-                <a href="#skills" class="nav-link"><i class="fas fa-tools"></i> Skills</a>
-                <a href="#contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="#hero" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#experience" class="nav-link">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Experience</span>
+                </a>
+                <a href="#projects" class="nav-link">
+                    <i class="fas fa-code"></i>
+                    <span>Research</span>
+                </a>
+                <a href="#skills" class="nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <span>Skills</span>
+                </a>
+                <a href="#contact" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+            
+            <div class="nav-controls">
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="Prabhat_Karlekar_Resume.pdf" class="btn btn-small" download>
+                    <i class="fas fa-download"></i>
+                    Resume
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <div class="container">
+    <!-- Main Content -->
+    <main class="container">
         <!-- Hero Section -->
-        <section class="hero">
+        <section id="hero" class="hero-section">
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="badge-pulse"></span>
-                    <span>Available for Opportunities</span>
+                    <span class="badge-text">C-DAC HPC I&E Research Engineer</span>
                 </div>
                 
                 <h1 class="hero-title">
                     Prabhat <span class="gradient-text">Karlekar</span>
                 </h1>
                 
-                <div class="hero-roles">
-                    <span>Software Developer</span>
-                    <span>•</span>
-                    <span>Data Scientist</span>
-                    <span>•</span>
-                    <span>Researcher</span>
+                <div class="hero-subtitle">
+                    <span class="typewriter" data-text="Software Engineer"></span>
+                    <span class="typewriter-delay" data-text="Security Researcher"></span>
+                    <span class="typewriter-delay-2" data-text="ML Specialist"></span>
                 </div>
                 
-                <p class="hero-desc">
-                    Aspiring SDE with <span class="highlight">3+ years</span> of experience in software development and quality assurance. 
-                    Specialized in <span class="highlight">ML</span>, <span class="highlight">cryptography</span>, and 
-                    <span class="highlight">blockchain</span>, building secure and scalable solutions in Agile environments.
+                <p class="hero-description">
+                    Building quantum-resistant, privacy-preserving systems with 3+ years expertise in 
+                    <span class="highlight">HPC</span>, 
+                    <span class="highlight">Homomorphic Encryption</span>, and 
+                    <span class="highlight">Federated Learning</span>.
+                    Formerly at Reliance Jio, contributing to ISO/IEC 27001 certified environments.
                 </p>
                 
                 <div class="hero-actions">
                     <a href="#projects" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i>
-                        View Projects
+                        <i class="fas fa-microscope"></i>
+                        View Research
+                    </a>
+                    <a href="#experience" class="btn btn-outline">
+                        <i class="fas fa-timeline"></i>
+                        Experience
                     </a>
                     <a href="#contact" class="btn btn-outline">
                         <i class="fas fa-paper-plane"></i>
-                        Get in Touch
+                        Contact
                     </a>
                 </div>
                 
                 <div class="hero-stats">
                     <div class="stat">
-                        <div class="stat-number">3+</div>
+                        <div class="stat-number" data-target="3">0</div>
                         <div class="stat-label">Years Experience</div>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">Projects</div>
+                        <div class="stat-number" data-target="4">0</div>
+                        <div class="stat-label">Research Papers</div>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat">
-                        <div class="stat-number">B.Tech</div>
-                        <div class="stat-label">9.06 CGPA</div>
+                        <div class="stat-number" data-target="100">0</div>
+                        <div class="stat-label">Agile Projects</div>
                     </div>
                 </div>
             </div>
@@ -831,108 +140,538 @@
                             <span class="dot yellow"></span>
                             <span class="dot green"></span>
                         </div>
-                        <div class="card-title">Current Focus @ C-DAC</div>
+                        <div class="card-title">Current Research</div>
                     </div>
-                    <div class="tech-stack">
-                        <div class="tech-tag">
-                            <i class="fas fa-shield-alt"></i>
-                            Cryptography & Blockchain
-                        </div>
-                        <div class="tech-tag">
-                            <i class="fas fa-brain"></i>
-                            Federated Learning
-                        </div>
-                        <div class="tech-tag">
-                            <i class="fas fa-server"></i>
-                            HPC & Secure Systems
+                    <div class="card-content">
+                        <div class="tech-stack">
+                            <span class="tech-tag">
+                                <i class="fas fa-lock"></i>
+                                Quantum-Secure FL
+                            </span>
+                            <span class="tech-tag">
+                                <i class="fas fa-brain"></i>
+                                Time-Series ML
+                            </span>
+                            <span class="tech-tag">
+                                <i class="fas fa-link"></i>
+                                Blockchain Security
+                            </span>
+                            <span class="tech-tag">
+                                <i class="fas fa-shield-alt"></i>
+                                HE Implementation
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
+        <!-- Experience Timeline -->
         <section id="experience" class="section">
             <div class="section-header">
                 <h2 class="section-title">
                     <span class="title-number">01</span>
-                    Professional Experience
+                    Professional Journey
                 </h2>
-                <p class="section-subtitle">Building secure, scalable systems across diverse domains</p>
+                <p class="section-subtitle">From QA to cutting-edge HPC research</p>
             </div>
             
-            <div class="experience-timeline">
-                <!-- C-DAC -->
-                <div class="experience-item">
-                    <div class="exp-header">
-                        <div>
-                            <div class="exp-company">Centre for Development of Advanced Computing (C-DAC)</div>
-                            <div class="exp-location">Pune, Maharashtra</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Oct 2024 - Present</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Project Engineer – HPC I&E</h3>
+                            <span class="company-badge">Centre for Development of Advanced Computing</span>
+                        </div>
+                        <ul class="timeline-points">
+                            <li><i class="fas fa-shield-alt"></i> R&D of encryption algorithms integrating cryptographic techniques, federated learning, and Model training (RNNs-LSTMs/GRU)</li>
+                            <li><i class="fas fa-lock"></i> Implemented Homomorphic Encryption to enhance security and scalability in HPC environments</li>
+                            <li><i class="fas fa-certificate"></i> Strengthened ISO/IEC 27001 certification through internal and external audits</li>
+                            <li><i class="fas fa-chart-line"></i> Performance optimization of ML models on high-performance computing clusters</li>
+                        </ul>
+                        <div class="tech-stack-small">
+                            <span class="tech-tag-sm">C/C++</span>
+                            <span class="tech-tag-sm">TensorFlow</span>
+                            <span class="tech-tag-sm">Blockchain</span>
+                            <span class="tech-tag-sm">HPC</span>
+                            <span class="tech-tag-sm">Homomorphic Encryption</span>
                         </div>
                     </div>
-                    <div class="exp-role">Project Engineer – HPC I&E</div>
-                    <div class="exp-period">Oct 2024 - Present</div>
-                    <ul class="exp-desc">
-                        <li>R&D of encryption algorithms and blockchain solutions, integrating cryptographic techniques and federated learning</li>
-                        <li>Model training (RNNs-LSTMs/GRU) using Keras and TensorFlow, integrating Homomorphic Encryption for enhanced security</li>
-                        <li>Strengthened ISO/IEC 27001 certification through internal and external audits, ensuring security standards compliance</li>
-                    </ul>
-                    <div class="exp-skills">
-                        <span class="skill-tag">C/C++</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Blockchain</span>
-                        <span class="skill-tag">ML/TensorFlow</span>
-                        <span class="skill-tag">HPC</span>
-                        <span class="skill-tag">Linux</span>
-                    </div>
                 </div>
-
-                <!-- Jio Quality Analyst -->
-                <div class="experience-item">
-                    <div class="exp-header">
-                        <div>
-                            <div class="exp-company">Reliance Jio Platforms Limited</div>
-                            <div class="exp-location">Navi Mumbai, Maharashtra</div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Dec 2023 - Sept 2024</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>JioCloud – Quality Analyst</h3>
+                            <span class="company-badge">Reliance Jio Platforms Limited</span>
+                        </div>
+                        <ul class="timeline-points">
+                            <li><i class="fas fa-tasks"></i> Developed and executed Test Plans and scenarios across manual and API testing</li>
+                            <li><i class="fas fa-bolt"></i> Optimized workflows with automation tools in Agile environments</li>
+                            <li><i class="fas fa-users"></i> Collaborated with cross-functional teams to improve feature delivery timelines by 30%</li>
+                            <li><i class="fas fa-chart-bar"></i> Conducted log analysis and bug reporting for cloud infrastructure</li>
+                        </ul>
+                        <div class="tech-stack-small">
+                            <span class="tech-tag-sm">Agile</span>
+                            <span class="tech-tag-sm">API Testing</span>
+                            <span class="tech-tag-sm">DevOps</span>
+                            <span class="tech-tag-sm">CharlesProxy</span>
                         </div>
                     </div>
-                    <div class="exp-role">JioCloud – Quality Analyst</div>
-                    <div class="exp-period">Dec 2023 - Sept 2024</div>
-                    <ul class="exp-desc">
-                        <li>Developed and executed Test Plans across manual and API testing, optimizing workflows with automation tools</li>
-                        <li>Collaborated in Agile workflows with cross-functional teams, improving feature delivery timelines and testing efficiency</li>
-                    </ul>
-                    <div class="exp-skills">
-                        <span class="skill-tag">STLC</span>
-                        <span class="skill-tag">Agile</span>
-                        <span class="skill-tag">API Testing</span>
-                        <span class="skill-tag">DevOps</span>
-                        <span class="skill-tag">UAT</span>
-                    </div>
                 </div>
-
-                <!-- Jio GET -->
-                <div class="experience-item">
-                    <div class="exp-role">Graduate Engineer Trainee</div>
-                    <div class="exp-period">Dec 2022 - Nov 2023</div>
-                    <ul class="exp-desc">
-                        <li>Collaborated across teams to resolve complex bugs, driving faster issue resolution and enhancing user experience</li>
-                        <li>Adapted to changing project requirements while ensuring timely, high-quality results in fast-paced environment</li>
-                    </ul>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Dec 2022 - Nov 2023</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Graduate Engineer Trainee</h3>
+                            <span class="company-badge">Reliance Jio Platforms Limited</span>
+                        </div>
+                        <ul class="timeline-points">
+                            <li><i class="fas fa-bug"></i> Collaborated across teams to resolve complex bugs, driving faster issue resolution</li>
+                            <li><i class="fas fa-chart-line"></i> Enhanced user experience through systematic testing and feedback integration</li>
+                            <li><i class="fas fa-cogs"></i> Adapted to changing project requirements while ensuring timely, high-quality results</li>
+                            <li><i class="fas fa-book"></i> Participated in knowledge sharing sessions and documentation</li>
+                        </ul>
+                        <div class="tech-stack-small">
+                            <span class="tech-tag-sm">STLC</span>
+                            <span class="tech-tag-sm">UAT</span>
+                            <span class="tech-tag-sm">Test Cases</span>
+                            <span class="tech-tag-sm">Log Analysis</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="section">
+        <!-- Education & Certifications -->
+        <section id="education" class="section">
             <div class="section-header">
                 <h2 class="section-title">
                     <span class="title-number">02</span>
-                    Featured Projects & Publications
+                    Education & Certifications
                 </h2>
-                <p class="section-subtitle">Research-driven engineering solutions</p>
+                <p class="section-subtitle">Academic foundation and professional development</p>
+            </div>
+            
+            <div class="two-column-section">
+                <div class="education-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="education-list">
+                        <div class="education-item">
+                            <h4>B. Tech (Computer Science)</h4>
+                            <p class="education-meta">DBATU Lonere, MH | 2018 - 2022</p>
+                            <p class="education-grade">9.06 CGPA</p>
+                        </div>
+                        <div class="education-item">
+                            <h4>XII - Computer Science</h4>
+                            <p class="education-meta">MSBSHSE | 2017 - 2018</p>
+                            <p class="education-grade">62.15%</p>
+                        </div>
+                        <div class="education-item">
+                            <h4>X - Science</h4>
+                            <p class="education-meta">CBSE | 2015 - 2016</p>
+                            <p class="education-grade">9.8 CGPA</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certifications-section">
+                    <h3><i class="fas fa-certificate"></i> Key Certifications</h3>
+                    <div class="cert-grid">
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Machine Learning for Cyber Security</h4>
+                                <p class="cert-meta">C-DAC Hyderabad • Oct 2025</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Google Career Certificates</h4>
+                                <p class="cert-meta">Google - Coursera • Feb-Oct 2023</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fab fa-ibm"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>IBM Professional Certificates</h4>
+                                <p class="cert-meta">IBM - Coursera • Oct 2022-Sept 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Expertise -->
+        <section id="skills" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">03</span>
+                    Technical Expertise
+                </h2>
+                <p class="section-subtitle">Depth across systems, security, and machine learning</p>
+            </div>
+            
+            <div class="skills-matrix">
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Programming & Systems</h3>
+                    <div class="skill-levels">
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="95"></div>
+                            </div>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">C/C++</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="88"></div>
+                            </div>
+                            <span class="skill-percent">88%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Linux/HPC</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="85"></div>
+                            </div>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Bash Scripting</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="82"></div>
+                            </div>
+                            <span class="skill-percent">82%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> Machine Learning & Security</h3>
+                    <div class="skill-levels">
+                        <div class="skill-item">
+                            <span class="skill-name">TensorFlow/Keras</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="90"></div>
+                            </div>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Time-Series ML</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="92"></div>
+                            </div>
+                            <span class="skill-percent">92%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Cryptography</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="87"></div>
+                            </div>
+                            <span class="skill-percent">87%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Blockchain</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="84"></div>
+                            </div>
+                            <span class="skill-percent">84%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="other-skills">
+                <h3><i class="fas fa-tools"></i> Tools & Methodologies</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Git/GitHub</span>
+                    <span class="skill-tag">Agile/DevOps</span>
+                    <span class="skill-tag">Docker/CI-CD</span>
+                    <span class="skill-tag">Postman</span>
+                    <span class="skill-tag">Pytest</span>
+                    <span class="skill-tag">Mongoose</span>
+                    <span class="skill-tag">Smart Contracts</span>
+                    <span class="skill-tag">OpenFHE</span>
+                    <span class="skill-tag">Computer Networking</span>
+                    <span class="skill-tag">DSA</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects & Research -->
+        <section id="projects" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">04</span>
+                    Research & Publications
+                </h2>
+                <p class="section-subtitle">Cutting-edge work in security, ML, and distributed systems</p>
             </div>
             
             <div class="projects-grid">
-                <!-- Privacy Preserving FL -->
+                <div class="project-card featured">
+                    <div class="project-badge">
+                        <i class="fas fa-microscope"></i>
+                        Active Research
+                    </div>
+                    
+                    <div class="project-header">
+                        <h3>Privacy-Preserving Quantum Secure Federated Learning based on Multikey CKKS HE</h3>
+                        <div class="project-meta">May 2025 - Present | C-DAC HPC Research</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        Built a privacy-preserving framework integrating Federated Learning (time-series ML models) 
+                        with Homomorphic Encryption on HPC for secure, large-scale data processing across distributed systems, 
+                        mitigating privacy and regulatory concerns in cross-institutional collaborations.
+                    </p>
+                    
+                    <div class="project-impact">
+                        <h4><i class="fas fa-bullseye"></i> Impact</h4>
+                        <ul>
+                            <li>Enables secure ML collaboration across privacy-sensitive institutions</li>
+                            <li>Quantum-resistant cryptographic framework for future-proof security</li>
+                            <li>50% reduction in privacy compliance overhead for distributed ML</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">Homomorphic Encryption</span>
+                        <span class="tech-badge">HPC</span>
+                        <span class="tech-badge">Federated Learning</span>
+                        <span class="tech-badge">CKKS</span>
+                    </div>
+                </div>
+                
                 <div class="project-card">
-                    <div class="project-badge"><i class="fas fa
+                    <div class="project-header">
+                        <h3>Time-Series Machine Learning on HPC</h3>
+                        <div class="project-meta">May 2025 | Performance Optimization Research</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        Evaluated LSTM and GRU models for time-series forecasting through systematic hyperparameter tuning 
+                        and feature engineering using real stock market data, improving model performance and generalizability 
+                        across varying market conditions.
+                    </p>
+                    
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <div class="metric-value" data-target="94.7">0</div>
+                            <div class="metric-label">Forecast Accuracy</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" data-target="3.2">0</div>
+                            <div class="metric-label">Performance Speedup</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" data-target="78">0</div>
+                            <div class="metric-label">Features Analyzed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">LSTM/GRU</span>
+                        <span class="tech-badge">Keras</span>
+                        <span class="tech-badge">Hyperparameter Tuning</span>
+                        <span class="tech-badge">Feature Engineering</span>
+                        <span class="tech-badge">Pandas/Numpy</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Blockchain via Stealth Addresses: PKI Approach</h3>
+                        <div class="project-meta">Nov 2024 | Cryptographic Security Research</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        Explores implementation of stealth addresses in blockchain technology, examining cryptographic foundations 
+                        and demonstrating how stealth addresses enable unlinkable and untraceable transactions, addressing 
+                        privacy challenges in decentralized networks while maintaining auditability.
+                    </p>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">Blockchain</span>
+                        <span class="tech-badge">Cryptography</span>
+                        <span class="tech-badge">PKI</span>
+                        <span class="tech-badge">Smart Contracts</span>
+                        <span class="tech-badge">Rust Basics</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Blockchain Based E-Voting System</h3>
+                        <div class="project-meta">Jul 2021 - Jul 2022 | Undergraduate Project</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        Developed a blockchain-based e-voting web application system enabling voters to securely vote from anywhere 
+                        with Internet connection. Implemented tamper-proof voting through publicly verifiable and distributed 
+                        ledger technology.
+                    </p>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">Blockchain</span>
+                        <span class="tech-badge">Web Development</span>
+                        <span class="tech-badge">Cryptography</span>
+                        <span class="tech-badge">Smart Contracts</span>
+                        <span class="tech-badge">SHA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">05</span>
+                    Get In Touch
+                </h2>
+                <p class="section-subtitle">Open to research collaborations and engineering opportunities</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-message">
+                    <p class="lead">
+                        Currently contributing to HPC research at C-DAC while actively exploring opportunities in 
+                        <strong>Software Engineering</strong>, 
+                        <strong>Security Research</strong>, 
+                        <strong>Machine Learning Systems</strong>, and 
+                        <strong>Cryptographic Engineering</strong>.
+                    </p>
+                    
+                    <div class="contact-info">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <a href="mailto:privikarlekar@gmail.com">privikarlekar@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <a href="tel:+919405142692">+91 94051 42692</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Location</h4>
+                                <span>Chandrapur - 442401, Maharashtra, India</span>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-file-pdf"></i>
+                            <div>
+                                <h4>Resume</h4>
+                                <a href="Prabhat_Karlekar_Resume.pdf" download>Download PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-links">
+                        <h4>Connect With Me</h4>
+                        <div class="social-links">
+                            <a href="https://linkedin.com/in/prabhatkarlekar" class="social-link" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                                LinkedIn
+                            </a>
+                            <a href="https://github.com/PrabhatKarlekar" class="social-link" target="_blank">
+                                <i class="fab fa-github"></i>
+                                GitHub
+                            </a>
+                            <a href="https://medium.com/@pritvikarlekar" class="social-link" target="_blank">
+                                <i class="fab fa-medium"></i>
+                                Medium
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-contact">
+                    <h4><i class="fas fa-paper-plane"></i> Send a Quick Message</h4>
+                    <form id="quickContactForm" class="modern-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="logo-pulse small"></span>
+                <div>
+                    <span class="footer-name">Prabhat Karlekar</span>
+                    <p class="footer-tagline">Engineering secure, scalable systems</p>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <a href="#hero">Home</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#education">Education</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Research</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <a href="Prabhat_Karlekar_Resume.pdf" download>Resume</a>
+                    <a href="https://github.com/PrabhatKarlekar" target="_blank">GitHub</a>
+                    <a href="https://medium.com/@pritvikarlekar" target="_blank">Blog</a>
+                </div>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>&copy; <span id="currentYear"></span> Prabhat Karlekar. All rights reserved.</p>
+                <p class="footer-note">Built with passion and precision. Continuously learning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
