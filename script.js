@@ -1,16 +1,18 @@
 // Main Portfolio JavaScript
 class PortfolioApp {
     constructor() {
+        this.initialized = false;
         this.init();
     }
 
     init() {
+        if (this.initialized) return;
+        
         // Set current year
         this.setCurrentYear();
         
         // Initialize components
         this.initThemeToggle();
-        this.initParticles();
         this.initNavigation();
         this.initAnimations();
         this.initContactForm();
@@ -22,6 +24,8 @@ class PortfolioApp {
             this.animateStats();
             this.animateSkillBars();
         }, 1000);
+        
+        this.initialized = true;
     }
 
     setCurrentYear() {
@@ -61,127 +65,6 @@ class PortfolioApp {
 
     updateThemeIcon(theme, icon) {
         icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    }
-
-    initParticles() {
-        const canvas = document.getElementById('particles-canvas');
-        if (!canvas) return;
-        
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animationId = null;
-        
-        // Set canvas size
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-        
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Particle class
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = document.documentElement.getAttribute('data-theme') === 'dark' 
-                    ? 'rgba(59, 130, 246, 0.5)' 
-                    : 'rgba(59, 130, 246, 0.3)';
-            }
-            
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                
-                if (this.x > canvas.width) this.x = 0;
-                else if (this.x < 0) this.x = canvas.width;
-                
-                if (this.y > canvas.height) this.y = 0;
-                else if (this.y < 0) this.y = canvas.height;
-            }
-            
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-        
-        // Create particles
-        const initParticles = () => {
-            particles = [];
-            const particleCount = Math.min(100, Math.floor(canvas.width * canvas.height / 15000));
-            
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        };
-        
-        // Connect particles
-        const connectParticles = () => {
-            const maxDistance = 100;
-            
-            for (let a = 0; a < particles.length; a++) {
-                for (let b = a + 1; b < particles.length; b++) {
-                    const dx = particles[a].x - particles[b].x;
-                    const dy = particles[a].y - particles[b].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < maxDistance) {
-                        ctx.strokeStyle = document.documentElement.getAttribute('data-theme') === 'dark'
-                            ? `rgba(59, 130, 246, ${0.2 * (1 - distance / maxDistance)})`
-                            : `rgba(59, 130, 246, ${0.1 * (1 - distance / maxDistance)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        };
-        
-        // Animation loop
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-            
-            connectParticles();
-            animationId = requestAnimationFrame(animate);
-        };
-        
-        // Initialize and start
-        initParticles();
-        animate();
-        
-        // Handle theme changes
-        const observer = new MutationObserver(() => {
-            particles.forEach(particle => {
-                particle.color = document.documentElement.getAttribute('data-theme') === 'dark'
-                    ? 'rgba(59, 130, 246, 0.5)'
-                    : 'rgba(59, 130, 246, 0.3)';
-            });
-        });
-        
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-        
-        // Cleanup on page hide
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                cancelAnimationFrame(animationId);
-            } else {
-                animate();
-            }
-        });
     }
 
     initNavigation() {
@@ -325,7 +208,7 @@ class PortfolioApp {
         statNumbers.forEach(stat => {
             const target = parseInt(stat.getAttribute('data-target'));
             const suffix = stat.textContent.includes('%') ? '%' : '';
-            const duration = 2000; // 2 seconds
+            const duration = 2000;
             const startTime = Date.now();
             
             const animate = () => {
@@ -385,17 +268,6 @@ class PortfolioApp {
     }
 
     initScrollAnimations() {
-        // Add parallax effect to floating card
-        const floatingCard = document.querySelector('.floating-card');
-        
-        if (floatingCard) {
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const rate = scrolled * -0.1;
-                floatingCard.style.transform = `translateY(${rate}px)`;
-            });
-        }
-        
         // Add fade-in animation for sections
         const fadeElements = document.querySelectorAll('.section');
         
@@ -417,6 +289,40 @@ class PortfolioApp {
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             fadeObserver.observe(el);
         });
+        
+        // Animate project metrics
+        const metricValues = document.querySelectorAll('.metric-value[data-target]');
+        
+        metricValues.forEach(metric => {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    const target = parseFloat(metric.getAttribute('data-target'));
+                    const suffix = metric.textContent.includes('%') ? '%' : 'x';
+                    const duration = 1500;
+                    const startTime = Date.now();
+                    
+                    const animate = () => {
+                        const currentTime = Date.now();
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                        const currentValue = easeOutCubic * target;
+                        
+                        metric.textContent = currentValue.toFixed(1) + suffix;
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        }
+                    };
+                    
+                    animate();
+                    observer.unobserve(metric);
+                }
+            });
+            
+            observer.observe(metric);
+        });
     }
 
     closeMobileMenu() {
@@ -430,14 +336,14 @@ class PortfolioApp {
 
 // Initialize the app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    new PortfolioApp();
+    window.portfolioApp = new PortfolioApp();
 });
 
 // Handle page visibility changes
 document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
+    if (!document.hidden && window.portfolioApp) {
         // Refresh animations when page becomes visible
-        const portfolioApp = new PortfolioApp();
+        window.portfolioApp.init();
     }
 });
 
@@ -449,22 +355,41 @@ document.addEventListener('keydown', (e) => {
             modal.classList.remove('active');
         });
     }
-    
-    // Tab key navigation for accessibility
-    if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-navigation');
-    }
 });
 
-// Remove keyboard navigation class on mouse click
-document.addEventListener('mousedown', () => {
-    document.body.classList.remove('keyboard-navigation');
+// Performance optimization: Debounce scroll events
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        // Update active navigation
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.clientHeight;
+            
+            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === `#${current}` || (current === 'hero' && href === '#')) {
+                link.classList.add('active');
+            }
+        });
+    }, 100);
 });
 
 // Add smooth scrolling polyfill for older browsers
 if (!('scrollBehavior' in document.documentElement.style)) {
-    import('https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js')
-        .then(() => {
-            // Polyfill loaded
-        });
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js';
+    script.onload = () => smoothscroll.polyfill();
+    document.head.appendChild(script);
 }
