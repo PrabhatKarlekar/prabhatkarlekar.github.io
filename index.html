@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prabhat Karlekar | Software Developer & Data Scientist</title>
-
-  <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <div class="page">
-
-    <!-- Navigation -->
+  <div class="page-wrapper">
     <header class="nav">
-      <div class="nav-left">
-        <span class="logo-dot"></span>
-        <span class="nav-name">Prabhat Karlekar</span>
+      <div class="nav-brand">
+        <div class="brand-dot"></div>
+        <span>Prabhat Karlekar</span>
       </div>
       <nav class="nav-links">
         <a href="#about">About</a>
@@ -31,129 +25,94 @@
       </nav>
     </header>
 
-    <!-- Hero -->
-    <main>
+    <main class="container">
       <section class="hero">
-        <div class="hero-text">
-          <p class="hero-kicker">Software Developer · Data Scientist · Researcher</p>
-          <h1 class="hero-title">
-            Building secure, data-driven systems.
-          </h1>
-          <p class="hero-subtitle">
-            3+ years of experience across software engineering, time-series ML,
-            applied cryptography, and system-level analysis.
+        <div class="hero-content">
+          <p class="hero-subtitle">Software Developer • Data Scientist • Researcher</p>
+          <h1 class="hero-title">Building secure, data-driven systems</h1>
+          <p class="hero-desc">
+            3+ years in software engineering, time-series ML, applied cryptography, and system analysis.
+            Passionate about scalable, research-informed solutions in Agile environments.
           </p>
           <div class="hero-actions">
             <a href="#projects" class="btn primary">View Projects</a>
-            <a href="#contact" class="btn ghost">Get in Touch</a>
+            <a href="#contact" class="btn secondary">Get in Touch</a>
           </div>
         </div>
-
         <div class="hero-meta">
-          <div class="meta-card">
-            <p class="meta-label">Focus</p>
-            <p class="meta-value">Time-series ML · Secure Systems</p>
+          <div class="meta-item">
+            <span class="meta-label">Focus</span>
+            <span class="meta-value">Time-Series ML • Secure Systems</span>
           </div>
-          <div class="meta-card">
-            <p class="meta-label">Experience</p>
-            <p class="meta-value">3+ years</p>
+          <div class="meta-item">
+            <span class="meta-label">Experience</span>
+            <span class="meta-value">3+ Years</span>
           </div>
         </div>
       </section>
 
-      <!-- About -->
       <section id="about" class="section">
         <h2>About</h2>
         <p>
-          Software Developer and Data Scientist with hands-on experience building,
-          testing, and analyzing data-driven systems. My work spans production-grade
-          software engineering, time-series forecasting, applied cryptography,
-          and system-level performance analysis.
-        </p>
-        <p>
-          I enjoy working in Agile teams and turning research ideas into
-          secure, scalable, and maintainable engineering solutions.
+          Software Developer and Data Scientist with 3+ years of experience building, testing, and analyzing data-driven systems.
+          My expertise spans software engineering, time-series machine learning, applied cryptography, and system-level analysis.
+          I thrive in Agile teams, delivering secure, scalable, and research-backed engineering solutions.
         </p>
       </section>
 
-      <!-- Projects -->
       <section id="projects" class="section">
         <div class="section-header">
           <h2>Featured Projects</h2>
-          <a class="section-link" href="https://github.com/PrabhatKarlekar">
-            View all on GitHub →
-          </a>
+          <a href="https://github.com/PrabhatKarlekar" class="section-link">All on GitHub →</a>
         </div>
-
         <div class="grid">
-          <article class="card">
+          <div class="card project-card">
             <h3>Comparative Analysis of Time-Series ML Models</h3>
-            <p>
-              Studied the impact of feature engineering and hyperparameter optimization
-              on prediction accuracy across multiple time-series models using
-              reproducible experiments.
-            </p>
-            <div class="card-footer">
-              <span class="tag">Time-Series ML</span>
-              <span class="tag">Model Optimization</span>
-              <a class="card-link"
-                 href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/">
-                View Project →
-              </a>
+            <p>Evaluated feature engineering and hyperparameter optimization impacts on prediction performance across models.</p>
+            <div class="card-tags">
+              <span class="tag">Time-Series</span>
+              <span class="tag">ML</span>
+              <span class="tag">Optimization</span>
             </div>
-          </article>
+            <a href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/" class="card-link">View Project →</a>
+          </div>
+          <!-- Add more real projects here later -->
         </div>
       </section>
 
-      <!-- Writing -->
       <section id="writing" class="section">
-        <div class="section-header">
-          <h2>Writing</h2>
-          <a class="section-link" href="https://medium.com/@pritvikarlekar">
-            All articles →
-          </a>
-        </div>
-        <p>
-          Technical writing on machine learning, systems, and engineering practices
-          with an emphasis on clarity and reproducibility.
-        </p>
+        <h2>Writing</h2>
+        <p>Technical articles on ML, system design, and engineering best practices.</p>
+        <a href="https://medium.com/@pritvikarlekar" class="btn primary">Read on Medium →</a>
       </section>
 
-      <!-- Code -->
       <section id="code" class="section">
         <h2>Code</h2>
-        <p>
-          Open-source and personal projects including ML experiments,
-          tooling, and research prototypes.
-        </p>
-        <p>
-          <a href="https://github.com/PrabhatKarlekar">GitHub Profile →</a>
-        </p>
+        <p>Open-source contributions, experiments, and tools.</p>
+        <a href="https://github.com/PrabhatKarlekar" class="btn primary">GitHub Profile →</a>
       </section>
 
-      <!-- Contact -->
       <section id="contact" class="section">
         <h2>Contact</h2>
-        <p>
-          Best way to reach me is via LinkedIn.
-          Open to SDE, data science, and research-driven roles.
-        </p>
-        <p>
-          <a href="https://www.linkedin.com/in/prabhatkarlekar">
-            Prabhat Vilas Karlekar →
-          </a>
-        </p>
+        <p>Open to opportunities in software engineering, data science, and research-driven roles.</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/prabhatkarlekar" class="link">Prabhat Vilas Karlekar</a></p>
       </section>
     </main>
 
     <footer class="footer">
-      © <span id="year"></span> Prabhat Karlekar · Built with HTML & CSS
+      <p>© <span id="year"></span> Prabhat Karlekar • Built with HTML & CSS</p>
     </footer>
   </div>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
-
 </body>
 </html>
