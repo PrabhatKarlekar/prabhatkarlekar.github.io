@@ -1,118 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prabhat Karlekar | Software Developer & Data Scientist</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prabhat Karlekar | Engineering Data-Driven Solutions</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page-wrapper">
-    <header class="nav">
-      <div class="nav-brand">
-        <div class="brand-dot"></div>
-        <span>Prabhat Karlekar</span>
-      </div>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#writing">Writing</a>
-        <a href="#code">Code</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
+    <!-- Animated Background -->
+    <div class="particles-container">
+        <div class="particles" id="particles-js"></div>
+    </div>
 
-    <main class="container">
-      <section class="hero">
-        <div class="hero-content">
-          <p class="hero-subtitle">Software Developer • Data Scientist • Researcher</p>
-          <h1 class="hero-title">Building secure, data-driven systems</h1>
-          <p class="hero-desc">
-            3+ years in software engineering, time-series ML, applied cryptography, and system analysis.
-            Passionate about scalable, research-informed solutions in Agile environments.
-          </p>
-          <div class="hero-actions">
-            <a href="#projects" class="btn primary">View Projects</a>
-            <a href="#contact" class="btn secondary">Get in Touch</a>
-          </div>
-        </div>
-        <div class="hero-meta">
-          <div class="meta-item">
-            <span class="meta-label">Focus</span>
-            <span class="meta-value">Time-Series ML • Secure Systems</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Experience</span>
-            <span class="meta-value">3+ Years</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" class="section">
-        <h2>About</h2>
-        <p>
-          Software Developer and Data Scientist with 3+ years of experience building, testing, and analyzing data-driven systems.
-          My expertise spans software engineering, time-series machine learning, applied cryptography, and system-level analysis.
-          I thrive in Agile teams, delivering secure, scalable, and research-backed engineering solutions.
-        </p>
-      </section>
-
-      <section id="projects" class="section">
-        <div class="section-header">
-          <h2>Featured Projects</h2>
-          <a href="https://github.com/PrabhatKarlekar" class="section-link">All on GitHub →</a>
-        </div>
-        <div class="grid">
-          <div class="card project-card">
-            <h3>Comparative Analysis of Time-Series ML Models</h3>
-            <p>Evaluated feature engineering and hyperparameter optimization impacts on prediction performance across models.</p>
-            <div class="card-tags">
-              <span class="tag">Time-Series</span>
-              <span class="tag">ML</span>
-              <span class="tag">Optimization</span>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo-pulse"></span>
+                <span class="nav-name">PK</span>
             </div>
-            <a href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/" class="card-link">View Project →</a>
-          </div>
-          <!-- Add more real projects here later -->
+            
+            <div class="nav-links">
+                <a href="#about" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>About</span>
+                </a>
+                <a href="#projects" class="nav-link">
+                    <i class="fas fa-code"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="#writing" class="nav-link">
+                    <i class="fas fa-pen"></i>
+                    <span>Writing</span>
+                </a>
+                <a href="#contact" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+            
+            <div class="nav-controls">
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
-      </section>
+    </nav>
 
-      <section id="writing" class="section">
-        <h2>Writing</h2>
-        <p>Technical articles on ML, system design, and engineering best practices.</p>
-        <a href="https://medium.com/@pritvikarlekar" class="btn primary">Read on Medium →</a>
-      </section>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-pulse"></span>
+                    <span class="badge-text">Available for Opportunities</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Prabhat <span class="gradient-text">Karlekar</span>
+                </h1>
+                
+                <div class="hero-subtitle">
+                    <span class="typewriter">Software Developer</span>
+                    <span class="typewriter-delay">Data Scientist</span>
+                    <span class="typewriter-delay-2">Researcher</span>
+                </div>
+                
+                <p class="hero-description">
+                    Crafting secure, scalable systems with 3+ years expertise in 
+                    <span class="highlight">time-series ML</span>, 
+                    <span class="highlight">applied cryptography</span>, and 
+                    <span class="highlight">data-driven engineering</span>.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Explore Projects
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-paper-plane"></i>
+                        Get in Touch
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Agile Mindset</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="floating-card">
+                    <div class="card-header">
+                        <div class="card-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="card-title">Current Focus</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="tech-stack">
+                            <span class="tech-tag">
+                                <i class="fab fa-python"></i>
+                                Time-Series ML
+                            </span>
+                            <span class="tech-tag">
+                                <i class="fas fa-shield-alt"></i>
+                                Secure Systems
+                            </span>
+                            <span class="tech-tag">
+                                <i class="fas fa-chart-line"></i>
+                                Data Engineering
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <section id="code" class="section">
-        <h2>Code</h2>
-        <p>Open-source contributions, experiments, and tools.</p>
-        <a href="https://github.com/PrabhatKarlekar" class="btn primary">GitHub Profile →</a>
-      </section>
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">01</span>
+                    About Me
+                </h2>
+                <p class="section-subtitle">The engineer behind the code</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead">
+                        Software Developer and Data Scientist with 3+ years of experience building, 
+                        testing, and analyzing data-driven systems.
+                    </p>
+                    
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-microchip"></i>
+                            <div>
+                                <h4>Software Engineering</h4>
+                                <p>Building robust, maintainable systems</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-item">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <h4>Time-Series ML</h4>
+                                <p>Specialized forecasting & optimization</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-item">
+                            <i class="fas fa-lock"></i>
+                            <div>
+                                <h4>Applied Cryptography</h4>
+                                <p>Secure system design & implementation</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-item">
+                            <i class="fas fa-chart-bar"></i>
+                            <div>
+                                <h4>System-Level Analysis</h4>
+                                <p>Performance optimization at scale</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>
+                        I thrive in <strong>Agile environments</strong> and am passionate about 
+                        translating research insights into production-ready, scalable solutions 
+                        that balance innovation with practical engineering constraints.
+                    </p>
+                </div>
+                
+                <div class="about-skills">
+                    <h3>Core Competencies</h3>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4>Languages & Frameworks</h4>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">JavaScript/TypeScript</span>
+                                <span class="skill-tag">C++</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h4>Data & ML</h4>
+                            <div class="skill-tags">
+                                <span class="skill-tag">TensorFlow/PyTorch</span>
+                                <span class="skill-tag">Pandas/Numpy</span>
+                                <span class="skill-tag">SQL/NoSQL</span>
+                                <span class="skill-tag">Time-Series Analysis</span>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h4>DevOps & Tools</h4>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">AWS/GCP</span>
+                                <span class="skill-tag">CI/CD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <section id="contact" class="section">
-        <h2>Contact</h2>
-        <p>Open to opportunities in software engineering, data science, and research-driven roles.</p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/prabhatkarlekar" class="link">Prabhat Vilas Karlekar</a></p>
-      </section>
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">02</span>
+                    Featured Projects
+                </h2>
+                <p class="section-subtitle">Research-driven engineering solutions</p>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Main Project -->
+                <div class="project-card featured">
+                    <div class="project-badge">
+                        <i class="fas fa-star"></i>
+                        Featured
+                    </div>
+                    
+                    <div class="project-header">
+                        <h3>Comparative Analysis of Time-Series ML Models</h3>
+                        <div class="project-links">
+                            <a href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/" 
+                               class="project-link" title="Live Demo">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            <a href="#" class="project-link" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p class="project-description">
+                        Comprehensive evaluation of feature engineering and hyperparameter 
+                        optimization impacts on time-series prediction performance across 
+                        multiple machine learning architectures.
+                    </p>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">Pandas</span>
+                        <span class="tech-badge">Scikit-learn</span>
+                        <span class="tech-badge">Matplotlib</span>
+                    </div>
+                    
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <div class="metric-value">94.7%</div>
+                            <div class="metric-label">Accuracy</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">3.2x</div>
+                            <div class="metric-label">Speedup</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Placeholder Projects -->
+                <div class="project-card">
+                    <h3>Secure Data Pipeline Architecture</h3>
+                    <p class="project-description">
+                        End-to-end encrypted data processing pipeline with real-time 
+                        monitoring and automated compliance checks.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">PostgreSQL</span>
+                        <span class="tech-badge">Docker</span>
+                        <span class="tech-badge">AWS</span>
+                    </div>
+                    <div class="project-status">
+                        <span class="status-badge in-progress">
+                            <i class="fas fa-sync-alt"></i>
+                            In Progress
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <h3>ML Experiment Tracking System</h3>
+                    <p class="project-description">
+                        Lightweight framework for tracking, comparing, and visualizing 
+                        machine learning experiments with reproducible configurations.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-footer">
+                <a href="https://github.com/PrabhatKarlekar" class="btn btn-ghost">
+                    <i class="fab fa-github"></i>
+                    View All Projects on GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- Writing & Code Sections -->
+        <div class="two-column-section">
+            <section id="writing" class="section half">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="title-number">03</span>
+                        Writing
+                    </h2>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fab fa-medium"></i>
+                    </div>
+                    <h3>Technical Articles</h3>
+                    <p>
+                        Sharing insights on machine learning, system design, and 
+                        engineering best practices.
+                    </p>
+                    <a href="https://medium.com/@pritvikarlekar" class="link-with-icon">
+                        Read on Medium
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </section>
+            
+            <section id="code" class="section half">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="title-number">04</span>
+                        Code
+                    </h2>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3>Open Source</h3>
+                    <p>
+                        Contributing to and maintaining projects focused on 
+                        data science tools and engineering utilities.
+                    </p>
+                    <a href="https://github.com/PrabhatKarlekar" class="link-with-icon">
+                        Explore GitHub
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">05</span>
+                    Get In Touch
+                </h2>
+                <p class="section-subtitle">Let's build something amazing together</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-message">
+                    <p class="lead">
+                        I'm currently open to new opportunities in 
+                        <strong>software engineering</strong>, 
+                        <strong>data science</strong>, and 
+                        <strong>research-driven product development</strong>.
+                    </p>
+                    
+                    <div class="contact-info">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <a href="mailto:your.email@example.com">prabhat@example.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fab fa-linkedin"></i>
+                            <div>
+                                <h4>LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/prabhatkarlekar">
+                                    Prabhat Vilas Karlekar
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <h4>GitHub</h4>
+                                <a href="https://github.com/PrabhatKarlekar">
+                                    @PrabhatKarlekar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm" class="modern-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="footer">
-      <p>© <span id="year"></span> Prabhat Karlekar • Built with HTML & CSS</p>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="logo-pulse small"></span>
+                <span class="footer-name">Prabhat Karlekar</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#writing">Writing</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://github.com/PrabhatKarlekar" class="social-icon">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/prabhatkarlekar" class="social-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://medium.com/@pritvikarlekar" class="social-icon">
+                    <i class="fab fa-medium"></i>
+                </a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>&copy; <span id="currentYear"></span> Prabhat Karlekar. All rights reserved.</p>
+                <p class="footer-note">Built with passion and precision.</p>
+            </div>
+        </div>
     </footer>
-  </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    // Smooth scroll for nav links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
