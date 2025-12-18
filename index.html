@@ -2,209 +2,838 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prabhat Karlekar | Software Engineer & Data Scientist</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Optional: modern, clean font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #050816;
+      --bg-elevated: #0a0e27;
+      --card-bg: rgba(15, 23, 42, 0.92);
+      --card-soft: rgba(15, 23, 42, 0.78);
+      --accent: #4f46e5;
+      --accent-cyan: #00d4ff;
+      --accent-purple: #a78bfa;
+      --accent-glow: rgba(79, 70, 229, 0.3);
+      --text-primary: #e5e7eb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --border-subtle: rgba(148, 163, 184, 0.4);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #111827 0%, #020617 45%, #000 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Animated background */
+    .background-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .background-animation::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -300px;
+      right: -200px;
+      animation: float 25s ease-in-out infinite;
+    }
+
+    .background-animation::after {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -250px;
+      left: -150px;
+      animation: float 20s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.1); }
+    }
+
+    /* Container */
+    .page-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .page-container {
+      margin: 40px 20px;
+      padding: 0 32px 48px;
+      border-radius: 28px;
+      background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.08) 0%, transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(0, 212, 255, 0.06) 0%, transparent 55%),
+                  linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 8px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9), transparent);
+      backdrop-filter: blur(12px);
+      margin: 0 -32px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-cyan), var(--accent));
+      box-shadow: 0 0 16px var(--accent-glow);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .nav-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+      background: rgba(79, 70, 229, 0.1);
+      border-color: rgba(79, 70, 229, 0.3);
+    }
+
+    /* Hero section */
+    .hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent) 50%, var(--accent-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+
+    .hero-subtitle span {
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .hero-description {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 600px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+      color: white;
+      box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(79, 70, 229, 0.6);
+    }
+
+    .btn-secondary {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-primary);
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(79, 70, 229, 0.15);
+      border-color: var(--accent);
+    }
+
+    /* Hero meta cards */
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .meta-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .meta-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 32px rgba(79, 70, 229, 0.3);
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      font-size: 1rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Sections */
+    section {
+      padding: 40px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      letter-spacing: -0.01em;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-cyan));
+      border-radius: 2px;
+    }
+
+    .section-link {
+      font-size: 0.9rem;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.3s ease;
+    }
+
+    .section-link:hover {
+      gap: 10px;
+    }
+
+    .section-link::after {
+      content: '→';
+    }
+
+    /* About content */
+    .about-content {
+      background: var(--card-bg);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .about-content:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(79, 70, 229, 0.2);
+      border-color: rgba(79, 70, 229, 0.4);
+    }
+
+    .about-content p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Project grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 60px rgba(79, 70, 229, 0.4);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-card h3 {
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .project-card p {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-weight: 500;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: gap 0.3s ease;
+    }
+
+    .project-link:hover {
+      gap: 12px;
+    }
+
+    .project-link::after {
+      content: '→';
+      font-size: 1.1rem;
+    }
+
+    /* Link cards */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .link-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(79, 70, 229, 0.2);
+      transition: all 0.5s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    .link-card:hover::before {
+      width: 400%;
+      height: 400%;
+    }
+
+    .link-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 36px rgba(79, 70, 229, 0.3);
+    }
+
+    .link-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    }
+
+    .link-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .link-title {
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .link-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Contact section */
+    .contact-card {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(0, 212, 255, 0.1));
+      border: 1px solid rgba(79, 70, 229, 0.3);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-card p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 1.05rem;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+      background: linear-gradient(135deg, var(--accent), #6366f1);
+      transform: scale(1.05);
+      box-shadow: 0 8px 28px rgba(79, 70, 229, 0.5);
+      border-color: transparent;
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 0 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .footer-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .hero-meta {
+        flex-direction: row;
+      }
+
+      .meta-card {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-container {
+        margin: 20px 16px;
+        padding: 0 20px 32px;
+      }
+
+      .nav {
+        margin: 0 -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 32px 0 24px;
+      }
+
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+
+      .projects-grid,
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-container {
+        margin: 12px;
+        padding: 0 16px 24px;
+      }
+
+      .nav {
+        margin: 0 -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="bg-orbit"></div>
-  <div class="bg-orbit bg-orbit--alt"></div>
+  <div class="background-animation"></div>
 
-  <div class="page">
-    <!-- Top navigation -->
-    <header class="nav">
-      <div class="nav-left">
-        <span class="logo-dot"></span>
-        <span class="nav-name">Prabhat Karlekar</span>
-      </div>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#writing">Writing</a>
-        <a href="#code">Code</a>
-        <a href="#contact">Contact</a>
+  <div class="page-wrapper">
+    <div class="page-container">
+      <!-- Navigation -->
+      <nav class="nav">
+        <div class="nav-brand">
+          <span class="logo-dot"></span>
+          <span class="nav-name">Prabhat Karlekar</span>
+        </div>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#writing">Writing</a>
+          <a href="#code">Code</a>
+          <a href="#contact">Contact</a>
+        </div>
       </nav>
-    </header>
 
-    <main>
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-text">
-          <p class="hero-kicker">Software Developer • Data Scientist • Researcher</p>
-          <h1 class="hero-title">
-            Building secure, data‑driven systems that ship.
-          </h1>
-          <p class="hero-subtitle">
-            3+ years working across software engineering, time‑series ML, applied cryptography,
-            and system‑level analysis. Focused on turning research into reliable, production‑ready solutions.
-          </p>
-          <div class="hero-actions">
-            <a href="#projects" class="btn primary">View projects</a>
-            <a href="#contact" class="btn ghost">Get in touch</a>
+      <!-- Hero Section -->
+      <header class="hero">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>Prabhat Karlekar</h1>
+            <p class="hero-subtitle">
+              <span>Software Developer</span> • <span>Data Scientist</span> • <span>Researcher</span>
+            </p>
+            <p class="hero-description">
+              3+ years of experience building, testing, and analyzing data-driven systems across software engineering, 
+              time-series machine learning, applied cryptography, and system-level analysis.
+            </p>
+            <div class="hero-actions">
+              <a href="#projects" class="btn btn-primary">View Projects</a>
+              <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+            </div>
+          </div>
+          <div class="hero-meta">
+            <div class="meta-card">
+              <p class="meta-label">Current Focus</p>
+              <p class="meta-value">Time-series ML • Secure Systems</p>
+            </div>
+            <div class="meta-card">
+              <p class="meta-label">Experience</p>
+              <p class="meta-value">3+ Years</p>
+            </div>
           </div>
         </div>
+      </header>
 
-        <div class="hero-meta">
-          <div class="meta-card">
-            <p class="meta-label">Current focus</p>
-            <p class="meta-value">Time‑series ML • Secure systems</p>
-          </div>
-          <div class="meta-card">
-            <p class="meta-label">Experience</p>
-            <p class="meta-value">3+ years</p>
-          </div>
-          <div class="meta-card meta-card--pill">
-            <span class="pill-dot"></span>
-            <span class="pill-text">Open to roles in backend, data, and research engineering</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- About -->
-      <section id="about" class="section">
-        <div class="section-header">
+      <main>
+        <!-- About Section -->
+        <section id="about">
           <h2>About</h2>
-        </div>
-        <p>
-          Software Developer and Data Scientist with hands‑on experience designing, building,
-          and evaluating data‑driven systems end‑to‑end. Work spans production software engineering,
-          time‑series forecasting, applied cryptography, and performance analysis.
-        </p>
-        <p>
-          Enjoy collaborating in Agile teams, shaping technical direction, and turning research ideas
-          into secure, scalable, and well‑tested engineering solutions.
-        </p>
-      </section>
-
-      <!-- Projects -->
-      <section id="projects" class="section">
-        <div class="section-header">
-          <h2>Featured projects</h2>
-          <a class="section-link" href="https://github.com/PrabhatKarlekar">
-            View all on GitHub →
-          </a>
-        </div>
-
-        <div class="grid">
-          <article class="card card--primary">
-            <div class="card-top">
-              <h3>Comparative Analysis of Time‑Series ML Models</h3>
-              <span class="card-chip">Research • ML</span>
-            </div>
+          <div class="about-content">
             <p>
-              Evaluated how feature engineering and hyperparameter optimization affect predictive
-              performance across multiple time‑series models, with reproducible experiments and benchmarks.
+              Software Developer and Data Scientist with 3+ years of experience building, testing, 
+              and analyzing data-driven systems. Work spans production-grade software engineering, 
+              time-series forecasting, applied cryptography, and system-level performance analysis.
             </p>
-            <div class="card-footer">
-              <div class="tag-row">
-                <span class="tag">Time‑series ML</span>
-                <span class="tag">Model tuning</span>
-                <span class="tag">Experiment design</span>
+            <p>
+              Enjoy working in Agile teams, collaborating across functions, and turning research ideas 
+              into secure, scalable, and maintainable engineering solutions.
+            </p>
+          </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+          <div class="section-header">
+            <h2>Featured Projects</h2>
+            <a href="https://github.com/PrabhatKarlekar" class="section-link">View All on GitHub</a>
+          </div>
+          <div class="projects-grid">
+            <article class="project-card">
+              <h3>Comparative Analysis of Time-Series ML Models</h3>
+              <p>
+                Evaluated how feature engineering and hyperparameter optimization influence prediction 
+                performance across multiple time-series models, with reproducible experiments and benchmarks.
+              </p>
+              <div class="project-tags">
+                <span class="tag">Time-series ML</span>
+                <span class="tag">Model Tuning</span>
+                <span class="tag">Python</span>
               </div>
-              <a class="card-link" href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/">
-                View project →
+              <a href="https://prabhatkarlekar.github.io/A-Comparative-Analysis-of-Parameter-Optimization-and-Feature-Engineering-for-Time-Series-ML-Models/" class="project-link">
+                View Project
               </a>
-            </div>
-          </article>
+            </article>
+          </div>
+        </section>
 
-          <!-- Replace these placeholders with real work when ready -->
-          <article class="card">
-            <div class="card-top">
-              <h3>Secure data pipeline (In progress)</h3>
-              <span class="card-chip card-chip--ghost">Systems</span>
-            </div>
-            <p>
-              Designing an end‑to‑end streaming pipeline with encryption, observability, and
-              reproducible analytics to support low‑latency, trustworthy insights.
-            </p>
-            <div class="card-footer">
-              <div class="tag-row">
-                <span class="tag">Security</span>
-                <span class="tag">Streaming</span>
+        <!-- Writing & Code Section -->
+        <section id="writing">
+          <h2>Writing & Code</h2>
+          <div class="links-grid">
+            <a href="https://medium.com/@pritvikarlekar" class="link-card">
+              <div class="link-icon">✍️</div>
+              <div class="link-content">
+                <span class="link-title">Medium</span>
+                <span class="link-subtitle">Technical Articles</span>
               </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-top">
-              <h3>Experiment tracking toolkit</h3>
-              <span class="card-chip card-chip--ghost">MLOps</span>
-            </div>
-            <p>
-              Lightweight framework to track configurations, runs, and metrics for ML experiments,
-              making model comparison and collaboration repeatable.
-            </p>
-            <div class="card-footer">
-              <div class="tag-row">
-                <span class="tag">Tooling</span>
-                <span class="tag">Reproducibility</span>
+            </a>
+            <a href="https://github.com/PrabhatKarlekar" id="code" class="link-card">
+              <div class="link-icon">💻</div>
+              <div class="link-content">
+                <span class="link-title">GitHub</span>
+                <span class="link-subtitle">Code & Projects</span>
               </div>
-            </div>
-          </article>
-        </div>
-      </section>
+            </a>
+          </div>
+        </section>
 
-      <!-- Writing -->
-      <section id="writing" class="section">
-        <div class="section-header">
-          <h2>Writing</h2>
-          <a class="section-link" href="https://medium.com/@pritvikarlekar">
-            All articles →
-          </a>
-        </div>
-        <p>
-          Technical articles on practical machine learning, system design, and engineering practices,
-          with an emphasis on clarity, trade‑offs, and reproducible insights.
-        </p>
-      </section>
+        <!-- Contact Section -->
+        <section id="contact">
+          <h2>Let's Connect</h2>
+          <div class="contact-card">
+            <h3>Get in Touch</h3>
+            <p>
+              Open to opportunities in software engineering, data science, and research-driven product teams.
+            </p>
+            <a href="https://www.linkedin.com/in/prabhatkarlekar" class="contact-link">
+              <span>🔗</span>
+              <span>Connect on LinkedIn</span>
+            </a>
+          </div>
+        </section>
+      </main>
 
-      <!-- Code -->
-      <section id="code" class="section">
-        <div class="section-header">
-          <h2>Code</h2>
-        </div>
-        <p>
-          Open‑source and personal projects live on GitHub, including ML experiments, small utilities,
-          and tooling around data and experimentation.
-        </p>
-        <p>
-          <a href="https://github.com/PrabhatKarlekar">GitHub profile →</a>
-        </p>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact" class="section">
-        <div class="section-header">
-          <h2>Contact</h2>
-        </div>
-        <p>
-          Open to opportunities in software engineering, data science, and research‑driven teams.
-          The fastest way to reach out is via LinkedIn.
-        </p>
-        <p>
-          LinkedIn:
-          <a href="https://www.linkedin.com/in/prabhatkarlekar">
-            Prabhat Vilas Karlekar
-          </a>
-        </p>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <span>© <span id="year"></span> Prabhat Karlekar</span>
-      <span class="footer-dot"></span>
-      <span>Built with HTML & CSS</span>
-    </footer>
+      <!-- Footer -->
+      <footer>
+        <span>© <span id="year"></span> Prabhat Karlekar</span>
+        <span class="footer-dot"></span>
+        <span>Built with HTML & CSS</span>
+      </footer>
+    </div>
   </div>
 
   <script>
-    // Dynamic year for scalability
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
   </script>
 </body>
 </html>
