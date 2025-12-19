@@ -393,3 +393,89 @@ if (!('scrollBehavior' in document.documentElement.style)) {
     script.onload = () => smoothscroll.polyfill();
     document.head.appendChild(script);
 }
+
+/* ===== Neural Background Animation ===== */
+(function initNeuralBackground() {
+  const canvas = document.getElementById('neural-bg');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let width, height, particles;
+
+  const MAX_PARTICLES = window.innerWidth < 768 ? 40 : 70;
+  const CONNECT_DISTANCE = 120;
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+    }
+
+    move() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x <= 0 || this.x >= width) this.vx *= -1;
+      if (this.y <= 0 || this.y >= height) this.vy *= -1;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 1.6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(99,102,241,0.6)';
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particles = Array.from({ length: MAX_PARTICLES }, () => new Particle());
+  }
+
+  function connect() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < CONNECT_DISTANCE) {
+          ctx.strokeStyle = `rgba(99,102,241,${1 - dist / CONNECT_DISTANCE})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach(p => {
+      p.move();
+      p.draw();
+    });
+    connect();
+    requestAnimationFrame(animate);
+  }
+
+  // Respect reduced motion
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    resize();
+    initParticles();
+    animate();
+    window.addEventListener('resize', () => {
+      resize();
+      initParticles();
+    });
+  }
+})();
+
