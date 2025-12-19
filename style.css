@@ -241,6 +241,7 @@ img {
     gap: var(--spacing-xl);
     align-items: center;
     padding: 8rem 0 4rem;
+    contain: layout paint;
 }
 
 @media (max-width: 1024px) {
@@ -1422,4 +1423,16 @@ img {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+#neural-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+[data-theme="dark"] #neural-bg {
+  opacity: 0.45;
 }
