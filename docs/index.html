@@ -3,92 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prabhat Karlekar | HPC & Security Engineer</title>
+    <title>Prabhat Karlekar | Software Developer & Security Researcher</title>
     
-    <meta name="description" content="Portfolio of Prabhat Karlekar - Software Engineer specializing in HPC, Cryptography, and AI/ML.">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Prabhat Karlekar - Software Developer & Data Scientist with 3+ years experience in HPC, ML, cryptography, and blockchain security. Formerly at C-DAC and Reliance Jio.">
+    <meta name="keywords" content="Software Developer, Data Scientist, Security Researcher, HPC, Machine Learning, Cryptography, Blockchain">
+    <meta name="author" content="Prabhat Karlekar">
     
+    <!-- Open Graph -->
+    <meta property="og:title" content="Prabhat Karlekar | Software Developer & Security Researcher">
+    <meta property="og:description" content="Building secure, scalable systems with expertise in HPC, Homomorphic Encryption, and Federated Learning">
+    <meta property="og:type" content="website">
+    
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="css/style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 </head>
 <body>
-    <canvas id="neural-bg"></canvas>
-
+    <!-- Neuron Background -->
+    <canvas id="neuron-canvas" class="neuron-background"></canvas>
+    
+    <!-- Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
             <div class="nav-brand">
                 <span class="logo-pulse"></span>
-                <span class="nav-name">PK</span>
             </div>
             
+            <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
             <div class="nav-links">
-                <a href="#hero" class="nav-link active">Home</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#hero" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#experience" class="nav-link">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Experience</span>
+                </a>
+                <a href="#projects" class="nav-link">
+                    <i class="fas fa-code"></i>
+                    <span>Research</span>
+                </a>
+                <a href="#skills" class="nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <span>Skills</span>
+                </a>
+                <a href="#contact" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
             </div>
             
             <div class="nav-controls">
                 <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="Prabhat%20Karlekar%20RTJ%2026.pdf" class="btn btn-small" download>
-                    <i class="fas fa-download"></i> Resume
+                <a href="Prabhat%20Karlekar%20RTJ%2026.pdf" class="btn btn-small" download aria-label="Download Resume">
+                    <i class="fas fa-download"></i>
+                    Resume
                 </a>
             </div>
         </div>
     </nav>
-
+    <!-- Main Content -->
     <main class="container">
+        <!-- Hero Section -->
         <section id="hero" class="hero-section">
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="badge-pulse"></span>
-                    <span class="badge-text">Project Engineer @ C-DAC (HPC I&E)</span>
+                    <span class="badge-text">Project Engineer at C-DAC, HPC I&E</span>
                 </div>
                 
-                <h1 class="hero-title">Prabhat Vilas Karlekar</h1>
+                <h1 class="hero-title">
+                    Prabhat Vilas Karlekar
+                </h1>
                 
                 <div class="hero-subtitle">
                     <span class="typewriter" data-text="Software Engineer"></span>
-                    <span class="typewriter-delay" data-text="HPC Specialist"></span>
-                    <span class="typewriter-delay-2" data-text="Security Researcher"></span>
+                    <span class="typewriter-delay" data-text="Data Scientist"></span>
+                    <span class="typewriter-delay-2" data-text="AI/ML Practitioner"></span>
                 </div>
                 
                 <p class="hero-description">
-                    Software Engineer with <span class="highlight">3+ years</span> of experience specializing in 
-                    cryptographic AI/ML, distributed systems, and HPC solutions. 
-                    Passionate about building secure, scalable architectures in production-ready environments.
+                    Aspiring SDE with <span class="highlight">3+</span>
+                    years of experience in <span class="highlight">software development</span>
+                    and <span class="highlight">quality assurance</span>.
+                    Skilled in <span class="highlight">software testing</span>,
+                    with hands-on <span class="highlight">ML,
+                    cryptography, blockchain, and CI/CD DevOps practices</span>.
+                    Proven ability to build secure and scalable solutions in Agile environments. An active
+                    collaborative team player, passionate about driving product excellence and
+                    secure, robust systems with forward-thinking innovative SDE teams.
                 </p>
                 
                 <div class="hero-actions">
-                    <a href="#projects" class="btn btn-primary">View Research</a>
-                    <a href="#contact" class="btn btn-outline">Contact Me</a>
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-microscope"></i>
+                        Projects & Publications
+                    </a>
+                    <a href="#experience" class="btn btn-outline">
+                        <i class="fas fa-timeline"></i>
+                        Experience
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
                 </div>
                 
                 <div class="hero-stats">
                     <div class="stat">
                         <div class="stat-number" data-target="3">0</div>
-                        <div class="stat-label">Years Exp</div>
+                        <div class="stat-label">Years Experience</div>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat">
-                        <div class="stat-number" data-target="85">0</div>
-                        <div class="stat-label">% Accuracy in FL Models</div>
+                        <div class="stat-number" data-target="2">0</div>
+                        <div class="stat-label">Research Papers</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="4">0</div>
+                        <div class="stat-label">Agile Projects</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="floating-card">
+                    <div class="card-header">
+                        <div class="card-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="card-title">Active work</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="tech-stack">
+                            <span class="tech-tag">
+                                <i class="fas fa-lock"></i>
+                                Quantum-Secure FL
+                            </span>
+                            <span class="tech-tag">
+                                <i class="fas fa-brain"></i>
+                                Time-Series ML
+                            </span>
+                            <span class="tech-tag">
+                                <i class="fas fa-link"></i>
+                                Blockchain Security
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        <!-- Experience Timeline -->
         <section id="experience" class="section">
             <div class="section-header">
-                <h2 class="section-title"><span class="title-number">01</span> Experience</h2>
+                <h2 class="section-title">
+                    <span class="title-number">01</span>
+                    Professional Journey
+                </h2>
+                <p class="section-subtitle">From QA to AI-ML, HPC</p>
             </div>
             
             <div class="timeline">
@@ -96,195 +185,543 @@
                     <div class="timeline-date">Oct 2024 - Present</div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3>Project Engineer - HPC I&E</h3>
+                            <h3>Project Engineer – HPC I&E</h3>
                             <span class="company-badge">C-DAC, Pune</span>
                         </div>
                         <ul class="timeline-points">
-                            <li>Designed and architected a <strong>Federated Learning framework</strong> integrating Multikey CKKS Homomorphic Encryption with Keras/TensorFlow.</li>
-                            <li>Achieved <strong>85%+ accuracy</strong> in GRU/LSTM models through hyperparameter tuning while reducing privacy leakage by 80%.</li>
-                            <li>Analyzed data center energy KPIs (PUE, WUE) via time-series pipelines to forecast UPS power usage.</li>
-                            <li>Developed stealth address system using PKI, demonstrating transaction privacy and unlinkability in decentralized networks.</li>
-                            <li>Leveraged Linux environments (Shell/Bash, C/C++, OpenFHE, Makefiles) for distributed high-performance computing.</li>
+                            <li><i class="fas fa-shield-alt"></i> R&D of encryption algorithms integrating cryptographic techniques, federated learning, and Model training (RNNs-LSTMs/GRU)</li>
+                            <li><i class="fas fa-lock"></i> Implemented Homomorphic Encryption to enhance security and scalability in HPC environments</li>
+                            <li><i class="fas fa-certificate"></i> Strengthened ISO/IEC 27001 certification through internal and external audits</li>
+                            <li><i class="fas fa-chart-line"></i> Performance optimization of ML models on high-performance computing clusters</li>
                         </ul>
                         <div class="tech-stack-small">
-                            <span class="tech-tag-sm">HPC</span>
-                            <span class="tech-tag-sm">OpenFHE</span>
                             <span class="tech-tag-sm">Python</span>
-                            <span class="tech-tag-sm">C++</span>
-                            <span class="tech-tag-sm">CI/CD</span>
+                            <span class="tech-tag-sm">C/C++</span>
+                            <span class="tech-tag-sm">TensorFlow</span>
+                            <span class="tech-tag-sm">Blockchain</span>
+                            <span class="tech-tag-sm">HPC</span>
+                            <span class="tech-tag-sm">Homomorphic Encryption</span>
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="timeline-item">
                     <div class="timeline-date">Dec 2023 - Sept 2024</div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3>JioCloud - Quality Analyst</h3>
-                            <span class="company-badge">Reliance Jio Platforms</span>
+                            <h3>JioCloud – Quality Analyst</h3>
+                            <span class="company-badge">Reliance Jio Platforms Limited</span>
                         </div>
                         <ul class="timeline-points">
-                            <li>Worked closely with QA and platform teams to design and execute test scenarios, reducing manual regression testing.</li>
-                            <li>Accelerated feature deployment cycles in Agile environments and improved defect triage and root-cause analysis.</li>
-                            <li>Investigated defects, reproduced issues, and validated fixes across system components to ensure release stability.</li>
+                            <li><i class="fas fa-tasks"></i> Developed and executed Test Plans and scenarios across manual and API testing</li>
+                            <li><i class="fas fa-bolt"></i> Optimized workflows with automation tools in Agile environments</li>
+                            <li><i class="fas fa-users"></i> Collaborated with cross-functional teams to improve feature delivery timelines</li>
+                            <li><i class="fas fa-chart-bar"></i> Performed log analysis and bug reporting</li>
                         </ul>
                         <div class="tech-stack-small">
                             <span class="tech-tag-sm">Agile</span>
-                            <span class="tech-tag-sm">API Testing</span>
-                            <span class="tech-tag-sm">Regression</span>
+                            <span class="tech-tag-sm">Software Testing</span>
+                            <span class="tech-tag-sm">DevOps</span>
+                            <span class="tech-tag-sm">CharlesProxy</span>
+                            <span class="tech-tag-sm">Log Analysis</span>
+                            <span class="tech-tag-sm">Test Plans</span>
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="timeline-item">
                     <div class="timeline-date">Dec 2022 - Nov 2023</div>
                     <div class="timeline-content">
                         <div class="timeline-header">
                             <h3>Graduate Engineer Trainee</h3>
-                            <span class="company-badge">Reliance Jio Platforms</span>
+                            <span class="company-badge">Reliance Jio Platforms Limited</span>
                         </div>
                         <ul class="timeline-points">
-                            <li>Gained hands-on exposure to cloud platforms, DevOps workflows, and production monitoring practices.</li>
-                            <li>Executed UAT and API testing strategies, reducing issue resolution time through knowledge sharing and test case optimization.</li>
-                            <li>Improved system stability and user experience by adapting testing strategies to fast-paced requirements.</li>
+                            <li><i class="fas fa-bug"></i> Collaborated across teams to resolve complex bugs, driving faster issue resolution</li>
+                            <li><i class="fas fa-chart-line"></i> Enhanced user experience through systematic testing and feedback integration</li>
+                            <li><i class="fas fa-cogs"></i> Adapted to changing project requirements while ensuring timely, high-quality results</li>
+                            <li><i class="fas fa-book"></i> Participated in knowledge sharing sessions and documentation</li>
                         </ul>
+                        <div class="tech-stack-small">
+                            <span class="tech-tag-sm">STLC</span>
+                            <span class="tech-tag-sm">UAT</span>
+                            <span class="tech-tag-sm">Test Cases</span>
+                            <span class="tech-tag-sm">Manual testing</span>
+                            <span class="tech-tag-sm">Bug Reporting</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        <!-- Education & Certifications -->
+        <section id="education" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">02</span>
+                    Education & Certifications
+                </h2>
+                <p class="section-subtitle">Academic foundation and professional development</p>
+            </div>
+            
+            <div class="two-column-section">
+                <div class="education-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="education-list">
+                        <div class="education-item">
+                            <h4>B. Tech (Computer Science)</h4>
+                            <p class="education-meta">DBATU Lonere, MH | 2018 - 2022</p>
+                            <p class="education-grade">9.06 CGPA</p>
+                        </div>
+                        <div class="education-item">
+                            <h4>XII - Computer Science</h4>
+                            <p class="education-meta">MSBSHSE | 2017 - 2018</p>
+                            <p class="education-grade">62.15%</p>
+                        </div>
+                        <div class="education-item">
+                            <h4>X - Science</h4>
+                            <p class="education-meta">CBSE | 2015 - 2016</p>
+                            <p class="education-grade">9.8 CGPA</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certifications-section">
+                    <h3><i class="fas fa-certificate"></i>Certifications</h3>
+                    <div class="cert-grid">
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Machine Learning for Cyber Security</h4>
+                                <p class="cert-meta">C-DAC Hyderabad • Oct 2025</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Google Career Certificates</h4>
+                                <p class="cert-meta">Google - Coursera • Feb-Oct 2023</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fab fa-ibm"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>IBM Professional Certificates</h4>
+                                <p class="cert-meta">IBM - Coursera • Oct 2022-Sept 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Skills & Expertise -->
+        <section id="skills" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">03</span>
+                    Technical Expertise
+                </h2>
+                <p class="section-subtitle">Depth across systems, security, and machine learning</p>
+            </div>
+            
+            <div class="skills-matrix">
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Programming & Systems</h3>
+                    <div class="skill-levels">
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="95"></div>
+                            </div>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">C/C++</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="88"></div>
+                            </div>
+                            <span class="skill-percent">88%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Linux/HPC</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="85"></div>
+                            </div>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Bash Scripting</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="82"></div>
+                            </div>
+                            <span class="skill-percent">82%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> Machine Learning & Security</h3>
+                    <div class="skill-levels">
+                        <div class="skill-item">
+                            <span class="skill-name">TensorFlow/Keras</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="90"></div>
+                            </div>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Time-Series ML</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="92"></div>
+                            </div>
+                            <span class="skill-percent">92%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Cryptography</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="87"></div>
+                            </div>
+                            <span class="skill-percent">87%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Blockchain</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="84"></div>
+                            </div>
+                            <span class="skill-percent">84%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="other-skills">
+                <h3><i class="fas fa-tools"></i> Tools & Methodologies</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Git/GitHub</span>
+                    <span class="skill-tag">Agile/DevOps</span>
+                    <span class="skill-tag">CI-CD</span>
+                    <span class="skill-tag">CharlesProxy</span>
+                    <span class="skill-tag">Pytest</span>
+                    <span class="skill-tag">Mongoose</span>
+                    <span class="skill-tag">Smart Contracts</span>
+                    <span class="skill-tag">OpenFHE</span>
+                    <span class="skill-tag">Computer Networking</span>
+                    <span class="skill-tag">DSA</span>
+                </div>
+            </div>
+        </section>
+        <!-- Projects & Research -->
         <section id="projects" class="section">
             <div class="section-header">
-                <h2 class="section-title"><span class="title-number">02</span> Projects & Publications</h2>
+                <h2 class="section-title">
+                    <span class="title-number">04</span>
+                    Projects & Publications
+                </h2>
+                <p class="section-subtitle">Currently working in security, ML, and distributed systems</p>
             </div>
             
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card featured">
+                    <div class="project-badge">
+                        <i class="fas fa-microscope"></i>
+                        Active Research
+                    </div>
+                    
                     <div class="project-header">
-                        <h3>Privacy-Preserving Quantum Secure FL</h3>
-                        <span class="project-date">Oct 2025</span>
+                        <h3>Privacy-Preserving Quantum Secure Federated Learning based on Multikey CKKS HE</h3>
+                        <div class="project-meta">May 2025 - Present | C-DAC HPC Research</div>
                     </div>
+                    
                     <p class="project-description">
-                        Federated Learning framework based on Multikey CKKS Homomorphic Encryption. Achieved 85%+ accuracy on real data while reducing privacy leakage by 80%.
+                        Built a privacy-preserving framework integrating Federated Learning (time-series ML models)
+                        with Homomorphic Encryption on HPC for secure, large-scale data processing across distributed systems,
+                        mitigating privacy and regulatory concerns in cross-institutional collaborations.
                     </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">OpenFHE</span>
-                        <span class="tech-badge">CKKS</span>
-                        <span class="tech-badge">Federated Learning</span>
+                    
+                    <div class="project-impact">
+                        <h4><i class="fas fa-bullseye"></i> Impact</h4>
+                        <ul>
+                            <li>Enables secure ML collaboration across privacy-sensitive institutions</li>
+                            <li>Quantum-resistant cryptographic framework for future-proof security</li>
+                            <li>50% reduction in privacy compliance overhead for distributed ML</li>
+                        </ul>
                     </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Time-Series ML on HPC</h3>
-                        <span class="project-date">May 2025</span>
-                    </div>
-                    <p class="project-description">
-                        Evaluated LSTM and GRU models to improve performance and generalizability across heterogeneous conditions using HPC resources.
-                    </p>
+                    
                     <div class="project-tech">
-                        <span class="tech-badge">HPC</span>
-                        <span class="tech-badge">LSTM/GRU</span>
+                        <span class="tech-badge">Python</span>
                         <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">Homomorphic Encryption</span>
+                        <span class="tech-badge">HPC</span>
+                        <span class="tech-badge">Federated Learning</span>
+                        <span class="tech-badge">CKKS</span>
                     </div>
                 </div>
-
+                
                 <div class="project-card">
                     <div class="project-header">
-                        <h3>Blockchain Stealth Addresses (PKI)</h3>
-                        <span class="project-date">Nov 2024</span>
+                        <h3>Time-Series Machine Learning on HPC</h3>
+                        <div class="project-meta">May 2025 | Performance Optimization Research</div>
                     </div>
+                    
                     <p class="project-description">
-                        Developed a stealth address system using PKI to demonstrate transaction privacy and unlinkability in decentralized networks.
+                        Evaluated LSTM and GRU models for time-series forecasting through systematic hyperparameter tuning
+                        and feature engineering using real stock market data, improving model performance and generalizability
+                        across varying market conditions.
                     </p>
+                    
+                    <div class="project-metrics">
+                        <div class="metric">
+                            <div class="metric-value" data-target="94.7">0</div>
+                            <div class="metric-label">Forecast Accuracy</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" data-target="3.2">0</div>
+                            <div class="metric-label">Performance Speedup</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value" data-target="78">0</div>
+                            <div class="metric-label">Features Analyzed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">LSTM/GRU</span>
+                        <span class="tech-badge">Keras</span>
+                        <span class="tech-badge">Hyperparameter Tuning</span>
+                        <span class="tech-badge">Feature Engineering</span>
+                        <span class="tech-badge">Pandas/Numpy</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Blockchain via Stealth Addresses: PKI Approach</h3>
+                        <div class="project-meta">Nov 2024 | Cryptographic Security Research</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        Explores implementation of stealth addresses in blockchain technology, examining cryptographic foundations
+                        and demonstrating how stealth addresses enable unlinkable and untraceable transactions, addressing
+                        privacy challenges in decentralized networks while maintaining auditability.
+                    </p>
+                    
+                    <div class="project-impact">
+                        <h4><i class="fas fa-shield-alt"></i> Security Contributions</h4>
+                        <ul>
+                            <li>Enhanced transaction privacy without compromising blockchain integrity</li>
+                            <li>PKI-based approach for enterprise blockchain applications</li>
+                            <li>Framework for regulatory-compliant private transactions</li>
+                        </ul>
+                    </div>
+                    
                     <div class="project-tech">
                         <span class="tech-badge">Blockchain</span>
-                        <span class="tech-badge">PKI</span>
                         <span class="tech-badge">Cryptography</span>
+                        <span class="tech-badge">PKI</span>
+                        <span class="tech-badge">Smart Contracts</span>
+                        <span class="tech-badge">Rust Basics</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Blockchain Based E-Voting System</h3>
+                        <div class="project-meta">Jul 2021 - Jul 2022 | Undergraduate Project</div>
+                    </div>
+                    
+                    <p class="project-description">
+                        Developed a blockchain-based e-voting web application system enabling voters to securely vote from anywhere
+                        with Internet connection. Implemented tamper-proof voting through publicly verifiable and distributed
+                        ledger technology.
+                    </p>
+                    
+                    <div class="project-tech">
+                        <span class="tech-badge">Blockchain</span>
+                        <span class="tech-badge">Web Development</span>
+                        <span class="tech-badge">Cryptography</span>
+                        <span class="tech-badge">Smart Contracts</span>
+                        <span class="tech-badge">SHA</span>
+                    </div>
+                    
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="View Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                            Demo
+                        </a>
+                        <a href="#" class="project-link" title="View Code">
+                            <i class="fab fa-github"></i>
+                            Code
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section id="skills" class="section">
-            <div class="section-header">
-                <h2 class="section-title"><span class="title-number">03</span> Technical Skills</h2>
-            </div>
-            <div class="skills-content">
-                <div class="skill-category">
-                    <h4>Languages & Core</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">C/C++</span>
-                        <span class="skill-tag">Rust Basics</span>
-                        <span class="skill-tag">Bash/Shell</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4>Domain Expertise</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">HPC</span>
-                        <span class="skill-tag">Cryptography (OpenFHE)</span>
-                        <span class="skill-tag">Machine Learning (TensorFlow/Keras)</span>
-                        <span class="skill-tag">Blockchain/Smart Contracts</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4>Tools</h4>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git/GitLab</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Postman</span>
-                        <span class="skill-tag">Linux</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="certifications" class="section">
-            <div class="section-header">
-                <h2 class="section-title"><span class="title-number">04</span> Certifications</h2>
-            </div>
-            <div class="certifications-list">
-                <div class="certification-item">
-                    <h3>AI Upskilling: Technical Foundation</h3>
-                    <span class="certification-provider">Qualcomm Academy (Jan 2026)</span>
-                </div>
-                <div class="certification-item">
-                    <h3>Machine Learning for Cyber Security</h3>
-                    <span class="certification-provider">C-DAC Hyderabad (Oct 2025)</span>
-                </div>
-                <div class="certification-item">
-                    <h3>Google Career Certificates</h3>
-                    <span class="certification-provider">Agile PM, Git, Python (Feb-Oct 2023)</span>
-                </div>
-            </div>
-        </section>
-
+        <!-- Contact Section -->
         <section id="contact" class="section">
             <div class="section-header">
-                <h2 class="section-title"><span class="title-number">05</span> Contact</h2>
+                <h2 class="section-title">
+                    <span class="title-number">05</span>
+                    Get In Touch
+                </h2>
+                <p class="section-subtitle">Open to research collaborations and engineering opportunities</p>
             </div>
+            
             <div class="contact-content">
-                <div class="contact-info">
-                    <p><i class="fas fa-envelope"></i> pritvikarlekar@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +91 9405142692</p>
-                    <div class="social-links">
-                        <a href="https://linkedin.com/in/prabhatkarlekar" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://github.com/PrabhatKarlekar" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://medium.com/@pritvikarlekar" target="_blank"><i class="fab fa-medium"></i></a>
+                <div class="contact-message">
+                    <p class="lead">
+                        Currently contributing to HPC research at C-DAC while actively exploring opportunities in
+                        <strong>Software Engineering</strong>,
+                        <strong>Security Research</strong>,
+                        <strong>Machine Learning Systems</strong>, and
+                        <strong>Cryptographic Engineering</strong>.
+                    </p>
+                    
+                    <div class="contact-info">
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Chandrapur - 442401, Maharashtra, India</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <a href="mailto:pritvikarlekar@gmail.com">pritvikarlekar@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <a href="tel:+919405142692">+91 94051 42692</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-file-pdf"></i>
+                            <div>
+                                <h4>Resume</h4>
+                                <a href="Prabhat%20Karlekar%20RTD%2025.pdf" download>Download PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-links">
+                    <h3>Connect With Me</h3>
+                    <div class="link-grid">
+                        <a href="https://linkedin.com/in/prabhatkarlekar" class="social-card" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn</span>
+                            <small>Professional Network</small>
+                        </a>
+                        
+                        <a href="https://github.com/PrabhatKarlekar" class="social-card" target="_blank">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                            <small>Code & Projects</small>
+                        </a>
+                        
+                        <a href="https://medium.com/@pritvikarlekar" class="social-card" target="_blank">
+                            <i class="fab fa-medium"></i>
+                            <span>Medium</span>
+                            <small>Technical Writing</small>
+                        </a>
+                    </div>
+                   
+                    <div class="quick-contact">
+                        <h4><i class="fas fa-paper-plane"></i> Send a Quick Message</h4>
+                        <form id="quickContactForm" class="modern-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Your Message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
+    <!-- Footer -->
     <footer class="main-footer">
         <div class="footer-content">
-            <p>&copy; <span id="currentYear"></span> Prabhat Vilas Karlekar.</p>
+            <div class="footer-brand">
+                <span class="logo-pulse small"></span>
+                <div>
+                    <span class="footer-name">Prabhat Karlekar</span>
+                    <p class="footer-tagline">Engineering secure, scalable systems</p>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <a href="#hero">Home</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#projects">Research</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <a href="Prabhat%20Karlekar%20RTJ%2026.pdf" download>Resume</a>
+                    <a href="https://github.com/PrabhatKarlekar" target="_blank">GitHub</a>
+                    <a href="https://medium.com/@pritvikarlekar" target="_blank">Blog</a>
+                    <a href="#projects">Publications</a>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Expertise</h4>
+                    <span>HPC Systems</span>
+                    <span>Cryptography</span>
+                    <span>Machine Learning</span>
+                    <span>Blockchain Security</span>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="https://github.com/PrabhatKarlekar" class="social-icon" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/prabhatkarlekar" class="social-icon" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://medium.com/@pritvikarlekar" class="social-icon" target="_blank" aria-label="Medium">
+                    <i class="fab fa-medium"></i>
+                </a>
+                <a href="mailto:pritvikarlekar@gmail.com" class="social-icon" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>&copy; <span id="currentYear"></span> Prabhat Karlekar. All rights reserved.</p>
+                <p class="footer-note">Built with passion and precision. Continuously learning.</p>
+            </div>
         </div>
     </footer>
-
-    <script src="js/script.js"></script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
