@@ -173,33 +173,40 @@ class PortfolioApp {
     }
 
     initTypewriter() {
-        const typewriterElements = document.querySelectorAll('.typewriter, .typewriter-delay, .typewriter-delay-2');
+        const roles = [
+            document.querySelector('.typewriter'),
+            document.querySelector('.typewriter-delay'),
+            document.querySelector('.typewriter-delay-2')
+        ].filter(Boolean);
         
-        typewriterElements.forEach((el, index) => {
-            const text = el.getAttribute('data-text') || el.textContent;
+        if (roles.length === 0) return;
+        
+        let current = 0;
+        const typeNext = () => {
+            const el = roles[current];
+            const text = el.getAttribute('data-text');
+            if (!text) return;
+            
             el.textContent = '';
             el.style.borderRight = '2px solid var(--accent-primary)';
-            
             let i = 0;
-            const speed = 50;
-            const delay = index * 1000; // Stagger animations
-            
-            setTimeout(() => {
-                const type = () => {
-                    if (i < text.length) {
-                        el.textContent += text.charAt(i);
-                        i++;
-                        setTimeout(type, speed);
-                    } else {
-                        // Remove cursor after typing
-                        setTimeout(() => {
-                            el.style.borderRight = 'none';
-                        }, 1000);
-                    }
-                };
-                type();
-            }, delay);
-        });
+            const type = () => {
+                if (i < text.length) { 
+                    el.textContent += text[i]; 
+                    i++; 
+                    setTimeout(type, 60); 
+                }
+                else {
+                    setTimeout(() => {
+                        el.style.borderRight = 'none';
+                        current = (current + 1) % roles.length;
+                        setTimeout(typeNext, 2000); // pause before next
+                    }, 1000);
+                }
+            };
+            type();
+        };
+        typeNext();
     }
 
     animateStats() {

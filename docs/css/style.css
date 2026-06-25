@@ -1471,3 +1471,104 @@ img {
 .project-link i {
     font-size: 1.1rem;
 }
+
+/* ===== NEW: Enhanced Project Cards (Alex Portfolio inspiration) ===== */
+.project-card.enhanced {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.project-card.enhanced:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15), 0 2px 8px rgba(0,0,0,0.08);
+}
+.project-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+.github-link i {
+    font-size: 0.9rem;
+}
+
+/* ===== Tech Shields (awesome-github-profile-readme style) ===== */
+.tech-shields {
+    margin-top: 3rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+.tech-shields h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+.shield-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+.shield {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent-primary);
+    transition: all 0.2s ease;
+}
+.shield:hover {
+    background: rgba(59, 130, 246, 0.15);
+    transform: translateY(-1px);
+}
+
+/* ===== GitHub Stats Card ===== */
+.github-stats-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+.github-stats-card h4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.gh-stats-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+.stats-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+}
+
+/* ===== New Section Title Underline (jsmfolio inspired) ===== */
+.section-title {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.4rem;
+}
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 60%;
+    background: var(--accent-gradient);
+    border-radius: 3px;
+}
