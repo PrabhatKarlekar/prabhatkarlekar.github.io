@@ -219,8 +219,8 @@ class PortfolioApp {
         const statNumbers = document.querySelectorAll('.stat-number[data-target]');
         
         statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target'));
-            const suffix = stat.textContent.includes('%') ? '%' : '';
+            const target = parseInt(stat.getAttribute('data-target'), 10);
+            const suffix = stat.getAttribute('data-suffix') !== null ? stat.getAttribute('data-suffix') : (stat.textContent.includes('+') ? '+' : '');
             const duration = 2000;
             const startTime = Date.now();
             
@@ -237,6 +237,8 @@ class PortfolioApp {
                 
                 if (progress < 1) {
                     requestAnimationFrame(animate);
+                } else {
+                    stat.textContent = target + suffix;
                 }
             };
             
@@ -310,7 +312,8 @@ class PortfolioApp {
             const observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
                     const target = parseFloat(metric.getAttribute('data-target'));
-                    const suffix = metric.textContent.includes('%') ? '%' : 'x';
+                    const suffix = metric.getAttribute('data-suffix') !== null ? metric.getAttribute('data-suffix') : (metric.textContent.includes('%') ? '%' : '');
+                    const decimals = parseInt(metric.getAttribute('data-decimals') || '0', 10);
                     const duration = 1500;
                     const startTime = Date.now();
                     
@@ -322,10 +325,12 @@ class PortfolioApp {
                         const easeOutCubic = 1 - Math.pow(1 - progress, 3);
                         const currentValue = easeOutCubic * target;
                         
-                        metric.textContent = currentValue.toFixed(1) + suffix;
+                        metric.textContent = currentValue.toFixed(decimals) + suffix;
                         
                         if (progress < 1) {
                             requestAnimationFrame(animate);
+                        } else {
+                            metric.textContent = target.toFixed(decimals) + suffix;
                         }
                     };
                     
