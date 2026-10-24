@@ -1,65 +1,84 @@
 // Main Portfolio JavaScript
+document.documentElement.classList.add('js');
+
 class PortfolioApp {
     constructor() {
         this.initialized = false;
         this.init();
     }
 
+    getStoredTheme() {
+        try {
+            return localStorage.getItem('theme');
+        } catch (e) {
+            return null;
+        }
+    }
+
+    setStoredTheme(theme) {
+        try {
+            localStorage.setItem('theme', theme);
+        } catch (e) {
+            // Ignore storage restrictions in incognito/WebViews
+        }
+    }
+
     init() {
         if (this.initialized) return;
         
-        // Set current year
-        this.setCurrentYear();
-        
-        // Initialize components
-        this.initThemeToggle();
-        this.initMobileNav();
-        this.initNavigation();
-        this.initAnimations();
-        this.initContactForm();
-        this.initTypewriter();
-        this.initScrollAnimations();
+        try { this.setCurrentYear(); } catch (e) { console.error('Year init:', e); }
+        try { this.initThemeToggle(); } catch (e) { console.error('Theme init:', e); }
+        try { this.initMobileNav(); } catch (e) { console.error('Mobile nav init:', e); }
+        try { this.initNavigation(); } catch (e) { console.error('Nav init:', e); }
+        try { this.initAnimations(); } catch (e) { console.error('Animations init:', e); }
+        try { this.initContactForm(); } catch (e) { console.error('Contact init:', e); }
+        try { this.initTypewriter(); } catch (e) { console.error('Typewriter init:', e); }
+        try { this.initScrollAnimations(); } catch (e) { console.error('Scroll anims init:', e); }
         
         // Initial animations
         setTimeout(() => {
-            this.animateStats();
-            this.animateSkillBars();
+            try { this.animateStats(); } catch (e) { console.error('Stats anim:', e); }
+            try { this.animateSkillBars(); } catch (e) { console.error('Skills anim:', e); }
         }, 1000);
         
         this.initialized = true;
     }
 
     setCurrentYear() {
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const yearEl = document.getElementById('currentYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
     }
 
     initThemeToggle() {
         const themeToggle = document.getElementById('theme-toggle');
+        if (!themeToggle) return;
         const themeIcon = themeToggle.querySelector('i');
         
         // Check for saved theme or prefer-color-scheme
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-        const savedTheme = localStorage.getItem('theme') || 
+        const savedTheme = this.getStoredTheme() || 
             (prefersDark.matches ? 'dark' : 'light');
         
         document.documentElement.setAttribute('data-theme', savedTheme);
-        this.updateThemeIcon(savedTheme, themeIcon);
+        if (themeIcon) this.updateThemeIcon(savedTheme, themeIcon);
         
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            this.updateThemeIcon(newTheme, themeIcon);
+            this.setStoredTheme(newTheme);
+            if (themeIcon) this.updateThemeIcon(newTheme, themeIcon);
         });
         
         // Listen for system theme changes
         prefersDark.addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
+            if (!this.getStoredTheme()) {
                 const newTheme = e.matches ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', newTheme);
-                this.updateThemeIcon(newTheme, themeIcon);
+                if (themeIcon) this.updateThemeIcon(newTheme, themeIcon);
             }
         });
     }
@@ -283,27 +302,26 @@ class PortfolioApp {
     }
 
     initScrollAnimations() {
-        // Add fade-in animation for sections
+        // Add progressive reveal animation for sections
         const fadeElements = document.querySelectorAll('.section');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
+        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+            fadeElements.forEach(el => el.classList.add('reveal-item'));
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0,
+                rootMargin: '0px 0px -40px 0px'
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        });
-        
-        fadeElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            fadeObserver.observe(el);
-        });
+            
+            fadeElements.forEach(el => fadeObserver.observe(el));
+        }
         
         // Animate project metrics
         const metricValues = document.querySelectorAll('.metric-value[data-target]');

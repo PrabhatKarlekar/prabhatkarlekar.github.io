@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var theme = savedTheme || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
     <title>Prabhat Karlekar | Software Engineer & AI/ML Researcher</title>
     
     <!-- SEO Meta Tags -->
@@ -72,7 +85,7 @@
                 <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="./Prabhat Karlekar RTJ 26.pdf" class="btn btn-small" download>
+                <a href="./Prabhat_Karlekar_Resume.pdf" class="btn btn-small" target="_blank">
                     <i class="fas fa-download"></i>
                     Resume
                 </a>
@@ -512,8 +525,7 @@
                         <span class="tech-badge">WebAssembly</span>
                     </div>
                     <div class="project-links">
-                        <a href="https://github.com/PrabhatKarlekar" class="project-link github-link"><i class="fab fa-github"></i> View Source</a>
-                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="#contact" class="project-link"><i class="fas fa-lock"></i> Request Access / Architecture Spec</a>
                     </div>
                 </div>
 
@@ -535,6 +547,9 @@
                         <span class="tech-badge">Two-Proof Model</span>
                         <span class="tech-badge">Carbon Markets</span>
                         <span class="tech-badge">Open Source</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/PrabhatKarlekar/GreyMisnomer" class="project-link github-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Specification Draft</a>
                     </div>
                 </div>
 
@@ -703,7 +718,7 @@
                             <i class="fas fa-file-pdf"></i>
                             <div>
                                 <h4>Resume:</h4>
-                                <a href="./Prabhat Karlekar RTJ 26.pdf" download>Download PDF</a>
+                                <a href="./Prabhat_Karlekar_Resume.pdf" target="_blank">Download PDF</a>
                             </div>
                         </div>
                     </div>
@@ -777,7 +792,7 @@
                 
                 <div class="footer-column">
                     <h4>Resources</h4>
-                    <a href="./Prabhat Karlekar RTJ 26.pdf" download>Resume</a>
+                    <a href="./Prabhat_Karlekar_Resume.pdf" target="_blank">Resume</a>
                     <a href="https://github.com/PrabhatKarlekar" target="_blank">GitHub</a>
                     <a href="https://medium.com/@pritvikarlekar" target="_blank">Medium</a>
                 </div>

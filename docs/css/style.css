@@ -111,6 +111,23 @@ img {
     padding: 0 var(--spacing-md);
 }
 
+/* Progressive enhancement: visible by default, progressive reveal only when JS is active and motion preferred */
+.section, .project-card, .timeline-item {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html.js .reveal-item {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html.js .reveal-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ===== Navigation ===== */
 .main-nav {
     position: fixed;
