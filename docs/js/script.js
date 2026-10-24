@@ -38,7 +38,6 @@ class PortfolioApp {
         // Initial animations
         setTimeout(() => {
             try { this.animateStats(); } catch (e) { console.error('Stats anim:', e); }
-            try { this.animateSkillBars(); } catch (e) { console.error('Skills anim:', e); }
         }, 1000);
         
         this.initialized = true;
@@ -309,39 +308,7 @@ class PortfolioApp {
     }
 
     animateSkillBars() {
-        const skillProgresses = document.querySelectorAll('.skill-progress');
-        
-        skillProgresses.forEach(progress => {
-            const level = parseInt(progress.getAttribute('data-level'));
-            const duration = 1500;
-            const startTime = Date.now();
-            
-            const animate = () => {
-                const currentTime = Date.now();
-                const elapsed = currentTime - startTime;
-                const currentProgress = Math.min(elapsed / duration, 1);
-                
-                // Easing function
-                const easeOutCubic = 1 - Math.pow(1 - currentProgress, 3);
-                
-                const currentWidth = easeOutCubic * level;
-                progress.style.width = `${currentWidth}%`;
-                
-                if (currentProgress < 1) {
-                    requestAnimationFrame(animate);
-                }
-            };
-            
-            // Start animation when element is in view
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    animate();
-                    observer.unobserve(progress);
-                }
-            });
-            
-            observer.observe(progress);
-        });
+        // Deprecated in Phase 4: Replaced by grouped semantic capability chips
     }
 
     initScrollAnimations() {

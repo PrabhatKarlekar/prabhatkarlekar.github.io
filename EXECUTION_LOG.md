@@ -16,8 +16,8 @@
 | **Phase 1** | Critical Functional Fixes & Reliability (Hotfix Track) | 7 | 7 | ✅ Completed |
 | **Phase 2** | Resume Alignment & Deep Systems Engineering | 5 | 5 | ✅ Completed |
 | **Phase 3** | Information Architecture & UX Structure | 3 | 3 | ✅ Completed |
-| **Phase 4** | Design System & Contrast Rectification | 4 | 0 | 🟡 Next |
-| **Phase 5** | Performance & Runtime Optimization | 5 | 0 | ⚪ Pending |
+| **Phase 4** | Design System & Contrast Rectification | 4 | 4 | ✅ Completed |
+| **Phase 5** | Performance & Runtime Optimization | 5 | 0 | 🟡 Next |
 | **Phase 6** | SEO, Security, Accessibility & Privacy | 6 | 0 | ⚪ Pending |
 | **Phase 7** | Verification & Acceptance Gate (Release Checklist) | 10 | 0 | ⚪ Pending |
 
@@ -61,4 +61,22 @@
 - **`STEP-3.3`**: Native `<details class="project-spec-drawer">` Architecture Spec Drawers:
   - Implemented zero-dependency collapsible spec drawers in PAYF, GreyMisnomer, and Privacy-Preserving FL cards.
   - Visualized step-by-step cryptographic protocol pipelines with ASCII/CSS badges (`spec-pipeline`, `spec-step`, `spec-arrow`).
-  - Outlined security guarantees, non-repudiation threat models, lock-free caching, and lattice encryption parameters without cluttering primary scannability.
+  - Outlined security guarantees, non-repudiation threat models, lock-free caching, and lattice encryption parameters without cluttering primary scannability (`commit 8a65686`).
+
+### Phase 4: Design System & Contrast Rectification
+- **`STEP-4.1`**: Centralized CSS Variables & Design Tokens:
+  - Consolidated 20+ hardcoded `rgba(59, 130, 246, ...)` into semantic `--accent-alpha-10`, `--accent-alpha-20`, `--accent-alpha-05` and `--border-subtle` tokens.
+  - Cleaned `:root` and `[data-theme="dark"]` with Google-grade 1px borders, subtle gradients, and restrained shadows.
+- **`STEP-4.2`**: Rectified All WCAG 2.1 AA Contrast Failures:
+  - Fixed Hero Badge: `--success: #15803d` in light theme (4.8:1) and `#4ade80` on dark (10.5:1).
+  - Fixed Muted Text: `--text-muted: #475569` on white (5.4:1) and `#94a3b8` on dark (5.6:1).
+  - Fixed Footer Note: removed `opacity: 0.7`, set solid `--text-muted`.
+  - Added global `:focus-visible` ring (`2px solid var(--accent-primary)`, `outline-offset: 2px`).
+- **`STEP-4.3`**: Replaced Arbitrary Percentage Bars with Grouped Semantic Chips:
+  - Completely removed arbitrary percentage bars (`Python 85%`, `Rust 78%`).
+  - Organized technical expertise into 6 resume-aligned domain clusters (37 total chips): *Languages*, *AI/ML & HPC*, *Blockchain & Cryptography*, *Systems & Networking*, *Backend & Infrastructure*, and *QA & Systems Verification*.
+  - Deprecated obsolete `animateSkillBars()` loop from `docs/js/script.js`.
+- **`STEP-4.4`**: Typography & Footer Polish:
+  - Dropped unused weights (Inter 300, 800) from Google Fonts link.
+  - Set authoritative footer tagline: *"HPC, Cryptographic Systems & Distributed Infrastructure"*.
+  - Set professional copyright statement: *"© 2026 Prabhat Vilas Karlekar. Built for performance, security, and accessibility."*

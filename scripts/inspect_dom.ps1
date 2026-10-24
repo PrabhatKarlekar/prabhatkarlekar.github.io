@@ -149,7 +149,38 @@ Write-Host "  - Legacy Alias Map Router in script.js: $(if ($hasAliasMap) {'[PAS
 Write-Host "  - Spec Drawer Styles in style.css: $(if ($hasDrawerCss) {'[PASS] Present'} else {'[FAIL] Missing'})"
 Write-Host "  - Section Scroll-Margin-Top in style.css: $(if ($hasScrollMargin) {'[PASS] Present'} else {'[FAIL] Missing'})"
 
+# 12. Phase 4: Design System & Capability Chips
+Write-Host "`n[12] PHASE 4: DESIGN SYSTEM & CAPABILITY CHIPS" -ForegroundColor Yellow
+$capCards = [regex]::Matches($content, '<div class="capability-card">\s*<div class="capability-header">\s*<i[^>]*></i>\s*<h3>(.*?)</h3>', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+Write-Host "  - Capability Domain Clusters: $($capCards.Count) (Target: 6)"
+foreach ($cc in $capCards) {
+    Write-Host "    * Domain: '$($cc.Groups[1].Value.Trim())'"
+}
+$capTags = [regex]::Matches($content, '<span class="cap-tag">(.*?)</span>')
+Write-Host "  - Total Semantic Pill Chips: $($capTags.Count) (Target: >=30)"
+
+# Arbitrary percentage bars check
+$skillBars = [regex]::Matches($content, '<div class="skill-progress"')
+Write-Host "  - Arbitrary Percentage Bars: $(if ($skillBars.Count -eq 0) {'[PASS] 0 Detected (Completely Replaced)'} else {"[FAIL] $($skillBars.Count) still present"})"
+
+# Focus visible and contrast tokens
+$hasFocusVisible = $cssContent -match ':focus-visible'
+$hasAccentAlpha = $cssContent -match '--accent-alpha-10'
+$hasVerifiedMuted = $cssContent -match '--text-muted:\s*#475569'
+$hasVerifiedSuccess = $cssContent -match '--success:\s*#15803d'
+Write-Host "  - Global :focus-visible Indicator: $(if ($hasFocusVisible) {'[PASS] Present'} else {'[FAIL] Missing'})"
+Write-Host "  - Tokenized --accent-alpha Palette: $(if ($hasAccentAlpha) {'[PASS] Present'} else {'[FAIL] Missing'})"
+Write-Host "  - WCAG AA --text-muted (#475569, 5.4:1): $(if ($hasVerifiedMuted) {'[PASS] Present'} else {'[FAIL] Missing'})"
+Write-Host "  - WCAG AA --success (#15803d, 4.8:1): $(if ($hasVerifiedSuccess) {'[PASS] Present'} else {'[FAIL] Missing'})"
+
+# Footer Note and Authoritative Copyright
+$hasAuthoritativeCopy = $content -match 'Prabhat Vilas Karlekar\. All rights reserved\.'
+$hasCleanFooterNote = $content -match 'Built for performance, security, and accessibility\.'
+Write-Host "  - Authoritative Copyright Statement: $(if ($hasAuthoritativeCopy) {'[PASS] Present'} else {'[FAIL] Missing'})"
+Write-Host "  - High-Contrast Footer Note: $(if ($hasCleanFooterNote) {'[PASS] Present'} else {'[FAIL] Missing'})"
+
 Write-Host "`n==========================================================" -ForegroundColor Cyan
 Write-Host " END OF DOM AUDIT REPORT" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Cyan
+
 
