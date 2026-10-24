@@ -13,6 +13,7 @@ class PortfolioApp {
         
         // Initialize components
         this.initThemeToggle();
+        this.initMobileNav();
         this.initNavigation();
         this.initAnimations();
         this.initContactForm();
@@ -332,11 +333,46 @@ class PortfolioApp {
         });
     }
 
+    initMobileNav() {
+        const toggle = document.getElementById('mobile-nav-toggle');
+        const navLinks = document.getElementById('primary-nav');
+        if (!toggle || !navLinks) return;
+
+        toggle.addEventListener('click', () => {
+            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+            const nextState = !isExpanded;
+            toggle.setAttribute('aria-expanded', String(nextState));
+            navLinks.classList.toggle('open', nextState);
+            document.body.classList.toggle('nav-open', nextState);
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+                this.closeMobileMenu();
+                toggle.focus();
+            }
+        });
+
+        // Close when clicking outside nav
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('open') &&
+                !navLinks.contains(e.target) &&
+                !toggle.contains(e.target)) {
+                this.closeMobileMenu();
+            }
+        });
+    }
+
     closeMobileMenu() {
-        // If you add a mobile menu later, implement this
-        const mobileMenu = document.querySelector('.mobile-menu');
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
+        const toggle = document.getElementById('mobile-nav-toggle');
+        const navLinks = document.getElementById('primary-nav');
+        if (navLinks && navLinks.classList.contains('open')) {
+            navLinks.classList.remove('open');
+            if (toggle) {
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+            document.body.classList.remove('nav-open');
         }
     }
 }
