@@ -63,17 +63,21 @@
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                 </a>
+                <a href="#work" class="nav-link">
+                    <i class="fas fa-microscope"></i>
+                    <span>Work</span>
+                </a>
                 <a href="#experience" class="nav-link">
                     <i class="fas fa-briefcase"></i>
                     <span>Experience</span>
                 </a>
-                <a href="#projects" class="nav-link">
-                    <i class="fas fa-code"></i>
-                    <span>Research</span>
-                </a>
-                <a href="#skills" class="nav-link">
+                <a href="#capabilities" class="nav-link">
                     <i class="fas fa-cogs"></i>
-                    <span>Skills</span>
+                    <span>Capabilities</span>
+                </a>
+                <a href="#credentials" class="nav-link">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Credentials</span>
                 </a>
                 <a href="#contact" class="nav-link">
                     <i class="fas fa-envelope"></i>
@@ -120,9 +124,9 @@
                 </p>
                 
                 <div class="hero-actions">
-                    <a href="#projects" class="btn btn-primary">
+                    <a href="#work" class="btn btn-primary">
                         <i class="fas fa-microscope"></i>
-                        View Research
+                        View Work & Research
                     </a>
                     <a href="./Prabhat_Karlekar_Resume.pdf" class="btn btn-outline" target="_blank">
                         <i class="fas fa-file-pdf"></i>
@@ -182,307 +186,15 @@
             </div>
         </section>
 
-        <!-- Experience Timeline -->
-        <section id="experience" class="section">
+        <!-- Selected Work & Research -->
+        <section id="work" class="section">
+            <span id="projects" class="anchor-target" aria-hidden="true"></span>
             <div class="section-header">
                 <h2 class="section-title">
                     <span class="title-number">01</span>
-                    Professional Journey
+                    Selected Work & Research
                 </h2>
-                <p class="section-subtitle">From QA to AI-ML, HPC</p>
-            </div>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">Oct 2024 - Present</div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Project Engineer – HPC Infrastructure & Ecosystem</h3>
-                            <span class="company-badge">C-DAC, Pune</span>
-                        </div>
-                        <ul class="timeline-points">
-                            <li><i class="fas fa-users-cog"></i> Lead a 4–5 person R&D team driving protocol design, architecture specifications, and implementation across secure distributed systems.</li>
-                            <li><i class="fas fa-sitemap"></i> Designed a decentralized architecture integrating blockchain marketplaces with QoS-driven resource allocation for low-latency network services.</li>
-                            <li><i class="fas fa-file-signature"></i> Authored Invention Disclosure Forms (IDFs), whitepapers, and IETF-RFC style protocol specifications for privacy-preserving data exchange and patent-track initiatives.</li>
-                            <li><i class="fas fa-shield-alt"></i> Architected a privacy-preserving decentralized registry using a Two-Proof Model (Proof-of-Integrity + Proof-of-Offset) with Merkle commitments and registry-market separation.</li>
-                            <li><i class="fas fa-lock"></i> Built a federated learning framework integrating multikey CKKS homomorphic encryption with TensorFlow/Keras across a multi-party HPC cluster testbed.</li>
-                            <li><i class="fas fa-bolt"></i> Developed PAYF, an ns-3 and Rust-based protocol implementing Ed25519-signed shim headers, FlowCache, and WebAssembly settlement dashboard for verifiable per-packet billing.</li>
-                        </ul>
-                        <div class="tech-stack-small">
-                            <span class="tech-tag-sm">Python</span>
-                            <span class="tech-tag-sm">Rust</span>
-                            <span class="tech-tag-sm">C/C++</span>
-                            <span class="tech-tag-sm">TensorFlow</span>
-                            <span class="tech-tag-sm">OpenFHE</span>
-                            <span class="tech-tag-sm">ns-3</span>
-                            <span class="tech-tag-sm">Merkle Trees</span>
-                            <span class="tech-tag-sm">Ed25519</span>
-                            <span class="tech-tag-sm">IETF/RFC</span>
-                            <span class="tech-tag-sm">HPC</span>
-                            <span class="tech-tag-sm">Linux/Bash</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">Dec 2023 - Sept 2024</div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>JioCloud – Quality Analyst</h3>
-                            <span class="company-badge">Reliance Jio Platforms Limited</span>
-                        </div>
-                        <ul class="timeline-points">
-                            <li><i class="fas fa-tasks"></i> Designed and executed test scenarios, reducing manual regression testing by 40%</li>
-                            <li><i class="fas fa-bolt"></i> Accelerated feature deployment cycles in Agile environments</li>
-                            <li><i class="fas fa-users"></i> Collaborated with cross-functional teams to improve defect triage and release stability</li>
-                            <li><i class="fas fa-chart-bar"></i> Investigated defects and validated fixes across system components</li>
-                        </ul>
-                        <div class="tech-stack-small">
-                            <span class="tech-tag-sm">Agile</span>
-                            <span class="tech-tag-sm">DevOps</span>
-                            <span class="tech-tag-sm">Charles Proxy</span>
-                            <span class="tech-tag-sm">Log Analysis</span>
-                            <span class="tech-tag-sm">UAT</span>
-                            <span class="tech-tag-sm">Test Case Design</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">Dec 2022 - Nov 2023</div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Graduate Engineer Trainee</h3>
-                            <span class="company-badge">Reliance Jio Platforms Limited</span>
-                        </div>
-                        <ul class="timeline-points">
-                            <li><i class="fas fa-cloud"></i> Gained hands-on exposure to cloud platforms and DevOps workflows</li>
-                            <li><i class="fas fa-chart-line"></i> Improved system stability and user experience through monitoring practices</li>
-                            <li><i class="fas fa-cogs"></i> Adapted testing strategies to changing requirements in fast-paced environment</li>
-                            <li><i class="fas fa-book"></i> Executed UAT and API testing, reducing issue resolution time</li>
-                        </ul>
-                        <div class="tech-stack-small">
-                            <span class="tech-tag-sm">STLC</span>
-                            <span class="tech-tag-sm">CI/CD</span>
-                            <span class="tech-tag-sm">API Testing</span>
-                            <span class="tech-tag-sm">Cloud Platforms</span>
-                            <span class="tech-tag-sm">Bug Reporting</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Education & Certifications -->
-        <section id="education" class="section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">02</span>
-                    Education & Certifications
-                </h2>
-                <p class="section-subtitle">Academic foundation and professional development</p>
-            </div>
-            
-            <div class="two-column-section">
-                <div class="education-section">
-                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
-                    <div class="education-list">
-                        <div class="education-item">
-                            <h4>B. Tech (Computer Science)</h4>
-                            <p class="education-meta">DBATU Lonere, MH | Jul 2018 - Aug 2022</p>
-                            <p class="education-grade">9.06 CGPA</p>
-                        </div>
-                        <div class="education-item">
-                            <h4>XII - Computer Science</h4>
-                            <p class="education-meta">MSBSHSE | Apr 2017 - May 2018</p>
-                            <p class="education-grade">62.15%</p>
-                        </div>
-                        <div class="education-item">
-                            <h4>X - Science</h4>
-                            <p class="education-meta">CBSE | Apr 2015 - May 2016</p>
-                            <p class="education-grade">9.8 CGPA</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="certifications-section">
-                    <h3><i class="fas fa-certificate"></i>Certifications</h3>
-                    <div class="cert-grid">
-                        <div class="cert-card">
-                            <div class="cert-icon">
-                                <i class="fab fa-microsoft"></i>
-                            </div>
-                            <div class="cert-info">
-                                <h4>Advanced Data Analysis with Generative AI</h4>
-                                <p class="cert-meta">Microsoft • Coursera • May 2026</p>
-                            </div>
-                        </div>
-
-                        <div class="cert-card">
-                            <div class="cert-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div class="cert-info">
-                                <h4>Officer Training – Basic on Artificial Intelligence</h4>
-                                <p class="cert-meta">C-DAC Pune • Jan 2026</p>
-                            </div>
-                        </div>
-
-                        <div class="cert-card">
-                            <div class="cert-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="cert-info">
-                                <h4>AI Upskilling: Technical Foundation</h4>
-                                <p class="cert-meta">Qualcomm Academy • Jan 2026</p>
-                            </div>
-                        </div>
-                        
-                        <div class="cert-card">
-                            <div class="cert-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="cert-info">
-                                <h4>Machine Learning for Cyber Security</h4>
-                                <p class="cert-meta">C-DAC Hyderabad • Oct 2025</p>
-                            </div>
-                        </div>
-                        
-                        <div class="cert-card">
-                            <div class="cert-icon">
-                                <i class="fab fa-google"></i>
-                            </div>
-                            <div class="cert-info">
-                                <h4>Google Career Certificates</h4>
-                                <p class="cert-meta">Coursera • Feb 2023 – Oct 2023</p>
-                            </div>
-                        </div>
-                        
-                        <div class="cert-card">
-                            <div class="cert-icon">
-                                <i class="fab fa-ibm"></i>
-                            </div>
-                            <div class="cert-info">
-                                <h4>IBM Professional Certificates</h4>
-                                <p class="cert-meta">Coursera • Oct 2022 – Sep 2023</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills & Expertise -->
-        <section id="skills" class="section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">03</span>
-                    Technical Expertise
-                </h2>
-                <p class="section-subtitle">Depth across systems, security, and machine learning</p>
-            </div>
-            
-            <div class="skills-matrix">
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Programming & Systems</h3>
-                    <div class="skill-levels">
-                        <div class="skill-item">
-                            <span class="skill-name">Python</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="85"></div>
-                            </div>
-                            <span class="skill-percent">85%</span>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">C/C++</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="75"></div>
-                            </div>
-                            <span class="skill-percent">75%</span>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Rust</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="78"></div>
-                            </div>
-                            <span class="skill-percent">78%</span>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Linux/HPC</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="80"></div>
-                            </div>
-                            <span class="skill-percent">80%</span>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Bash Scripting</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="70"></div>
-                            </div>
-                            <span class="skill-percent">70%</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-brain"></i> Machine Learning & Security</h3>
-                    <div class="skill-levels">
-                        <div class="skill-item">
-                            <span class="skill-name">TensorFlow/Keras</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="80"></div>
-                            </div>
-                            <span class="skill-percent">80%</span>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Time-Series ML</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="85"></div>
-                            </div>
-                            <span class="skill-percent">85%</span>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Cryptography</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="75"></div>
-                            </div>
-                            <span class="skill-percent">75%</span>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Blockchain</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-level="70"></div>
-                            </div>
-                            <span class="skill-percent">70%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tech-shields">
-                <h4><i class="fas fa-shield-alt"></i> Core Tech Stack</h4>
-                <div class="shield-grid">
-                    <span class="shield"><i class="fab fa-rust"></i> Rust</span>
-                    <span class="shield"><i class="fas fa-network-wired"></i> ns-3</span>
-                    <span class="shield"><i class="fas fa-key"></i> Ed25519</span>
-                    <span class="shield"><i class="fas fa-project-diagram"></i> Apache Kafka</span>
-                    <span class="shield"><i class="fas fa-database"></i> PostgreSQL</span>
-                    <span class="shield"><i class="fas fa-microchip"></i> HPC</span>
-                    <span class="shield"><i class="fas fa-brain"></i> TensorFlow</span>
-                    <span class="shield"><i class="fas fa-lock-open"></i> OpenFHE</span>
-                    <span class="shield"><i class="fas fa-code"></i> Python</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects & Research -->
-        <section id="projects" class="section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span class="title-number">04</span>
-                    Projects & Publications
-                </h2>
-                <p class="section-subtitle">Currently working in security, ML, and distributed systems</p>
+                <p class="section-subtitle">Systems engineering, cryptographic protocols, and peer-reviewed research</p>
             </div>
             
             <div class="projects-grid">
@@ -511,6 +223,35 @@
                             <li>PostgreSQL schema with asynchronous Rust/Axum REST APIs and Yew/WASM real-time settlement dashboard</li>
                         </ul>
                     </div>
+
+                    <details class="project-spec-drawer">
+                        <summary class="spec-toggle-btn">
+                            <span><i class="fas fa-microchip"></i> Architecture & Protocol Spec</span>
+                            <i class="fas fa-chevron-down spec-chevron"></i>
+                        </summary>
+                        <div class="spec-content">
+                            <h5>Protocol Pipeline</h5>
+                            <div class="spec-pipeline">
+                                <span class="spec-step">ns-3 Packet Gen</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Ed25519 Shim Header</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">FlowCache Layer</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Axum REST API</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">PostgreSQL Ledger</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Yew/WASM UI</span>
+                            </div>
+                            <h5>Security & Concurrency Highlights</h5>
+                            <ul>
+                                <li><strong>Cryptographic Non-Repudiation:</strong> 18-byte shim header carries Ed25519 digital signature per QoS flow, preventing spoofed delivery claims.</li>
+                                <li><strong>Lock-Free Cache:</strong> In-memory FlowCache ring buffer absorbs line-rate simulation bursts, reducing PostgreSQL write lock contention.</li>
+                                <li><strong>Deterministic Settlement:</strong> WASM dashboard executes client-side cryptographic signature verification against batch settlement state.</li>
+                            </ul>
+                        </div>
+                    </details>
 
                     <div class="project-tech">
                         <span class="tech-badge">Rust</span>
@@ -542,6 +283,33 @@
                         protocol-level prevention of double-counting and greenwashing. Implements a Two-Proof Model
                         combining Proof-of-Integrity (PoI) and Proof-of-Offset (PoO) with Merkle commitments and strict registry-market separation.
                     </p>
+
+                    <details class="project-spec-drawer">
+                        <summary class="spec-toggle-btn">
+                            <span><i class="fas fa-layer-group"></i> Protocol Spec & Two-Proof Model</span>
+                            <i class="fas fa-chevron-down spec-chevron"></i>
+                        </summary>
+                        <div class="spec-content">
+                            <h5>Two-Proof Verification Pipeline</h5>
+                            <div class="spec-pipeline">
+                                <span class="spec-step">MRV IoT Telemetry</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Proof-of-Integrity (PoI)</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Sparse Merkle Tree</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Proof-of-Offset (PoO)</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Irreversible State Transition</span>
+                            </div>
+                            <h5>Integrity Guarantees</h5>
+                            <ul>
+                                <li><strong>Double-Counting Prevention:</strong> PoI binds cryptographic commitments of physical sequestration to unique geospatial epochs before credit minting.</li>
+                                <li><strong>Permanent Retirement:</strong> PoO enforces atomic, non-fungible retirement certificates with cryptographic zero-state proofs.</li>
+                                <li><strong>Registry-Market Separation:</strong> Decouples core registry state transitions from secondary market financial mechanics.</li>
+                            </ul>
+                        </div>
+                    </details>
 
                     <div class="project-tech">
                         <span class="tech-badge">Rust</span>
@@ -580,6 +348,33 @@
                             <li>2.5x aggregation speedup using MPI and optimized polynomial multiplication on HPC nodes</li>
                         </ul>
                     </div>
+
+                    <details class="project-spec-drawer">
+                        <summary class="spec-toggle-btn">
+                            <span><i class="fas fa-shield-virus"></i> Lattice CKKS & HPC Architecture Spec</span>
+                            <i class="fas fa-chevron-down spec-chevron"></i>
+                        </summary>
+                        <div class="spec-content">
+                            <h5>Privacy-Preserving Training Pipeline</h5>
+                            <div class="spec-pipeline">
+                                <span class="spec-step">Edge Model Weights</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">OpenFHE CKKS Encryption</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">MPI Aggregation Nodes</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Ciphertext Polynomial Ops</span>
+                                <span class="spec-arrow">→</span>
+                                <span class="spec-step">Collective Decryption</span>
+                            </div>
+                            <h5>Lattice Cryptography & HPC Cluster Performance</h5>
+                            <ul>
+                                <li><strong>Zero Parameter Leakage:</strong> Aggregator computes weighted polynomial addition and rescale operations directly over ciphertexts without private key access.</li>
+                                <li><strong>Inference Defense:</strong> 80% privacy leakage reduction against membership inference and model inversion attacks.</li>
+                                <li><strong>HPC Acceleration:</strong> Distributed polynomial multiplication parallelized via MPI on HPC nodes, delivering 2.5x aggregation speedup.</li>
+                            </ul>
+                        </div>
+                    </details>
                     
                     <div class="project-tech">
                         <span class="tech-badge">Python</span>
@@ -685,6 +480,301 @@
                         <span class="tech-badge">Cryptography</span>
                         <span class="tech-badge">Smart Contracts</span>
                         <span class="tech-badge">SHA-256</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Timeline -->
+        <section id="experience" class="section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">02</span>
+                    Professional Journey
+                </h2>
+                <p class="section-subtitle">Engineering progression across R&D leadership and cloud infrastructure</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Oct 2024 - Present</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Project Engineer – HPC Infrastructure & Ecosystem</h3>
+                            <span class="company-badge">C-DAC, Pune</span>
+                        </div>
+                        <ul class="timeline-points">
+                            <li><i class="fas fa-users-cog"></i> Lead a 4–5 person R&D team driving protocol design, architecture specifications, and implementation across secure distributed systems.</li>
+                            <li><i class="fas fa-sitemap"></i> Designed a decentralized architecture integrating blockchain marketplaces with QoS-driven resource allocation for low-latency network services.</li>
+                            <li><i class="fas fa-file-signature"></i> Authored Invention Disclosure Forms (IDFs), whitepapers, and IETF-RFC style protocol specifications for privacy-preserving data exchange and patent-track initiatives.</li>
+                            <li><i class="fas fa-shield-alt"></i> Architected a privacy-preserving decentralized registry using a Two-Proof Model (Proof-of-Integrity + Proof-of-Offset) with Merkle commitments and registry-market separation.</li>
+                            <li><i class="fas fa-lock"></i> Built a federated learning framework integrating multikey CKKS homomorphic encryption with TensorFlow/Keras across a multi-party HPC cluster testbed.</li>
+                            <li><i class="fas fa-bolt"></i> Developed PAYF, an ns-3 and Rust-based protocol implementing Ed25519-signed shim headers, FlowCache, and WebAssembly settlement dashboard for verifiable per-packet billing.</li>
+                        </ul>
+                        <div class="tech-stack-small">
+                            <span class="tech-tag-sm">Python</span>
+                            <span class="tech-tag-sm">Rust</span>
+                            <span class="tech-tag-sm">C/C++</span>
+                            <span class="tech-tag-sm">TensorFlow</span>
+                            <span class="tech-tag-sm">OpenFHE</span>
+                            <span class="tech-tag-sm">ns-3</span>
+                            <span class="tech-tag-sm">Merkle Trees</span>
+                            <span class="tech-tag-sm">Ed25519</span>
+                            <span class="tech-tag-sm">IETF/RFC</span>
+                            <span class="tech-tag-sm">HPC</span>
+                            <span class="tech-tag-sm">Linux/Bash</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Dec 2023 - Sept 2024</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>JioCloud – Quality Analyst</h3>
+                            <span class="company-badge">Reliance Jio Platforms Limited</span>
+                        </div>
+                        <ul class="timeline-points">
+                            <li><i class="fas fa-tasks"></i> Designed and executed test scenarios, reducing manual regression testing by 40%</li>
+                            <li><i class="fas fa-bolt"></i> Accelerated feature deployment cycles in Agile environments</li>
+                            <li><i class="fas fa-users"></i> Collaborated with cross-functional teams to improve defect triage and release stability</li>
+                            <li><i class="fas fa-chart-bar"></i> Investigated defects and validated fixes across system components</li>
+                        </ul>
+                        <div class="tech-stack-small">
+                            <span class="tech-tag-sm">Agile</span>
+                            <span class="tech-tag-sm">DevOps</span>
+                            <span class="tech-tag-sm">Charles Proxy</span>
+                            <span class="tech-tag-sm">Log Analysis</span>
+                            <span class="tech-tag-sm">UAT</span>
+                            <span class="tech-tag-sm">Test Case Design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Dec 2022 - Nov 2023</div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Graduate Engineer Trainee</h3>
+                            <span class="company-badge">Reliance Jio Platforms Limited</span>
+                        </div>
+                        <ul class="timeline-points">
+                            <li><i class="fas fa-cloud"></i> Gained hands-on exposure to cloud platforms and DevOps workflows</li>
+                            <li><i class="fas fa-chart-line"></i> Improved system stability and user experience through monitoring practices</li>
+                            <li><i class="fas fa-cogs"></i> Adapted testing strategies to changing requirements in fast-paced environment</li>
+                            <li><i class="fas fa-book"></i> Executed UAT and API testing, reducing issue resolution time</li>
+                        </ul>
+                        <div class="tech-stack-small">
+                            <span class="tech-tag-sm">STLC</span>
+                            <span class="tech-tag-sm">CI/CD</span>
+                            <span class="tech-tag-sm">API Testing</span>
+                            <span class="tech-tag-sm">Cloud Platforms</span>
+                            <span class="tech-tag-sm">Bug Reporting</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Capabilities -->
+        <section id="capabilities" class="section">
+            <span id="skills" class="anchor-target" aria-hidden="true"></span>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">03</span>
+                    Technical Capabilities
+                </h2>
+                <p class="section-subtitle">Depth across systems programming, applied cryptography, and machine learning</p>
+            </div>
+            
+            <div class="skills-matrix">
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Programming & Systems</h3>
+                    <div class="skill-levels">
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="85"></div>
+                            </div>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">C/C++</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="75"></div>
+                            </div>
+                            <span class="skill-percent">75%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Rust</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="78"></div>
+                            </div>
+                            <span class="skill-percent">78%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Linux/HPC</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="80"></div>
+                            </div>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Bash Scripting</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="70"></div>
+                            </div>
+                            <span class="skill-percent">70%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> Machine Learning & Security</h3>
+                    <div class="skill-levels">
+                        <div class="skill-item">
+                            <span class="skill-name">TensorFlow/Keras</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="80"></div>
+                            </div>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Time-Series ML</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="85"></div>
+                            </div>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Cryptography</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="75"></div>
+                            </div>
+                            <span class="skill-percent">75%</span>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Blockchain</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-level="70"></div>
+                            </div>
+                            <span class="skill-percent">70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tech-shields">
+                <h4><i class="fas fa-shield-alt"></i> Core Tech Stack</h4>
+                <div class="shield-grid">
+                    <span class="shield"><i class="fab fa-rust"></i> Rust</span>
+                    <span class="shield"><i class="fas fa-network-wired"></i> ns-3</span>
+                    <span class="shield"><i class="fas fa-key"></i> Ed25519</span>
+                    <span class="shield"><i class="fas fa-project-diagram"></i> Apache Kafka</span>
+                    <span class="shield"><i class="fas fa-database"></i> PostgreSQL</span>
+                    <span class="shield"><i class="fas fa-microchip"></i> HPC</span>
+                    <span class="shield"><i class="fas fa-brain"></i> TensorFlow</span>
+                    <span class="shield"><i class="fas fa-lock-open"></i> OpenFHE</span>
+                    <span class="shield"><i class="fas fa-code"></i> Python</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Credentials -->
+        <section id="credentials" class="section">
+            <span id="education" class="anchor-target" aria-hidden="true"></span>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-number">04</span>
+                    Education & Credentials
+                </h2>
+                <p class="section-subtitle">Academic foundation and specialized technical certifications</p>
+            </div>
+            
+            <div class="two-column-section">
+                <div class="education-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="education-list">
+                        <div class="education-item">
+                            <h4>B. Tech (Computer Science)</h4>
+                            <p class="education-meta">DBATU Lonere, MH | Jul 2018 - Aug 2022</p>
+                            <p class="education-grade">9.06 CGPA</p>
+                        </div>
+                        <div class="education-item">
+                            <h4>XII - Computer Science</h4>
+                            <p class="education-meta">MSBSHSE | Apr 2017 - May 2018</p>
+                            <p class="education-grade">62.15%</p>
+                        </div>
+                        <div class="education-item">
+                            <h4>X - Science</h4>
+                            <p class="education-meta">CBSE | Apr 2015 - May 2016</p>
+                            <p class="education-grade">9.8 CGPA</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certifications-section">
+                    <h3><i class="fas fa-certificate"></i>Certifications</h3>
+                    <div class="cert-grid">
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fab fa-microsoft"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Advanced Data Analysis with Generative AI</h4>
+                                <p class="cert-meta">Microsoft • Coursera • May 2026</p>
+                            </div>
+                        </div>
+
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Officer Training – Basic on Artificial Intelligence</h4>
+                                <p class="cert-meta">C-DAC Pune • Jan 2026</p>
+                            </div>
+                        </div>
+
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>AI Upskilling: Technical Foundation</h4>
+                                <p class="cert-meta">Qualcomm Academy • Jan 2026</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Machine Learning for Cyber Security</h4>
+                                <p class="cert-meta">C-DAC Hyderabad • Oct 2025</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Google Career Certificates</h4>
+                                <p class="cert-meta">Coursera • Feb 2023 – Oct 2023</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cert-card">
+                            <div class="cert-icon">
+                                <i class="fab fa-ibm"></i>
+                            </div>
+                            <div class="cert-info">
+                                <h4>IBM Professional Certificates</h4>
+                                <p class="cert-meta">Coursera • Oct 2022 – Sep 2023</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -804,10 +894,10 @@
                 <div class="footer-column">
                     <h4>Navigation</h4>
                     <a href="#hero">Home</a>
+                    <a href="#work">Work</a>
                     <a href="#experience">Experience</a>
-                    <a href="#education">Education</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#projects">Research</a>
+                    <a href="#capabilities">Capabilities</a>
+                    <a href="#credentials">Credentials</a>
                     <a href="#contact">Contact</a>
                 </div>
                 

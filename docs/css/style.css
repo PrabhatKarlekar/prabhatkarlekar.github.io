@@ -660,6 +660,7 @@ img {
 .section {
     padding: var(--spacing-xl) 0;
     position: relative;
+    scroll-margin-top: 80px;
 }
 
 @media (max-width: 480px) {
@@ -1261,6 +1262,130 @@ img {
 
 .tech-badge:hover {
     transform: translateY(-2px);
+}
+
+/* ===== Architecture Spec Drawers (Phase 3) ===== */
+.project-spec-drawer {
+    margin: 1.25rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    background: rgba(59, 130, 246, 0.03);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .project-spec-drawer {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.spec-toggle-btn {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    background: transparent;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.spec-toggle-btn:hover {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.spec-toggle-btn::-webkit-details-marker {
+    display: none;
+}
+
+.spec-chevron {
+    transition: transform 0.3s ease;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.project-spec-drawer[open] .spec-chevron {
+    transform: rotate(180deg);
+}
+
+.spec-content {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.spec-content h5 {
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.85rem;
+    margin-bottom: 0.4rem;
+}
+
+.spec-content h5:first-child {
+    margin-top: 0;
+}
+
+.spec-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.5rem 0;
+}
+
+.spec-content li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.35rem;
+    font-size: 0.825rem;
+}
+
+.spec-content li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
+    font-weight: bold;
+}
+
+.spec-pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0.75rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+}
+
+.spec-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.spec-arrow {
+    color: var(--accent-primary);
+    font-weight: bold;
+    font-size: 0.75rem;
+}
+
+/* Section Backwards-Compatibility Anchor */
+.anchor-target {
+    position: relative;
+    top: -90px;
+    display: block;
+    visibility: hidden;
+    height: 0;
 }
 
 /* ===== Contact Section ===== */

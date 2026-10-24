@@ -15,8 +15,8 @@
 | **Phase 0** | Baseline & Safety Setup (Git tag, Branch, Baselines) | 3 | 3 | ✅ Completed |
 | **Phase 1** | Critical Functional Fixes & Reliability (Hotfix Track) | 7 | 7 | ✅ Completed |
 | **Phase 2** | Resume Alignment & Deep Systems Engineering | 5 | 5 | ✅ Completed |
-| **Phase 3** | Information Architecture & UX Structure | 3 | 0 | 🟡 Next |
-| **Phase 4** | Design System & Contrast Rectification | 4 | 0 | ⚪ Pending |
+| **Phase 3** | Information Architecture & UX Structure | 3 | 3 | ✅ Completed |
+| **Phase 4** | Design System & Contrast Rectification | 4 | 0 | 🟡 Next |
 | **Phase 5** | Performance & Runtime Optimization | 5 | 0 | ⚪ Pending |
 | **Phase 6** | SEO, Security, Accessibility & Privacy | 6 | 0 | ⚪ Pending |
 | **Phase 7** | Verification & Acceptance Gate (Release Checklist) | 10 | 0 | ⚪ Pending |
@@ -49,3 +49,16 @@
   - **Federated Learning**: Lattice-based CKKS Homomorphic Encryption, multi-party HPC cluster testbed, 85%+ accuracy, 80% privacy leakage reduction, 2.5x speedup.
   - **IEEE Paper**: Published — IEEE SCI 2025, Time-Series ML Optimization on HPC with full citation.
 - **`STEP-2.5`**: Non-destructive preservation of all educational records (Class X, XII, B.Tech 9.06 CGPA) and all 10+ certifications with full-year dates (`commit e2147e2`).
+
+### Phase 3: Information Architecture & UX Structure
+- **`STEP-3.1`**: Section Hierarchy Reordering:
+  - Reordered main sections into primary showcase flow: `#hero` -> `#work` (`01` Selected Work & Research) -> `#experience` (`02` Professional Journey) -> `#capabilities` (`03` Technical Capabilities) -> `#credentials` (`04` Education & Credentials) -> `#contact` (`05` Get In Touch).
+  - Preserved backward-compatibility anchor targets: `<span id="projects">`, `<span id="skills">`, `<span id="education">`.
+- **`STEP-3.2`**: Navigation & Anchors Unification + High-Performance Scroll-Spy:
+  - Synchronized primary navbar and footer links to `Home`, `Work`, `Experience`, `Capabilities`, `Credentials`, `Contact`.
+  - Replaced legacy window scroll polling with native `IntersectionObserver` scroll-spy (`-20% 0px -65% 0px`).
+  - Added seamless hash router in JavaScript to automatically map legacy `#projects`, `#skills`, `#education` links with smooth scrolling and `scroll-margin-top: 80px`.
+- **`STEP-3.3`**: Native `<details class="project-spec-drawer">` Architecture Spec Drawers:
+  - Implemented zero-dependency collapsible spec drawers in PAYF, GreyMisnomer, and Privacy-Preserving FL cards.
+  - Visualized step-by-step cryptographic protocol pipelines with ASCII/CSS badges (`spec-pipeline`, `spec-step`, `spec-arrow`).
+  - Outlined security guarantees, non-repudiation threat models, lock-free caching, and lattice encryption parameters without cluttering primary scannability.

@@ -88,17 +88,30 @@ class PortfolioApp {
     }
 
     initNavigation() {
-        // Smooth scroll for navigation links
+        const aliasMap = {
+            'projects': 'work',
+            'skills': 'capabilities',
+            'education': 'credentials'
+        };
+
+        // Smooth scroll for internal links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', (e) => {
                 const href = anchor.getAttribute('href');
-                if (href === '#' || href === '#hero') return;
+                if (href === '#' || href === '') return;
                 
-                e.preventDefault();
-                const targetElement = document.querySelector(href);
+                const targetId = href.substring(1);
+                const resolvedId = aliasMap[targetId] || targetId;
+                const targetElement = document.getElementById(resolvedId) || document.querySelector(href);
+                
                 if (targetElement) {
+                    e.preventDefault();
+                    const navHeight = 75;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                    const offsetPosition = elementPosition - navHeight;
+                    
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: resolvedId === 'hero' ? 0 : offsetPosition,
                         behavior: 'smooth'
                     });
                     
@@ -106,41 +119,71 @@ class PortfolioApp {
                     document.querySelectorAll('.nav-link').forEach(link => {
                         link.classList.remove('active');
                     });
-                    anchor.classList.add('active');
+                    const activeNavLink = document.querySelector(`.nav-link[href="#${resolvedId}"]`) || anchor;
+                    if (activeNavLink && activeNavLink.classList.contains('nav-link')) {
+                        activeNavLink.classList.add('active');
+                    }
+                    
+                    // Update URL without jump
+                    if (history.pushState) {
+                        history.pushState(null, null, `#${resolvedId}`);
+                    }
                     
                     // Close mobile menu if open
                     this.closeMobileMenu();
                 }
             });
         });
+
+        // Handle initial hash on page load (support legacy #projects, #skills, #education)
+        if (window.location.hash) {
+            const rawHash = window.location.hash.substring(1);
+            const resolvedHash = aliasMap[rawHash] || rawHash;
+            const target = document.getElementById(resolvedHash);
+            if (target) {
+                setTimeout(() => {
+                    const navHeight = 75;
+                    const offsetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight;
+                    window.scrollTo({
+                        top: resolvedHash === 'hero' ? 0 : offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 150);
+            }
+        }
         
-        // Update active nav on scroll
+        // High-performance IntersectionObserver Scroll-Spy
+        this.initScrollSpy();
+    }
+
+    initScrollSpy() {
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-link');
+        if (!sections.length || !navLinks.length) return;
         
-        const updateActiveNav = () => {
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                const sectionHeight = section.clientHeight;
-                
-                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href === `#${current}` || (current === 'hero' && href === '#')) {
-                    link.classList.add('active');
-                }
-            });
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -65% 0px',
+            threshold: 0
         };
         
-        window.addEventListener('scroll', updateActiveNav);
-        updateActiveNav(); // Initial call
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const currentId = entry.target.getAttribute('id');
+                    
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        const href = link.getAttribute('href');
+                        if (href === `#${currentId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => observer.observe(section));
     }
 
     initAnimations() {
