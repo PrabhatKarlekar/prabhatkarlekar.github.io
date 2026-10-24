@@ -14,8 +14,8 @@
 |---|---|:---:|:---:|:---:|
 | **Phase 0** | Baseline & Safety Setup (Git tag, Branch, Baselines) | 3 | 3 | ✅ Completed |
 | **Phase 1** | Critical Functional Fixes & Reliability (Hotfix Track) | 7 | 7 | ✅ Completed |
-| **Phase 2** | Resume Alignment & Deep Systems Engineering | 5 | 0 | 🟡 Next |
-| **Phase 3** | Information Architecture & UX Structure | 3 | 0 | ⚪ Pending |
+| **Phase 2** | Resume Alignment & Deep Systems Engineering | 5 | 5 | ✅ Completed |
+| **Phase 3** | Information Architecture & UX Structure | 3 | 0 | 🟡 Next |
 | **Phase 4** | Design System & Contrast Rectification | 4 | 0 | ⚪ Pending |
 | **Phase 5** | Performance & Runtime Optimization | 5 | 0 | ⚪ Pending |
 | **Phase 6** | SEO, Security, Accessibility & Privacy | 6 | 0 | ⚪ Pending |
@@ -38,3 +38,14 @@
 - **`STEP-1.5`**: Cleaned dead links: PAYF link updated to "Request Access / Architecture Spec", GreyMisnomer linked to spec draft, and all 3 resume links updated to canonical `docs/Prabhat_Karlekar_Resume.pdf` (`commit 5765436`).
 - **`STEP-1.6`**: Implemented progressive enhancement: content is visible by default (`opacity: 1`), and smooth entrance animations apply strictly via `html.js .reveal-item` when `prefers-reduced-motion: no-preference` matches (`commit 5765436`).
 - **`STEP-1.7`**: Hardened JavaScript lifecycle: wrapped `localStorage` in defensive try/catch helpers, isolated each component initialization in its own try/catch block, added `<meta name="color-scheme" content="light dark">`, and added blocking head script to eliminate theme FOUC (`commit 5765436`).
+
+### Phase 2: Resume Alignment & Deep Systems Engineering
+- **`STEP-2.1`**: Deployed canonical resume `docs/Prabhat_Karlekar_Resume.pdf` copied from Oct 2026 update, verified clean text extraction.
+- **`STEP-2.2`**: Rewrote Hero section: updated name to **Prabhat Vilas Karlekar**, authoritative subtitle *"Software Engineer — HPC, Cryptographic Systems & Distributed Infrastructure"*, focused systems description, and stat breakdown (3+ Years Systems Eng, 2 Research Papers with 1 Published & 1 Under Review, 1 IEEE SCI 2025 Publication).
+- **`STEP-2.3`**: Expanded C-DAC Pune experience: updated department to "HPC Infrastructure & Ecosystem", added 4–5 person R&D team leadership bullet, and detailed IDF/RFC specification authoring.
+- **`STEP-2.4`**: Embedded deep systems engineering in project cards:
+  - **PAYF**: Rust/Axum REST APIs, PostgreSQL, FlowCache, Yew/WASM settlement visualization dashboard, Ed25519 digital signatures.
+  - **GreyMisnomer**: RFC protocol design, Two-Proof Model (`PoI` + `PoO`), Merkle commitments.
+  - **Federated Learning**: Lattice-based CKKS Homomorphic Encryption, multi-party HPC cluster testbed, 85%+ accuracy, 80% privacy leakage reduction, 2.5x speedup.
+  - **IEEE Paper**: Published — IEEE SCI 2025, Time-Series ML Optimization on HPC with full citation.
+- **`STEP-2.5`**: Non-destructive preservation of all educational records (Class X, XII, B.Tech 9.06 CGPA) and all 10+ certifications with full-year dates (`commit e2147e2`).
