@@ -146,30 +146,35 @@ class PortfolioApp {
     }
 
     initContactForm() {
-        const form = document.getElementById('quickContactForm');
-        if (!form) return;
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(form);
-            const formValues = Object.fromEntries(formData);
-            
-            // Here you would typically send the data to a server
-            console.log('Form submitted:', formValues);
-            
-            // Show success message
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                form.reset();
-            }, 3000);
+        const copyBtn = document.getElementById('copy-email-btn');
+        const textSpan = document.getElementById('copy-email-text');
+        if (!copyBtn || !textSpan) return;
+
+        copyBtn.addEventListener('click', async () => {
+            const email = 'pritvikarlekar@gmail.com';
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(email);
+                } else {
+                    const tempInput = document.createElement('input');
+                    tempInput.value = email;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                }
+                const originalText = textSpan.textContent;
+                textSpan.textContent = 'Copied to Clipboard!';
+                copyBtn.classList.add('btn-copied');
+
+                setTimeout(() => {
+                    textSpan.textContent = originalText;
+                    copyBtn.classList.remove('btn-copied');
+                }, 2000);
+            } catch (err) {
+                console.error('Clipboard copy failed, opening mailto:', err);
+                window.location.href = `mailto:${email}`;
+            }
         });
     }
 
