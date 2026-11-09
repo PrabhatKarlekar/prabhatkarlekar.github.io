@@ -434,6 +434,8 @@ img {
     margin-bottom: 2rem;
     font-size: 1.25rem;
     color: var(--text-secondary);
+}
+
 .hero-role-line {
     font-size: clamp(1.15rem, 2.5vw, 1.35rem);
     font-weight: 600;
