@@ -1,0 +1,2786 @@
+Reading the repo code now (HTML, CSS, JS) so the review is based on the actual source; the middle of `index.html` is next.
+
+Mobile finding: nav links are hidden under 768px and no hamburger exists. Next I'll scan the remaining CSS, compute contrast ratios, and cross-check the resume PDF against the site.
+
+Finished reading all source files, the workflow, and the resume PDF. I couldn't run a browser here (no Lighthouse or screenshots), so visual and timing items are static-code inferences, marked *(verify)*.
+
+## Corrections to my first review
+
+- **Contact form is fake, not just unverified.** `script.js:158-164` logs to the console and shows "Message Sent!". Nothing is sent, and the inputs have no `name=` so the logged data is empty. Visitors think they contacted you and you receive nothing.
+- **No mobile navigation exists.** At ≤768px `.nav-links{display:none}` (`style.css:185`), and `closeMobileMenu()` is an empty stub (`script.js:335`). Phone users can't jump between sections.
+- **`rel="noopener"` is low priority.** Modern browsers already imply it for `target="_blank"`.
+
+## Snapshot
+
+| Item | Value |
+|---|---|
+| HTML / CSS / JS (gzip) | 7.2 / 5.1 / 4.0 KB. Your own code is already ~16 KB. |
+| Third-party origins | 4: Google Fonts (2), cdnjs (Font Awesome), gh-stats-card.vercel.app. jsdelivr loads conditionally. |
+| Font Awesome | 44 icons used. The full CSS plus solid and brands webfonts are roughly 250 KB *(verify)*. |
+| Fonts | Inter 300–800 (300 unused), JetBrains Mono (4 selectors only) |
+| Headings | h1×1, h2×5, h3×13, h4×21 (h4 is used as a label style) |
+| Accessibility hooks | 1 `aria-*`, 0 `<label>`, 0 skip link, 0 CSS `prefers-reduced-motion` |
+| Missing files | canonical, og:image/url, twitter:card, JSON-LD, theme-color, robots.txt, sitemap.xml, 404.html, real favicon, repo README |
+
+**Already good, keep:**
+- `lang`, viewport, and semantic `main`/`nav`/`footer`.
+- Token-based light/dark theme.
+- `scroll-padding-top` and `contain` on the hero.
+- The canvas respects reduced motion.
+- No frameworks or trackers.
+- Pages workflow has least-privilege permissions.
+
+## P0: Broken or misleading
+
+- **Content invisible without JS.** `.timeline-item` (`style.css:~640`) and `.project-card` (`:1019`) are `opacity:0` until JS adds `.visible`. `.section` is set to opacity 0 by JS (`script.js:294`).
+  - **Affected:** no-JS, JS errors, print, reader mode, and archive snapshots all show blank Experience and Projects. There is no `<noscript>`.
+- **One thrown error kills everything.** `localStorage.getItem` (`script.js:41`) is unguarded. Some privacy modes and WebViews throw, which aborts `init()` and leaves the cards hidden forever.
+- **Section reveal can fail on short phones** *(verify at 375×667)*. The observer needs 10% of the section visible, minus a 100px bottom margin. A Projects section taller than ~5.7k px may never appear.
+- **Metric suffix bug.** `script.js:307` reads `textContent.includes('%')` from the initial text "0", so the suffix is always `x`. "Accuracy %" renders as **85.0x** and "Features Analyzed" as **12.0x**.
+- **Hero stats:** "Years Experience" shows `3`, not `3+`. "Research Papers: 2" has only one linked paper.
+- **Dead links:**
+  - `href="#"` for Live Demo (`index.html:510`).
+  - "View Source" points to your GitHub profile, not a repo (`:509`).
+  - GreyMisnomer has no link at all.
+- **"SHA encryption"** (`index.html:637`). SHA is hashing. This is an error on a cryptography portfolio.
+
+## P0: Credibility, cross-checked against your resume PDF
+
+- **Numbers appear only on the site.** 40% regression reduction, 80% leakage reduction, 85%+ accuracy, 2.5x speedup, and 12 features are all absent from the resume. The resume says "reducing regression effort". Keep each number only if you can defend its method and baseline in an interview. Otherwise remove it.
+- **Resume summary vs. site.** The resume calls you "IEEE-published researcher in federated learning with homomorphic encryption". The linked IEEE paper (SCI 2025) is on time-series and hyperparameter work, so reconcile these.
+- **Date mismatch.** The FL project is Sep 2025 on the resume and Oct 2025 on the site.
+- **Department name.** The resume expands I&E as "Infrastructure & Ecosystem", and the site never expands it. Confirm the official name (Innovation & Entrepreneurship vs Infrastructure & Ecosystem) and use one version everywhere.
+- **Claims to tighten:**
+  - "Quantum Secure": say lattice-based/post-quantum. PAYF's Ed25519 is not quantum-safe.
+  - "Large-scale" vs the 2-client cluster.
+  - "Accuracy" for forecasting: name the metric and split method.
+- **Possible disclosure issue.** Public IDF, patent-track, and PAYF internals may predate filing or conflict with C-DAC policy. Confirm with the IPR cell.
+- **Orphaned content.** Kafka and the Mongoose HTTP server (FL weight transfer) are on the resume but in no site project. Kafka sits in "Core Tech Stack" with no context.
+- **Leadership is invisible.** Your 4–5 person R&D team doesn't appear anywhere.
+- **SCI 2025 venue** is missing from the site. Add a full citation.
+
+## P1: UX, IA, mobile
+
+- **Order:** Experience → Education → Skills → Projects. Your strongest asset is fourth. Put Research first after the hero.
+- **Nav inconsistencies:**
+  - Top nav omits Education and the footer includes it.
+  - "Research" in the nav is "Projects & Publications" in the heading and `#projects` in the anchor.
+  - While scrolling over Education, no link is active.
+- **Hero on ≤1024px:** `.hero-visual{order:-1}` (`style.css:~490`) puts the floating "Currently Building" card above your name. The card bobs forever and fades in after a 1s delay.
+- **Hero is too tall on phones:** stats stack in a column, and `100vh` jumps with the URL bar. Use `svh`.
+- **Staggered reveal** takes ~1.8s, and counters show "0" for 1s then count for 2s. Final numbers appear around 3s.
+- **Three equal CTAs.** Make one primary (Research or Resume) and one secondary (Contact).
+- **Typewriter:**
+  - Loops forever and re-clears phrases, so the width shifts.
+  - No pause control.
+  - Ignores reduced motion.
+  - Role text is empty without JS.
+- **Positioning:** "Software Engineer & AI/ML Researcher", plus "Data Scientist" in the keywords, plus four target domains in Contact. Pick one spine.
+- **Hero copy:** "QA automation" and "Passionate about" dilute the line.
+- **Resume link:** unencoded spaces and the odd `RTJ 26` suffix. `download` forces a save instead of an inline preview.
+- **Contact:** phone and Gmail are public. The Chandrapur PIN conflicts with the Pune job.
+- **Form:** placeholder-only fields, no labels, no error states.
+
+## P1: Accessibility
+
+- **Contrast (computed):**
+
+| Pair | Ratio | WCAG AA (needs 4.5) |
+|---|---|---|
+| Hero badge, green on tint (your job title) | 2.31 | fails |
+| Muted text on the gradient end | 4.34 | fails |
+| White on `#8b5cf6` | 4.23 | fails |
+| Dark mode: white on `#3b82f6` | 3.68 | fails |
+| Dark mode: white on `#a78bfa` | 2.72 | fails |
+| GitHub stats text on dark | 3.75 | fails |
+| `.footer-note` (opacity .7) | lower still | fails |
+
+- **Focus:** forms use `outline:none` plus a 10%-alpha ring (1.12:1 vs the 3:1 needed). There is no `:focus-visible` styling elsewhere and no skip link.
+- **Skill bars** have no text alternative.
+- **Typewriter and counters** change live text constantly with no reduced-motion CSS. Three infinite CSS animations (`pulse`×2, `float`) don't respect it either.
+- **Icons** (44) lack `aria-hidden`.
+- **Theme toggle** doesn't expose state.
+- **Headings:** the h4 labels ("Email:", "Phone:") should be `<dl>` or `<strong>`.
+- **PDF:** untagged, with empty Title and Author metadata.
+
+## P1: Performance
+
+- **Canvas plus blur:** `backdrop-filter: blur(20px)` on the fixed nav and floating card sits over an animating canvas, so the blur is recomputed every frame. The canvas also runs a 70-particle O(n²) loop forever, with no devicePixelRatio scaling. Resize reseeds particles, and mobile URL-bar scroll triggers resize.
+- **Font Awesome** for 44 icons: replace with an inline SVG sprite (~5 KB).
+- **Fonts:** drop Inter 300 and the extra weights, or use a system stack.
+- **gh-stats image:** third-party cold start, no `width`/`height` (layout shift), and the transparent theme is unreadable in dark mode.
+- **Render-blocking and parsing:** `script.js` has no `defer`, and cdnjs and Google Fonts CSS block rendering.
+- **Other:**
+  - 13× `transition: all`.
+  - `body{overflow-x:hidden}` masks overflow bugs.
+  - Skill bars jump to full width because `startTime` is set at load, and a CSS width transition fights the JS per frame.
+  - Two overlapping scroll handlers read `offsetTop` on every event.
+  - Dead code: the Escape-modal handler, `visibilitychange`, and the smoothscroll polyfill (injected dynamically; `scroll-behavior` is already CSS).
+- **Target:** one origin, under 100 KB transfer, Lighthouse 100.
+
+## P1: SEO and sharing
+
+- Add `og:image` (1200×630), `og:url`, `twitter:card`, canonical, `theme-color`, and Person JSON-LD with `sameAs`.
+- Add `robots.txt`, `sitemap.xml`, and `404.html`.
+- Drop `meta keywords`.
+- **Favicon:** an SVG data URI declared as `x-icon`, with unencoded `<>`. iOS Safari ignores it, and ⚡ doesn't match your "PK" brand. Ship `favicon.svg`, `.ico`, and a 180px apple-touch-icon.
+- **Naming:** Prabhat Vilas Karlekar on the site and PDF, but `pritvikarlekar` in the email and Medium handle. Pick one public identity.
+
+## P1: Security, privacy, repo
+
+- **Privacy:** remove the phone, and use an obfuscated or form-only email. Your resume PDF also carries both.
+- **Headers:** GitHub Pages can't set them. Use meta CSP and referrer policy, or put Cloudflare in front of a custom domain.
+- **Workflow:**
+  - Pin actions by SHA.
+  - Add `concurrency` and `workflow_dispatch`.
+  - Add html-validate, a link check, and Lighthouse CI.
+- **Repo README and license:**
+  - `.github/README.md` is empty, so the repo landing page is blank.
+  - `deployments/README.md` is a placeholder.
+  - CSS comments say "Alex Portfolio inspiration" and "jsmfolio inspired". If any code was copied, keep the license notice.
+
+## P2: Polish
+
+- **Visual design:**
+  - Mixed blues, with 20× hardcoded `rgba(59,130,246)` against the `#2563eb` token.
+  - Blue-to-violet gradient plus glow is the generic template look.
+  - No figures or diagrams. Add PAYF flow, Two-Proof model, and FL+CKKS pipeline as inline SVG.
+- **Skill bars:** replace them with grouped evidence tags (percentages are arbitrary).
+- **Certifications:** use unambiguous dates ("May 2026") and collapse the generic Coursera items.
+- **Tags:** cap at 3–4 per project.
+- **Footer:** remove "Built with passion and precision".
+- **Spelling:** unify en-IN or UK, and "Quantum-Secure" hyphenation.
+- **Project labels:** "Cryptographic Security Activity" → "Study". Soften "unlinkable and untraceable".
+
+## Tuned-version plan
+
+- **Stack:** single `index.html`, one CSS, one JS under 3 KB, self-hosted Inter variable subset or a system stack, an inline SVG sprite, and no Font Awesome, canvas, or gh-stats.
+- **Progressive enhancement:** content visible without JS, with reveal and motion gated on `prefers-reduced-motion`.
+- **Navigation:** CSS-only mobile menu using `<details>`.
+- **Layout:** hero (name, one-line positioning, 3 proof points, 1 CTA) → featured research with status badges and diagrams → experience (with leadership) → grouped skills → compact education → contact.
+- **Contact:** working endpoint plus honeypot, with no public phone.
+- **Accessibility:** contrast-fixed tokens, skip link, `:focus-visible`, `dl` for contact.
+- **SEO and security:** the full SEO set above, meta CSP, hardened workflow, README, LICENSE.
+
+## What I need from you
+
+- Display name, and your single positioning line.
+- Which numbers you can substantiate (40/80/85/2.5/12), with method.
+- PAYF repo URL, and whether public disclosure is cleared.
+- Status and venue of the second paper.
+- Official I&E expansion.
+- Whether to keep phone, X/XII marks, and Gmail.
+- Form endpoint (Formspree/Web3Forms) or mailto only.
+
+Should I build the tuned version now as a drop-in replacement for `docs/`, with placeholders where I need your inputs?
+
+
+**Scope:** I could read the page's text, links and meta tags. I could not see the rendered visuals, CSS/JS, or network waterfall. Items marked *(verify)* are checks, not confirmed defects.
+
+## P0: Fix first (credibility errors)
+
+- **"SHA encryption" (e-voting project):** SHA is a hash, not encryption. For someone positioned in cryptography, this is the most damaging line on the page. Use "SHA-256 hashing".
+- **"Reduced privacy leakage by 80%":** Say how you measured it (membership inference, gradient inversion, etc.) and against what baseline. Otherwise it reads as invented.
+- **"85%+ accuracy" for time-series forecasting:** Accuracy isn't a regression metric. Report MAPE/RMSE/directional accuracy and the split method (walk-forward vs. random). Reviewers distrust LSTM/GRU stock results with look-ahead leakage.
+- **"Large-scale data processing" vs. "2-client HPC cluster":** These contradict each other. Say "multi-party prototype, 2 clients" and state the scaling plan.
+- **"Quantum-Secure" in titles:** CKKS is lattice-based, so say "post-quantum (lattice-based)" and name the parameters. Ed25519 in PAYF is not quantum-safe, so don't let the labels blur together.
+- **Stats counters show 0** *(verify without JS)*: Crawlers, previews and no-JS users see "0 Years / 0 Papers / 0 Accuracy %". Put the real value in the HTML and animate from it.
+- **Dead and placeholder links:** "Live Demo" points to `#`. "View Source" goes to your GitHub profile, not the PAYF repo. GreyMisnomer has no link at all.
+- **Possible IP exposure (check this):** The site describes IDFs, patent-oriented work, and PAYF internals (shim headers, FlowCache, settlement). Public disclosure before filing can count as prior art against your own application, and C-DAC may have a disclosure policy. Confirm with your IPR/tech-transfer cell before leaving this public.
+
+## 1. Positioning and first impression
+
+- The headline says "Software Engineer & AI/ML Researcher". The meta keywords add "Data Scientist". The contact section lists 4 target domains. This reads as unfocused.
+- Pick one spine, for example "Secure & verifiable distributed systems: applied cryptography, HPC, privacy-preserving ML". Everything else supports it.
+- The hero line "Proven ability in building time-series forecasting models, RNN and QA automation" is the weakest sentence. QA automation dilutes the research story, "RNN" is vague (you used LSTM/GRU), and "Passionate about" is filler.
+- Leadership is invisible. Add "Leads a 4–5 person R&D team" in the hero and the C-DAC entry.
+- Hero CTAs: 3 equal buttons. Make one primary (View Research or Resume) and one secondary (Contact).
+- The "Years Experience" figure is hard-coded. Compute it from Dec 2022 so it doesn't go stale.
+- "Agile Projects" is a weak stat. Replace it with things like "1 paper published", "IETF-style specs authored", "Patent-track disclosures" (if disclosable).
+
+## 2. Information architecture and navigation
+
+- **Nav mismatch:** Top nav has Home, Experience, Research, Skills, Contact. Footer adds Education. Section order is Experience, Education, Skills, Projects, Contact. Section label is "Projects & Publications" but nav says "Research" and the anchor is `#projects`. Pick one name and one order.
+- **Wrong priority order:** Your strongest asset (research and projects) sits after experience, education and skill bars. Suggested order: Hero → Featured research → Experience → Skills → Education & certs → Contact.
+- Add scroll-spy active state, `scroll-padding-top` so the sticky nav doesn't cover headings, and an accessible mobile menu *(verify)*.
+- Consider separate case-study pages (`/payf`, `/ppqsflhe`) instead of one long page. This gives depth for reviewers and better SEO.
+
+## 3. Content by section
+
+**Experience (C-DAC)**
+- Bullets list what you built, not outcomes. Add scale, result, and your role (lead vs. contributor).
+- Spell out "IDFs" (Invention Disclosure Forms).
+- Tags are fine, but 11 chips is a wall. Keep 6–7.
+
+**Experience (Jio)**
+- Fine, but 2 entries could merge into one "Reliance Jio, Dec 2022–Sep 2024 (GET → QA)" with a progression line. It saves vertical space and shows growth.
+
+**Projects**
+- No visuals. A research portfolio needs figures: architecture diagram, protocol sequence, ns-3 result plot, dashboard screenshot. This is the biggest content gap.
+- Each project needs a status badge: Published / Under review / In progress / Prototype. The FL work in particular should show venue or submission status if applicable.
+- "Cryptographic Security Activity" is an odd label. Use "Study" or "Implementation".
+- "Unlinkable and untraceable" is an absolute claim. Soften or qualify it.
+- Tags per project: cap at 3–4.
+- "HE" is not expanded, and the FL title is too long. Use a short title plus a subtitle.
+- Consider adding VeriAuth (VC/DID on blockchain) if it's public. It strengthens the blockchain side.
+
+**Skills**
+- Remove the percentage bars (Python 85%, Rust 78%…). They're arbitrary and recruiters discount them. Use grouped tags, or "Used in: PAYF, FL framework" evidence.
+- Bars and the "Core Tech Stack" list overlap. Merge them.
+
+**Education and certifications**
+- Date format "May 26" / "Jan 26" is ambiguous (the 26th?). Use "May 2026".
+- 6 certificates, mostly Coursera. Collapse the generic ones into one line and keep the C-DAC and Qualcomm items prominent.
+- Class X/XII entries: keep them if you target govt/PSU roles. Otherwise compress.
+
+## 4. Copywriting and consistency
+
+- Pick one spelling variant. You mix "decentralised/monetisation" (UK) with US forms.
+- Hyphenation is inconsistent: "Quantum Secure" vs "Quantum-Secure", "AI-ML" vs "AI/ML".
+- Cut clichés: "Built with passion and precision. Continuously learning."
+- Footer © has no year.
+- **Identity inconsistency:** The page says Prabhat Vilas Karlekar, while the email and Medium handle say "pritvikarlekar". Decide how you want to be known and say it once (e.g., "Prabhat (Pritvi) Karlekar").
+- The resume file name `Prabhat Karlekar RTJ 26.pdf` has spaces and an internal-looking suffix. Rename it `prabhat-karlekar-resume.pdf`.
+
+## 5. Contact and privacy
+
+- Personal Gmail and full phone number are in plain text, which invites scraping and spam. Remove the phone. Obfuscate the email or use the form only.
+- "Chandrapur – 442401" while working in Pune is a mismatch. Use "Based in Pune / open to relocate" and drop the PIN code.
+- "Send a Quick Message" form *(verify)*: needs real labels (not placeholder-only), a working backend (Formspree/Web3Forms), spam protection (honeypot or Turnstile), and success/error states.
+
+## 6. Visual design (inferred from the stats-card URL)
+
+- The palette looks like default Tailwind: blue-500 (#3b82f6), violet-500 (#8b5cf6), slate-500 (#64748b). The blue-to-purple gradient is the generic "SaaS template" look. Choose one accent and use it sparingly.
+- Echo the Google/Wikipedia lesson: lots of whitespace, one typeface family, restrained motion.
+- A "PK" monogram is fine as a logo. Add a matching favicon and `theme-color`.
+- Dark mode: the GitHub stats image uses transparent background plus slate text, which becomes unreadable on dark backgrounds *(verify)*.
+
+## 7. Performance (target: Google-homepage lightness)
+
+GitHub Pages is fast by default, so the risks are what you add:
+- **Third-party stats image** (`gh-stats-card.vercel.app`): a cold-start dependency that can rate-limit or fail, and it leaks visitor IPs to a third party. Replace it with pinned repos or a build-time SVG generated by a GitHub Action.
+- Fonts: use a system stack, or max 1–2 weights with `font-display: swap`.
+- JS: no framework needed. `defer` all scripts, and trigger counters via IntersectionObserver.
+- Images: explicit `width`/`height`, `loading="lazy"`, WebP/AVIF.
+- Budget: <300 KB total transfer, LCP <1.5 s, CLS <0.1, INP <200 ms, Lighthouse ≥95 on all four categories.
+
+## 8. Accessibility *(all verify)*
+
+- `prefers-reduced-motion` for counters, bar fills and scroll animations.
+- Skill bars need text values or `role="progressbar"` with ARIA attributes. Otherwise screen readers get nothing.
+- Contrast: slate-500 on white passes AA only barely (~4.7:1). It fails on tinted or gradient backgrounds.
+- Visible focus rings, a skip-to-content link, a logical heading hierarchy, and 44px tap targets on mobile.
+- Gradient text needs a solid fallback.
+
+## 9. SEO and link previews
+
+- Present: title, description, og:title, og:description, og:type, viewport.
+- Missing (from what I could see): `og:image`, `og:url`, `twitter:card`, canonical, JSON-LD `Person` schema with `sameAs`, `sitemap.xml`, `robots.txt`.
+- No `og:image` means weak previews on LinkedIn and WhatsApp, where most portfolio links get shared. Add a 1200×630 image.
+- Meta keywords are ignored by Google. Remove them.
+- Trim the meta description to ≤155 characters.
+
+## 10. Security and hygiene
+
+- GitHub Pages can't set response headers. Use `<meta http-equiv="Content-Security-Policy">` and `<meta name="referrer">`, but note that `frame-ancestors` is ignored in meta tags. For real headers (HSTS, CSP, X-Frame-Options), put Cloudflare in front of a custom domain.
+- Add `rel="noopener noreferrer"` on all `target="_blank"` links.
+- Add SRI hashes for any CDN scripts. Avoid inline handlers so a strict CSP is possible.
+- Enforce HTTPS in repo settings.
+- A custom domain (`prabhatkarlekar.dev` or `.in`) adds credibility.
+- Optional: privacy-friendly analytics (GoatCounter/Plausible), plus a 404 page.
+
+## Suggested fix order
+
+| # | Fix | Effort |
+|---|---|---|
+| 1 | Correct "SHA encryption", leakage and accuracy claims | 20 min |
+| 2 | Check IP/disclosure policy for PAYF and IDF content | External |
+| 3 | Fix dead links and real repo URLs | 15 min |
+| 4 | Make counters render real values in the HTML | 30 min |
+| 5 | Remove phone, obfuscate email | 15 min |
+| 6 | Add OG image and meta tags | 30 min |
+| 7 | Drop skill percentage bars | 30 min |
+| 8 | Replace the third-party stats card | 1 hr |
+| 9 | Reorder sections and align nav | 1 hr |
+| 10 | Add figures and status badges per project | 2–4 hr |
+
+**Next step:** Share the repo (or paste `index.html`, CSS and JS) and I'll do a code-level audit and produce a tuned version. For the performance and accessibility numbers, run PageSpeed Insights on the URL and paste the results.
+
+
+# Updated audit: your actual portfolio source code
+
+The ZIP gives me a much clearer picture. I can now evaluate the actual HTML, CSS, JavaScript, résumé file, and GitHub Pages deployment workflow instead of relying primarily on the public page's content.
+
+My updated verdict: your portfolio has a solid foundation, but there are several concrete implementation issues I would fix before spending time on a major visual redesign. The most important are the mobile navigation, the contact form that reports success without sending anything, the research metric animations, and the amount of continuously running JavaScript.
+
+I reviewed the contents of `docs/index.html`, `docs/css/style.css`, `docs/js/script.js`, the PDF résumé, and `.github/workflows/pages.yml`. This is a source-code audit; I have not executed the website in a real browser or run Lighthouse, so I will not present unmeasured performance or security claims as facts.
+
+## 1. Findings that change my original assessment
+
+Mobile navigation
+
+Fix first
+
+At widths below 768px, the CSS hides `.nav-links`. There is no corresponding menu-toggle button in the HTML, so the main navigation disappears on mobile. The hero and footer still offer some navigation, but the main menu is unavailable.
+
+Contact form
+
+Fix first
+
+The form's JavaScript prevents normal submission, logs the form data to the console, and changes the button to “Message Sent!” without sending a message. Its inputs also lack `name` attributes, so `FormData` will not contain the entered values.
+
+Research metric animations
+
+Fix first
+
+The JavaScript chooses a suffix based on the initial text, which is `0` for all three metrics. As written, the values are animated with an `x` suffix, meaning accuracy and feature counts can display as `85.0x` and `12.0x` rather than `85%` and `12`.
+
+Neural background
+
+Optimize
+
+A canvas animation runs continuously, moving particles and checking pairwise distances to draw connecting lines. It does respect reduced-motion preference, which is good, but it does not pause when the tab is hidden or stop after the visitor has moved beyond the relevant experience.
+
+Project links
+
+Improve
+
+PAYF's “View Source” link leads to your GitHub profile rather than a specific repository, and “Live Demo” points to `#`. These are concrete opportunities to improve the portfolio's credibility and usefulness.
+
+These are source-level findings, not hypothetical recommendations. The exact user-visible effect of each one should still be confirmed against the deployed site.
+
+## 2. Performance: the biggest architectural opportunity
+
+Your website is built using plain HTML, CSS, and JavaScript. For this type of portfolio, I consider that a good starting point. You do not need to migrate to React, Next.js, or another framework simply to make the website feel modern.
+
+The opportunity is to make the existing implementation leaner.
+
+### A. Remove or redesign the neural background
+
+Your `script.js` contains a canvas animation with up to 40 particles on mobile and 70 on desktop. It redraws the canvas on every animation frame and calculates the distance between every pair of particles.
+
+With 70 particles, that means 2,415 unique particle-pair checks per frame before accounting for drawing operations. At 60 frames per second, that is approximately 144,900 pair checks per second.
+
+That calculation is not a benchmark of actual CPU usage, but it explains why the effect has a nonzero and continuous computational cost.
+
+My recommendation:
+
+- Prefer a static, subtle background as the default.
+- If you retain the animation, pause it when the page is hidden.
+- Avoid restarting the animation on every resize event without a debounce or appropriate scheduling.
+- Keep the existing reduced-motion support.
+- Test battery consumption and responsiveness on lower-powered mobile devices.
+- Ensure the animation never competes with text or interactive elements.
+
+I would not remove all visual character. I would simply ensure that the website's visual identity does not require continuous computation.
+
+### B. Reduce external dependencies
+
+Your HTML loads two external font families from Google Fonts and Font Awesome 6.4.0 from a CDN. It also loads a remote GitHub statistics image from a Vercel-hosted service.
+
+Each dependency can introduce network requests, latency, availability concerns, and some additional privacy exposure.
+
+## Dependency review
+
+Google Fonts
+
+Inter and JetBrains Mono are a reasonable pairing, but I would check which weights are actually used. Keep only the necessary weights or consider self-hosting optimized font files.
+
+Font Awesome
+
+The site uses many icons. Keep a consistent icon style, but evaluate whether loading the complete icon stylesheet is worth the cost. A small set of inline SVG icons may be sufficient.
+
+Remote GitHub statistics
+
+Treat this as optional content. If it loads slowly or fails, the rest of the portfolio should remain unaffected. A static contribution summary or a simple GitHub profile link may be a better trade-off.
+
+I would not automatically remove every external dependency. I would measure each one, decide whether it contributes meaningful value, and keep the smallest set that meets your requirements.
+
+### C. Simplify the JavaScript lifecycle
+
+Your script currently has several overlapping mechanisms:
+
+- `initNavigation()` installs a scroll listener.
+- A separate global scroll handler repeats active-navigation calculations.
+- `initAnimations()` observes project cards, timeline items, and skill categories.
+- `initScrollAnimations()` installs another observer for sections and additional observers for metrics.
+- The page-visibility handler calls `init()`, which returns early because the application is already initialized.
+
+This is more complicated than a portfolio needs.
+
+I would consolidate the behavior into a small number of well-defined modules:
+
+1. Theme preference and toggle.
+2. Mobile navigation.
+3. Active-section tracking.
+4. Optional entrance animations.
+5. Metric presentation, if retained.
+6. Contact handling, only if a real submission mechanism exists.
+
+The goal is not to minimize the number of lines at all costs. It is to reduce unnecessary event listeners, duplicated calculations, and code paths that are difficult to reason about.
+
+### D. Improve animation behavior
+
+Your typewriter effect reveals three professional descriptors sequentially. That can be visually appealing, but it introduces a delay before all the role information is displayed.
+
+I would either display the descriptors as static text or use a subtle animation that does not hide essential information from users or assistive technology.
+
+The project cards and sections also animate into view. I would retain only effects that make navigation feel smoother, and I would ensure that reduced-motion preferences disable nonessential movement consistently across the site.
+
+### E. What we cannot conclude yet
+
+I have not measured the site's actual bundle size, time to first render, LCP, INP, CLS, or memory usage. The source indicates where optimization opportunities exist, but only browser testing can establish whether those opportunities translate into measurable improvements.
+
+## 3. Design direction: what I would change visually
+
+Your current design uses a blue-to-purple gradient, translucent cards, rounded corners, animated elements, a fixed navigation bar, and a dark-mode theme. The CSS also defines a consistent set of colors, spacing values, shadows, and transitions.
+
+That is a reasonable design foundation. I would refine it rather than discard it.
+
+[Vu A. Hoang - Full-Stack Developer & AI Engineer](https://images.openai.com/static-rsc-4/9cMBa5iazT7DRwFa-EtT-e1uQAeqJoIGUu0a4odQL3BGWbPMgZh7f8BjBlh8AeXzAA1Wyoz8AMXUP3nH2heQ6gL3rT1dCnA2T1Xl2BWDXOvQ9YQQ26IliXxSJ7Njh1Ih76_CNgbJsizg4HmoIaEXgE4wabHpE5_HxX_owZpYxhw?purpose=inline)
+
+My preferred direction: clean technical editorial
+
+Use a neutral background, dark readable text, one primary accent color, subtle separators, and carefully composed project summaries. Keep gradients for a few intentional highlights rather than applying them everywhere.
+
+[Ajay Vinjamuri](https://images.openai.com/static-rsc-4/IzyewuYDAyGdb64y_qNkhO2ZF2j-af_HjRyhEZJCHwsFall6T5_tj02B2fHsUeKgh7mQVdfFMsnVROqpkVZ8YDLetVv8b28MHqyKxxsOTkUEDrhkLzilPp-VqGE-oFrWdFuJNzWlSE6SG5gOEJn1gFYpQb04QXtzi3lHzP0bMVk?purpose=inline)
+
+Alternative: restrained dark mode
+
+Keep the dark theme, but simplify glows, translucent layers, and shadows. The emphasis should remain on readable technical content rather than decorative effects.
+
+These are visual references for the design direction, not screenshots of your actual website.
+
+### A. Header and navigation
+
+I would preserve the fixed header but reduce the number of competing visual elements.
+
+The desktop header can contain your initials or a compact wordmark, the main navigation, a theme toggle, and a résumé action.
+
+On mobile, replace the hidden navigation with a real menu button that has an accessible name, correct `aria-expanded` state, and reliable keyboard behavior. Ensure the menu can be opened and closed, and that selecting a link moves the visitor to the intended section.
+
+### B. Hero section
+
+The current hero has a name, job badge, typewriter descriptors, a summary paragraph, three calls to action, animated statistics, and a “Currently Building” card.
+
+That is a lot of competing content for one viewport.
+
+I would simplify the first screen to:
+
+- Your name and current role.
+- A concise, coherent professional positioning statement.
+- Two primary actions: projects and résumé.
+- One secondary contact link.
+- A compact row of verified professional highlights.
+
+I would remove the animated counters from the hero unless they provide meaningful information. The visitor should not need to wait for a number to animate before understanding your profile.
+
+The “Currently Building” card can remain, but it should show no more than two or three active projects, each with an accurate status and a direct link when one exists.
+
+### C. Project cards
+
+The current cards contain detailed descriptions and technology tags, with some cards also containing impact metrics and links.
+
+I would make the hierarchy more consistent:
+
+1. Project title and status.
+2. One-sentence problem statement.
+3. Short explanation of your contribution.
+4. A small, curated set of technology tags.
+5. Evidence links: repository, paper, technical specification, or demo.
+
+The featured project can have a little more visual prominence, but not every card needs a gradient, badge, and separate decorative treatment.
+
+### D. Typography and spacing
+
+I would keep Inter for general content if it performs well in testing and retain JetBrains Mono for limited technical metadata, code snippets, and protocol labels.
+
+I would standardize heading sizes, card padding, section spacing, and text widths. The aim is to make the site feel like one coherent design system, rather than a collection of individually styled sections.
+
+### E. Dark mode
+
+Your CSS already supports theme variables, and the JavaScript saves the selected theme in local storage while respecting the system preference when no explicit selection exists.
+
+I would retain this feature, with three refinements:
+
+- Avoid a noticeable flash of the wrong theme during initial rendering.
+- Ensure all muted text, borders, forms, and third-party content remain readable in both themes.
+- Verify that the saved preference and system preference behave consistently.
+
+Dark mode is a useful feature, but it should not be prioritized ahead of navigation, form correctness, and content quality.
+
+## 4. Content and professional positioning
+
+Now that I have seen the source, I would make a distinction between what your portfolio says you do and what it demonstrates you have done.
+
+Your strongest differentiator is the combination of software engineering, HPC, AI/ML, and security-oriented research. The website already contains material that can support that positioning. The task is to make the relationship between those areas clear and provide direct evidence for your claims.
+
+### A. Rewrite the hero description
+
+Your current summary contains several useful keywords, but phrases such as “cryptographic, scalable AI/ML” and “production-ready architecture” could be more precise.
+
+I would use something closer to this:
+
+I’m a software engineer and research-oriented systems developer working across high-performance computing, privacy-preserving machine learning, cryptography, and distributed systems. My work spans engineering prototypes, protocol design, system simulation, and experimental evaluation, with a focus on building secure and scalable technical solutions.
+
+This is a proposed draft. It should be adjusted to reflect the specific projects you are authorized to discuss and the depth of your contributions.
+
+### B. Improve the experience timeline
+
+The C-DAC section contains five technically rich contributions. That is useful evidence, but the current presentation gives every bullet a similar level of emphasis.
+
+I would prioritize the work most relevant to your intended roles:
+
+- Privacy-preserving federated learning using homomorphic encryption.
+- PAYF protocol simulation and cryptographically verifiable billing.
+- Distributed architecture and protocol specifications.
+- Other infrastructure and registry work, where appropriate.
+
+For the JioCloud roles, retain the testing and quality engineering experience. It shows a progression into more complex engineering responsibilities.
+
+The claim that manual regression testing was reduced by 40% is particularly useful if you can explain the baseline, what was automated, and how the reduction was measured. If it is an estimate rather than a measured result, the wording should reflect that.
+
+### C. Remove self-assessed skill percentages
+
+The skills section currently assigns percentages to Python, C/C++, Rust, Linux/HPC, Bash, TensorFlow/Keras, time-series ML, cryptography, and blockchain.
+
+I would replace those percentages with grouped skills and project evidence. A number such as “Rust — 78%” has no clear interpretation unless you define a rigorous assessment scale.
+
+For a technical audience, the following is stronger:
+
+- Rust — used in a specific implementation or SDK.
+- Python — used in machine-learning experiments and data processing.
+- OpenFHE and CKKS — used in the stated homomorphic-encryption workflow.
+- ns-3 — used to simulate the described network protocol.
+
+These are examples based on the technologies already present in your source. The exact wording should correspond to your actual contribution.
+
+### D. Separate publications from active projects
+
+The project section combines active research, protocol development, machine-learning experiments, and academic work. I would keep them together in a portfolio overview if that is convenient, but explicitly label their status.
+
+A good status vocabulary could be:
+
+- Published research.
+- Active development.
+- Research prototype.
+- Technical specification.
+- Completed academic project.
+
+Only use a label when it is accurate. In particular, “open source” should point to a public repository, and “live demo” should point to a functioning demo.
+
+### E. Revisit the numerical research claims
+
+The source includes claims of 85%+ accuracy and an 80% reduction in privacy leakage for the federated-learning work, along with animated values for the time-series project.
+
+These should be supported by the underlying experiments.
+
+For the forecasting project, I would identify the metric used, the baseline, the train/test methodology, and the dataset. For privacy leakage, I would identify the specific leakage measure and comparison method. For any performance speedup, I would state the reference implementation and hardware or execution conditions.
+
+This is particularly important because the portfolio is presenting you to people who may understand the technical distinctions.
+
+## 5. Accessibility and mobile usability
+
+The current source has some positive foundations: semantic section elements, a main landmark, descriptive page title, form validation attributes, and reduced-motion handling for the canvas.
+
+However, there are several areas I would correct.
+
+| Area               | Finding and recommended change                                                                                                                            |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mobile navigation  | Hidden at small widths without a functional menu toggle. Implement an accessible menu.                                                                    |
+| Contact fields     | Placeholder-only inputs have no explicit labels. Add persistent labels and appropriate `name` attributes.                                                 |
+| Keyboard focus     | Audit all buttons and links. The form removes the default outline on focus, replacing it with a custom shadow; verify that focus remains clearly visible. |
+| Animated text      | Ensure the typewriter effect does not make important role information unavailable or difficult to read.                                                   |
+| Reduced motion     | Apply reduced-motion preferences to all nonessential animations, not just the canvas.                                                                     |
+| Contrast           | Test both themes, including muted metadata, buttons, tags, and focus states.                                                                              |
+| Section navigation | Verify anchor targets, sticky-header offsets, and keyboard behavior.                                                                                      |
+| Image alternatives | The GitHub statistics image has alternative text, but its usefulness depends on whether the image loads and what information it conveys.                  |
+
+I would also test at narrow viewport widths, browser zoom, and with keyboard-only navigation. These checks should be performed on the actual rendered site, not inferred from the CSS alone.
+
+## 6. Security and privacy
+
+Your site is a static website, which can be an excellent security baseline because it has no application database or custom server-side application visible in the supplied source. That does not mean every security property is automatically satisfied.
+
+### A. Fix the contact-form behavior first
+
+This is the most important trust issue in the current JavaScript.
+
+The form currently gives a false success indication. If you want a working contact form, connect it to a suitable form service or a backend endpoint and display “Message sent” only after the service confirms success.
+
+If you do not need a form, remove it and provide a direct email link instead. That would be simpler and would avoid collecting visitor data through a nonfunctional interface.
+
+### B. Review the GitHub Pages deployment
+
+Your workflow deploys the `docs` directory using GitHub Pages deployment actions. This is a straightforward deployment approach for a static site.
+
+I would verify:
+
+- The intended branch and deployment source are correct.
+- The deployment workflow succeeds consistently.
+- No secrets are committed to the public repository.
+- HTTPS works correctly on the published site.
+- All required assets are present in the deployed directory.
+- The résumé and all external links work from the production URL.
+
+I would not claim that security headers are missing without inspecting the live HTTP response. GitHub Pages also imposes hosting-level constraints, so any header recommendations must be compatible with the actual hosting configuration.
+
+### C. Reduce unnecessary third-party requests
+
+The fonts, icon stylesheet, and GitHub statistics service are the main external dependencies visible in the supplied HTML.
+
+I would assess whether each is necessary, document what it contributes, and remove anything that does not justify its network and privacy cost.
+
+### D. Review publicly exposed information
+
+Your contact section contains an email address, phone number, and a detailed location. Consider whether all three need to be displayed publicly and indexed by search engines.
+
+A portfolio can remain professionally useful with a dedicated contact email and relevant professional profile links. This is a personal privacy choice rather than a technical defect, but it deserves deliberate consideration.
+
+## 7. SEO and professional discoverability
+
+Your HTML already has a descriptive title, meta description, author metadata, and Open Graph title and description. That is a good starting point.
+
+I would make the following refinements:
+
+- Canonical URL: specify the preferred HTTPS portfolio URL.
+- Social preview image: create a restrained image with your name and professional focus so shared links look intentional.
+- Twitter/X card metadata: provide appropriate title, description, and image metadata.
+- Search-friendly headings: maintain one clear H1 and a logical hierarchy of section headings.
+- Project links: link directly to specific public repositories, papers, and demos rather than generic profiles or placeholder URLs.
+- Résumé accessibility: ensure the downloadable PDF is current, readable, and accurately reflects the portfolio.
+- Broken-link checks: automate checks for important internal and external links.
+
+The `keywords` meta tag can be deprioritized; it is not a meaningful ranking lever for Google Search. Clear content, crawlability, useful links, and a well-structured page matter much more.
+
+## 8. Deployment and maintainability
+
+I would retain your current GitHub Pages workflow unless testing reveals a reason to change it.
+
+The repository is already organized with the website under `docs/`, its CSS and JavaScript in separate directories, a résumé PDF, and a GitHub Actions workflow that deploys the `docs` directory.
+
+That is a straightforward structure for a static portfolio.
+
+My suggested improvements are:
+
+1. Add basic HTML validation and broken-link checks.
+2. Validate JavaScript syntax as part of the workflow.
+3. Add a deployment check to confirm the expected files exist.
+4. Review third-party dependency versions and update them deliberately.
+5. Test the site before publishing changes.
+6. Keep a clear rollback path.
+
+I would avoid introducing a build system, framework, or complex CI pipeline until it provides a real benefit. A small website should be easy to understand and maintain.
+
+## 9. The implementation roadmap I recommend
+
+Here is the order I would follow for your specific website.
+
+## 01
+
+### Correct functional defects
+
+Immediate
+
+Fix mobile navigation, correct the metric suffix logic, remove the fake contact-form success behavior, and replace placeholder project links. These changes improve actual usability and trust.
+
+## 02
+
+### Refine the professional narrative
+
+High
+
+Improve the hero summary, emphasize the strongest technical work, replace skill percentages with meaningful categories, and clarify publication and project status.
+
+## 03
+
+### Simplify the implementation
+
+High
+
+Consolidate scroll handlers and observers, reduce unnecessary animation work, review external dependencies, and preserve the simple static architecture.
+
+## 04
+
+### Refine the design system
+
+After fixes
+
+Standardize typography, spacing, colors, project cards, and theme behavior. Keep the visual identity distinctive but restrained.
+
+## 05
+
+### Validate the result
+
+Before release
+
+Test desktop and mobile behavior, keyboard accessibility, links, contact handling, Core Web Vitals, hosting configuration, and the deployment workflow.
+
+## 10. What I would preserve
+
+A good audit should identify strengths as well as problems. I would retain these parts of your current implementation:
+
+- Plain HTML, CSS, and JavaScript as the baseline.
+- The existing theme variables and dark-mode capability.
+- The professional experience timeline.
+- The technical depth of the research and project descriptions.
+- The separate CSS and JavaScript files.
+- GitHub Pages deployment through GitHub Actions.
+- Reduced-motion support, while extending it to the other animations.
+- Your existing résumé and publication links, after verifying that the documents and destinations are current.
+
+I would also preserve your broad technical identity. The aim is to connect your work across AI/ML, HPC, cryptography, and distributed systems, not force you into a generic single-discipline software developer profile.
+
+## My final assessment
+
+Your portfolio does not need an expensive-looking redesign or a wholesale rewrite to become substantially better. It needs a combination of functional corrections, clearer professional positioning, less unnecessary browser work, stronger evidence for technical claims, and disciplined visual refinement.
+
+The first changes I would make are the mobile menu, the nonfunctional contact form, the incorrect research metric suffixes, and the placeholder project links. Those are concrete issues in the source you supplied. The next phase should focus on improving the project narrative and reducing the ongoing cost of the animation and external dependencies.
+
+After that, I would use real browser testing to decide which further performance and accessibility changes are necessary.
+
+I would treat Google as the inspiration for simplicity, Cloudflare for security-minded engineering, and GitHub for technical credibility — while keeping the portfolio unmistakably yours.
+
+I have completed this source-level review, but I have not modified your ZIP, changed your GitHub repository, or deployed any changes to your live site. The appropriate next step is to implement the highest-priority corrections on a separate working copy and validate them before publishing.
+
+
+# Portfolio review: Prabhat Karlekar
+
+My goal would be to turn your portfolio into a fast, lightweight, technically credible, secure, and professionally designed personal website — one that communicates your strengths within seconds and gives recruiters, engineering leaders, and research collaborators a compelling reason to explore your work.
+
+I would not simply copy Google's homepage or add a fashionable dark theme with animations. I'd take the underlying principles that make Google, Cloudflare, GitHub, and Wikipedia effective and apply them to your own identity, career, and technical projects.
+
+There are four separate things we need to evaluate:
+
+- What visitors see: visual design, content, hierarchy, navigation, and mobile experience.
+- How the website behaves: speed, accessibility, responsiveness, usability, and reliability.
+- How it is built: HTML, CSS, JavaScript, dependencies, hosting, architecture, and maintainability.
+- How it represents you: professional positioning, project evidence, research credibility, discoverability, and contact experience.
+
+One important qualification before I begin: I attempted to locate the exact website through public search, but I haven't obtained a reliable, inspectable copy of its current rendered pages or source code yet. So I will distinguish between your initial strategic review and findings that would require direct inspection. I won't pretend to have measured your page speed, verified your security headers, or inspected your CSS when I haven't.
+
+## 1. Executive assessment of your current portfolio
+
+I can now inspect the website's published page content. Your site is positioned as “Prabhat Karlekar | Software Engineer & AI/ML Researcher”, with sections for experience, education, technical skills, research projects, publications, and contact. It presents you as a Project Engineer working in HPC and infrastructure engineering at C-DAC.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+## Initial portfolio assessment
+
+Content and information architecture review — not a measured performance or security audit.
+
+Professional positioning
+
+Strong foundation
+
+A clear technical identity across software engineering, AI/ML, security, and HPC.
+
+Technical credibility
+
+Promising
+
+Real research themes, technical details, and links to source code and publications.
+
+Content clarity
+
+Needs refinement
+
+Several disciplines compete for attention; the main professional specialization could be sharper.
+
+Evidence and trust
+
+Needs validation
+
+Some numerical impact claims and skill percentages need context and supporting evidence.
+
+Accessibility and reliability
+
+Needs testing
+
+The rendered behavior, keyboard usability, mobile layout, and working links need verification.
+
+Performance and security
+
+Not yet measured
+
+Actual load time, Core Web Vitals, resource weight, and security headers require testing.
+
+My initial conclusion is that you have useful professional material to work with. The biggest opportunity is not adding more content or technology for its own sake. It is making the existing work easier to understand, easier to verify, and easier to navigate, while ensuring the implementation is as efficient as the professional image you want to project.
+
+## 2. Your professional identity and homepage
+
+The current hero introduces your name, your job title, a summary of your experience, and links to projects, experience, and contact. It also presents three numerical indicators and a “Currently Building” area.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+### What is working
+
+- Your full name is prominent.
+- Your professional title is specific enough to distinguish you from a generic web developer.
+- The summary mentions cryptography, AI/ML, distributed systems, and HPC.
+- Visitors can navigate directly to important areas rather than having to discover them by scrolling.
+
+### What I would change
+
+A. Make your specialization immediately understandable.
+
+Your experience spans quality assurance, machine learning, cryptography, federated learning, networking, distributed systems, and high-performance computing. That breadth is valuable, but a visitor should not have to assemble the connections independently.
+
+I would position the portfolio around a coherent theme:
+
+> Secure, privacy-preserving intelligent systems — from cryptographic protocols and distributed infrastructure to scalable AI/ML.
+
+This is a proposed positioning statement, not a claim that you work exclusively in these areas. It creates a unifying thread between your research and engineering work.
+
+B. Make the first screen answer four questions.
+
+Within the first few seconds, a recruiter or technical reviewer should be able to identify:
+
+1. Who you are.
+2. What problems you specialize in.
+3. What you have built or published.
+4. Where they can inspect your work or contact you.
+
+I'd prioritize two primary actions:
+
+- Explore my work
+- Download résumé
+
+A third, quieter link could lead to LinkedIn or GitHub. The page should not require a visitor to scroll before discovering your most important work.
+
+C. Avoid a generic AI-generated portfolio aesthetic.
+
+I would not use excessive gradients, a giant animated title, a floating collection of technology logos, or a decorative 3D background. Those effects can make a site look fashionable while reducing clarity and adding unnecessary implementation complexity.
+
+Instead, use deliberate typography, generous but controlled spacing, a restrained color palette, and strong visual hierarchy. The result should feel like a technical professional's publication and engineering portfolio, not a generic agency landing page.
+
+D. Reconsider the “Currently Building” section.
+
+Your page identifies PAYF Protocol, a quantum-secure federated learning project, and a carbon registry SDK as current work.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+That is useful, but the section should distinguish between:
+
+- Active implementation.
+- Research and design.
+- A prototype or simulation.
+- A planned direction.
+
+A visitor should not have to infer the maturity of each project from its title. Add a small text status such as “Active development,” “Research prototype,” or “Specification in progress,” where accurate.
+
+## 3. Navigation and page structure
+
+Your published navigation includes Home, Experience, Research, Skills, and Contact, with a résumé link. The page also contains education, certifications, projects, and publications.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+The structure is sensible, but I would organize it around the visitor's likely goals rather than your site's internal categories.
+
+### Proposed navigation
+
+PRIMARY NAVIGATION
+
+Home
+
+Work
+
+Research
+
+Experience
+
+About
+
+PRIMARY ACTION
+
+Download résumé
+
+Keep this consistently accessible without making it visually louder than everything else.
+
+FOOTER AND SECONDARY LINKS
+
+GitHub · LinkedIn · Publications · Email · Certifications
+
+### Navigation details I would examine
+
+- Does the header remain usable on smaller screens?
+- Is the active section indicated clearly while scrolling?
+- Do links land below a fixed header rather than hiding the section heading?
+- Can visitors use the navigation entirely by keyboard?
+- Does the mobile menu close when a section is selected?
+- Does the browser back button behave naturally?
+- Do all sections have stable, shareable URL fragments?
+- Are there duplicate navigation links that add clutter without adding value?
+
+I would retain simple anchor navigation if the site is primarily a single page. You do not need a client-side routing framework just to scroll between sections.
+
+## 4. Experience: tell a coherent career story
+
+The site describes your progression from a Graduate Engineer Trainee role to Quality Analyst at Reliance Jio Platforms, followed by Project Engineer – HPC I&E at C-DAC. It also includes technical responsibilities and skills for each role.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+This progression is a strength because it can tell a story about how you moved from testing and software quality into systems engineering and research.
+
+### What should improve
+
+Make the progression explicit. A simple timeline can show the transition from quality assurance and testing into AI/ML, security, and HPC. This communicates growth more effectively than three isolated job cards.
+
+Separate responsibilities from achievements. “Collaborated with cross-functional teams” describes a responsibility. A measurable improvement, a system delivered, a defect class eliminated, or a technical capability introduced is stronger evidence of impact.
+
+Use a consistent structure for every role:
+
+- Role, organization, and dates.
+- One sentence describing the environment and purpose.
+- Two to four specific contributions.
+- Verified results, where available.
+- Technologies actually used in that role.
+
+Your current C-DAC entry contains several technically rich contributions, including federated learning with homomorphic encryption and an ns-3-based protocol simulation.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+&#x20;Those deserve more attention than a long list of keywords.
+
+
+
+For earlier roles, I would preserve the quality engineering experience rather than hide it. It provides evidence of testing discipline, defect investigation, and release reliability, which are relevant to building dependable systems.
+
+## 5. Projects and research — the most important section to get right
+
+This is where I would invest the greatest amount of content-design effort.
+
+Your portfolio lists PAYF, GreyMisnomer, privacy-preserving federated learning with multikey CKKS homomorphic encryption, time-series machine learning on HPC, blockchain via stealth addresses, and a blockchain-based e-voting project.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+These are not all the same kind of work. Some are protocol designs, some are software implementations, some are research efforts, and some are academic projects. Presenting all of them as equivalent cards loses that distinction.
+
+### A. Give each project a clear identity
+
+[Ch9:IP module components](https://images.openai.com/static-rsc-4/GJH-tnW_gWpL2JSX_t3A6hb6b6afZyK3Y4tMjZypI9LdePfbzxroSnOOv9AksV5fzMeW5aMZDvfk2pu3PU_udzpuXDzJibV8kz7-erEWeuDW2gifRIi6SL4fW8H77nYC7GUsr5sMz18MKeeETzMIWJBniuutItM02TBwlhC4v3A?purpose=inline)
+
+### 1. PAYF — Pay As You Forward
+
+Distributed networking · Cryptographic verification
+
+Your page describes a protocol involving ns-3 simulation, signed QoS headers, a FlowCache, settlement engines, Rust APIs, and PostgreSQL.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+What I would emphasize: the problem with existing forwarding or settlement approaches, your protocol's design, the trust model, how packet-level verification works, and the evidence from simulation.
+
+Ideal links: source code, architecture diagram, technical specification, test results, and a demo if it is functional and safe to publish.
+
+[Secure and Flexible Privacy-Preserving Federated Learning Based on Multi-Key Fully Homomorphic Encryption | MDPI](https://images.openai.com/static-rsc-4/wGCfoXnFQhIsnKl-G0r4AKX44kbcMOkXiQ9dnNUdn6BKXnWrD4uXDJA5ToC-nwZlnNbwi24ulNH4eouqsHht2WNF8txeumLHNSF_h2Mq2cm0zwKylrJq4ZqP7U7OKbeWSaMUQLCwFda_e4UyfpYcZJeey7DGd3Qa__by5IuuzTg?purpose=inline)
+
+### 2. Privacy-preserving federated learning
+
+Applied cryptography · AI/ML · HPC
+
+The portfolio describes federated learning with multikey CKKS homomorphic encryption on HPC infrastructure.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+What I would emphasize: what remains local, what is encrypted, how aggregation works, the threat model, the computational cost, and the trade-offs between privacy and model utility.
+
+Ideal evidence: architecture diagram, reproducible experiment setup, evaluation tables, benchmark methodology, and a link to the published paper or repository.
+
+[New blockchain platform brings credibility to carbon registries](https://images.openai.com/static-rsc-4/xwvp_NP6qUky_YKbrfRFXu7KNGawlFXySuxIEEOjCufCpBS8gTkyT3xoHOk3L8mHXRfY7AZCTnivp478MwkHRD8lU8Dh9gpKUBbMZMsG5JFbMTzzwWpnXwQDLaaVzWwTJFpFabuapKpBP2z5tYliVSUIpyHnIXrrCIvBX82bMik?purpose=inline)
+
+### 3. GreyMisnomer — Carbon registry SDK
+
+Rust · Registry integrity · Protocol design
+
+The current description focuses on a Two-Proof Model and lifecycle guarantees intended to address double counting and greenwashing.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+What I would emphasize: the registry's trust assumptions, the meaning of each proof, how issuance and retirement are handled, and which guarantees have been implemented or formally specified.
+
+Avoid implying that a design eliminates greenwashing in every real-world setting. Explain precisely what the protocol can and cannot guarantee.
+
+[Electrical Load Forecasting Using LSTM, GRU, and RNN Algorithms](https://images.openai.com/static-rsc-4/ic8pZey-lsOaIV-QUCXHMY7owAFVNUp_xYl1OIcr8lGWWueHkE7w6V7VTJftQKn_Uaah9IDrS7yoKracyeK4Lx6jmX8wnKwFI7UJcUza_j5O7eMk8qT9OvtB6XOOilWTjOpZOdp-7NpEv0qqCbWmiLaQ_e1Cm5CsjkoNiaNMcBU?purpose=inline)
+
+### 4. Time-series machine learning on HPC
+
+Research · Model evaluation · Performance
+
+The site describes LSTM and GRU experiments, hyperparameter tuning, feature engineering, and financial time-series forecasting.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+What I would emphasize: the research question, experimental design, baseline, evaluation metrics, computational setup, results, limitations, and publication.
+
+This project is particularly suited to a small results table or an actual chart generated from your experiment data, rather than a purely decorative illustration.
+
+These image references are illustrative concepts for the types of project visuals I would use, not verified screenshots of your implementations.
+
+### B. Standardize the project-card design
+
+Every project card should answer a predictable set of questions.
+
+## Example project-card structure
+
+Proposed design
+
+RESEARCH PROTOTYPE · DISTRIBUTED SYSTEMS
+
+# PAYF — Verifiable packet-forwarding settlement
+
+Problem
+
+What limitation or unsolved problem motivated the work?
+
+Approach
+
+Explain the architecture and the important engineering decision in two or three sentences.
+
+My contribution
+
+Identify what you personally designed, implemented, evaluated, or documented, while accurately crediting collaborators.
+
+Evidence
+
+Implementation
+
+Repository and tests
+
+Validation
+
+Benchmarks and results
+
+View GitHubBack to portfolio
+
+Illustrative layout only. Project-specific links and evidence must be verified before use.
+
+### C. Add project detail pages where the evidence warrants them
+
+I would not turn every small project into a separate page. Instead:
+
+- Keep a concise overview on the main portfolio.
+- Create a detailed page for your strongest research or engineering projects.
+- Link to the relevant repository and publication.
+- Include diagrams and results only when they clarify real technical work.
+
+This creates a natural route for different visitors: a recruiter can scan the overview, while a researcher or engineering lead can investigate the implementation.
+
+### D. Be precise about collaboration and intellectual property
+
+For work involving an employer, research group, or collaborators, make it clear what is public, what is your individual contribution, and what is collaborative work. Do not publish confidential architecture, internal data, credentials, private code, or unpublished material without authorization.
+
+A technically impressive portfolio should also demonstrate good professional judgment about what not to disclose.
+
+## 6. Publications: separate published research from projects in progress
+
+Your page includes a time-series machine learning publication link to IEEE Xplore, alongside other research and protocol work.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+I would make the publications section more formal and easier to verify.
+
+For every publication, include:
+
+- Full paper title.
+- All authors in the correct order.
+- Publication venue and date.
+- DOI or official publisher link, where available.
+- A concise summary of the research question and contribution.
+- A PDF or repository link, only where legally and practically available.
+
+Then maintain a separate Research in progress section for work that is not yet published.
+
+This distinction matters. A paper accepted for publication, a published paper, a working paper, and a protocol specification are different forms of evidence. Your portfolio should label them accurately.
+
+For the time-series work, a link to the publication is more valuable than a vague statement that you do research. For work still in development, a design document, a reproducible repository, or a clearly labeled technical note may be the strongest evidence available.
+
+## 7. Skills: replace misleading precision with useful context
+
+The current page assigns percentages to skills such as Python, C/C++, Rust, Linux/HPC, TensorFlow/Keras, time-series ML, cryptography, and blockchain.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+This is one area I would reconsider carefully.
+
+A claim such as “Python — 85%” looks measurable, but visitors cannot know what the percentage represents. Is it proficiency against a defined rubric? Years of experience? A self-assessment? Performance relative to other developers?
+
+Without a clear methodology, these numbers can undermine the credibility of an otherwise strong technical portfolio.
+
+### My recommendation
+
+Organize skills into meaningful groups, with a brief explanation of where you have applied them.
+
+### Programming and systems
+
+Python
+
+Rust
+
+C/C++
+
+Linux
+
+Bash
+
+Connect each skill to a relevant project or engineering contribution.
+
+### AI and machine learning
+
+TensorFlow/Keras
+
+Federated Learning
+
+Time-Series ML
+
+Feature Engineering
+
+Highlight applied work and experimental evaluation.
+
+### Security and cryptography
+
+Homomorphic Encryption
+
+OpenFHE
+
+Ed25519
+
+Merkle Trees
+
+Distinguish practical implementation from theoretical familiarity.
+
+### Infrastructure and distributed systems
+
+HPC
+
+ns-3
+
+Apache Kafka
+
+PostgreSQL
+
+Show the actual system or workflow in which each technology was used.
+
+The groups above are based on technologies already listed on your website. They are not a claim that every technology has the same depth of practical use.
+
+I would also remove decorative proficiency bars unless you have a well-defined, defensible reason to retain them. A link to a working implementation or a reproducible experiment is usually stronger evidence than a percentage.
+
+## 8. Education and certifications
+
+Your current page includes your computer science degree, academic results, and several professional development certificates.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+I would preserve the information but reduce its visual weight relative to your professional work.
+
+### Education
+
+Use a compact format with the degree, institution, graduation period, and relevant distinction. School-level education can remain in a smaller subsection if you want a complete chronology, but it should not compete with your engineering and research experience.
+
+### Certifications
+
+Group certifications into areas such as:
+
+- AI and machine learning.
+- Data analytics and generative AI.
+- Cybersecurity and related technical training.
+- Other professional development.
+
+Each certification should have its official title, issuer, date, and a credential verification link where available.
+
+I would avoid generic or ambiguous labels such as “Google Career Certificates” or “IBM Professional Certificates” if the actual individual certificate titles are available. Specific titles provide more information and are easier to verify.
+
+The design should communicate that certifications complement your work; they should not occupy as much attention as substantive projects or published research.
+
+## 9. The numerical counters: a potentially important defect
+
+One detail stood out in the page's published, machine-readable content: the hero includes `0` for years of experience, research papers, and agile projects. The time-series project also includes three zero-valued metrics for accuracy, performance speedup, and features analyzed.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+I cannot tell from the extracted page alone whether those zeros are visible to a normal visitor, are temporary initial values, or represent a rendering or animation problem. But I would investigate this early because it could affect both presentation and credibility.
+
+### What I would test
+
+1. Load the page with JavaScript enabled and disabled.
+2. Watch whether the counters change after page load.
+3. Test whether they update when the relevant section scrolls into view.
+4. Check the browser console for JavaScript errors.
+5. Check whether the counters depend on a third-party library or external API.
+6. Inspect the page after a slow network load and when reduced motion is enabled.
+7. Check what search engines and link-preview systems can read.
+
+If a counter requires JavaScript, its initial HTML should still contain a sensible value. Essential information should not appear as zero until an animation completes.
+
+### Which numbers should remain?
+
+I would only display metrics that are meaningful, accurate, and explainable.
+
+For example, years of professional experience can be calculated from verified dates. Research-paper counts should reflect a clearly defined publication status. Project counts should state whether they include active projects, completed projects, or research prototypes.
+
+For machine learning, accuracy is not interchangeable with R², and neither tells the whole story for time-series forecasting. A meaningful result should specify the dataset, evaluation split, metric, baseline, and experimental conditions.
+
+Likewise, a claim about reducing privacy leakage by a certain percentage needs a defined leakage measure, comparison baseline, and reproducible methodology. Your page currently presents claims of 85%+ accuracy and 80% lower privacy leakage in the federated-learning project description.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+&#x20;I would retain such figures only if you can substantiate them and explain what they measure.
+
+
+
+My preference: three verified facts are better than six impressive-looking numbers that lack context.
+
+## 10. Visual design: how I would approach it
+
+I have inspected the page's content structure, but I have not yet verified its exact colors, font sizes, spacing, or responsive layout from browser screenshots. The following is my proposed visual direction, not a claim that your current styling has these defects.
+
+[Youssef Elsayed — Software & AI Engineer](https://images.openai.com/static-rsc-4/fktpSAKICM_Zch2RXDnCyTS-InBnmqnvuMeuFXUhvNQI86d5aNQEr7gfwn5kAcnY_N8AIn82hS1mk4b1hCrz5xury8Btnn_PL1rW2V7HMRM9_39C5qGuLrt8e9E-Og-3TUA_WdCRO5pp_CmBjhPHHiyS1UIdv_VoF43R_sjJp7o?purpose=inline)
+
+Direction A — Editorial engineering
+
+My preferred direction
+
+Off-white or neutral surfaces, dark text, a single restrained accent color, clean typography, thin separators, and carefully structured project summaries.
+
+Best for communicating technical maturity, research credibility, and professionalism.
+
+[Michał Ziółek | Lublin, Polska | useme | useme.com](https://images.openai.com/static-rsc-4/vy0eoZx7SNcvt40LyWRjvhQEyYuEogvnDC1qhmVYVpbeKtGGhuU9ITm0Ji3XNeI_bDox83ucipEKi2sILkvbbMLnrqufIoOoXFiP2bQWX0L4Uw9TQK7n497pK8cqctWrIgrlZtRbz2mcrJ0k20-06TC4ndlzkI5tSRCnV31gpLw?purpose=inline)
+
+Direction B — Restrained technical dark mode
+
+Charcoal backgrounds, high-contrast text, subtle borders, and one accent color. Avoid excessive glow, gradients, and neon effects.
+
+Best if you prefer a darker technical identity, provided text contrast and mobile readability remain excellent.
+
+### Typography
+
+I would use one well-chosen type family or a carefully matched pair, with a clear hierarchy for page titles, section headings, body text, metadata, and code.
+
+- Body text should remain comfortable to read on desktop and mobile.
+- Paragraph widths should not become excessively long on wide monitors.
+- Headings should communicate hierarchy without making every section visually dominant.
+- Technical labels should remain readable rather than shrinking into tiny chips.
+- External fonts should be self-hosted or loaded efficiently when practical, with suitable fallbacks.
+
+### Spacing and layout
+
+Consistency matters more than decorative effects.
+
+I would establish a small spacing scale, consistent section widths, predictable card padding, and deliberate vertical rhythm. Project cards should align without forcing descriptions into awkward heights.
+
+On desktop, the layout can use more horizontal space for diagrams and results. On mobile, it should naturally collapse into a single column without horizontal scrolling or tiny text.
+
+### Color and contrast
+
+Choose colors for their function: primary text, secondary text, links, borders, surfaces, and status indicators. Do not rely on color alone to distinguish project states or communicate information.
+
+Both light and dark modes can be good choices. Neither automatically makes a site faster, safer, or more accessible.
+
+### Animation and micro-interactions
+
+Animations should explain state changes or provide feedback, not exist merely to make the page feel modern.
+
+I would retain only those that serve a purpose, such as a subtle menu transition or a clear focus and hover state. I would avoid heavy scroll-triggered effects, elaborate cursor animations, and animated counters that delay essential information.
+
+## 11. Performance: making the site genuinely lightweight
+
+This is one of your explicit goals, and it deserves a technical audit rather than a visual guess.
+
+A website can look minimal and still be slow because of oversized images, blocking scripts, third-party widgets, unnecessary fonts, or a poorly optimized layout.
+
+### What I would measure
+
+| Area             | What to check                                                            |
+| ---------------- | ------------------------------------------------------------------------ |
+| Initial load     | HTML, CSS, JavaScript, fonts, and images transferred                     |
+| Rendering        | First Contentful Paint and Largest Contentful Paint                      |
+| Responsiveness   | Interaction to Next Paint                                                |
+| Visual stability | Cumulative Layout Shift                                                  |
+| Network          | Number of requests, compression, cache behavior, and resource waterfalls |
+| JavaScript       | Parse time, execution time, unused code, and runtime errors              |
+| Images           | Dimensions, file size, responsive variants, and modern formats           |
+| Third parties    | GitHub stats, analytics, embedded widgets, and remote fonts              |
+
+Google's Core Web Vitals provide useful targets: LCP at or below 2.5 seconds, INP at or below 200 milliseconds, and CLS at or below 0.1, evaluated at the 75th percentile of real visits where data is available. These are targets, not measurements of your current site.
+
+### My implementation strategy
+
+First: keep the initial page cheap to load.
+
+The browser should receive the page's important content without waiting for complex animation libraries or external services.
+
+Second: remove dependencies that do not justify their cost.
+
+If the website uses a large framework for a mostly static portfolio, we should evaluate whether it is necessary. But I would inspect the existing source before recommending a rewrite.
+
+Third: optimize images and fonts.
+
+Use correctly sized assets, avoid loading images before they are needed, and reserve their dimensions to prevent layout shifts. Load only the font weights you actually use.
+
+Fourth: make external widgets optional.
+
+Your page includes a GitHub activity/statistics image from an external service.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+&#x20;That widget may be useful, but I would check whether it loads reliably, how long it takes, and whether it can be replaced by a static or cached representation.
+
+
+
+Fifth: test the deployed site, not just the source code.
+
+Run Lighthouse on desktop and mobile, inspect the Network panel, and compare results before and after changes. Use repeated runs and distinguish lab measurements from real-user data.
+
+I would not promise a particular speed score until those tests have been run.
+
+## 12. Security and privacy
+
+Hosting a static portfolio on GitHub Pages can reduce the amount of server-side code you need to maintain. It does not, by itself, prove that the entire website is secure.
+
+Security needs to be assessed separately from appearance and performance.
+
+### A. Transport security
+
+Verify that the site consistently uses HTTPS, that HTTP requests redirect correctly, that there are no mixed-content resources, and that all important links point to the intended secure destination.
+
+### B. Third-party resources
+
+Every externally loaded script, font, analytics tool, image, or widget introduces a dependency. I would inventory them and ask:
+
+- Is this resource necessary?
+- Does it collect visitor data?
+- Does it block rendering?
+- Can it be replaced with a static asset?
+- Is it loaded from a trustworthy origin?
+- Could the page work if the service becomes unavailable?
+
+### C. Content Security Policy and security headers
+
+Inspect the actual response headers. Where the hosting platform permits the required controls, consider an appropriate Content Security Policy and other relevant browser security headers.
+
+GitHub Pages has hosting-level limitations, so not every header can necessarily be configured through repository files. If a header cannot be set directly, we should identify an appropriate hosting or CDN configuration rather than adding a file that has no effect.
+
+### D. Contact forms
+
+Your page includes a name field, email field, and message action.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+&#x20;The actual submission endpoint and its implementation still need to be inspected.
+
+
+
+A form that only uses HTML and JavaScript cannot securely protect a private credential embedded in client-side code. If a third-party form provider is used, check its privacy practices, spam protection, validation, and failure handling.
+
+Never put email API secrets, private tokens, passwords, or service credentials into public JavaScript or repository files.
+
+### E. Personal information
+
+The site publishes direct contact information and a specific location.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+&#x20;Decide how much information you want indexed and visible to every visitor.
+
+
+
+For a professional portfolio, a dedicated email address or clear contact link may be sufficient. A personal phone number or detailed location should be included only if you are comfortable with the exposure.
+
+### F. Repository hygiene
+
+Before sharing the portfolio widely, review the public repository for accidentally committed credentials, `.env` files, access tokens, private data, and unpublished material. If a credential has ever been exposed, removing it from the current file is not sufficient; rotate or revoke it.
+
+My security goal would be a small, auditable, dependency-light website with a clearly understood privacy footprint — not an unsupported claim that a portfolio is “unhackable.”
+
+## 13. Accessibility: the details that make a website usable
+
+Accessibility is not just a compliance exercise. It improves usability for recruiters, researchers, and anyone browsing your site on a different device, using a keyboard, or relying on assistive technology.
+
+I would audit the following areas against WCAG 2.2 AA where applicable.
+
+Keyboard navigation
+
+Every link, button, menu, and form control must be reachable and usable without a mouse.
+
+Focus visibility
+
+Provide a visible focus indicator that is not hidden beneath a sticky header or other content.
+
+Semantic HTML
+
+Use real headings, navigation landmarks, lists, buttons, links, and form labels rather than generic containers for everything.
+
+Contrast and readability
+
+Check text and interface contrast, including muted metadata, disabled controls, and both themes.
+
+Motion preferences
+
+Respect prefers-reduced-motion and avoid requiring animation to reveal important information.
+
+Responsive behavior
+
+Ensure the page remains usable with zoom, larger text, narrow viewports, and long project titles.
+
+Images and diagrams
+
+Provide meaningful alternative text when an image conveys information; use empty alt text for purely decorative images.
+
+Forms and feedback
+
+Identify fields programmatically, announce errors clearly, and show success or failure after submission.
+
+I would pay particular attention to the navigation, any animated counters, project cards with nested links, and the contact form. These are common places where visual polish can accidentally reduce keyboard or screen-reader usability.
+
+## 14. SEO and discoverability
+
+A professional portfolio needs to be understandable to both humans and search engines.
+
+I would inspect the actual HTML and metadata before making claims about your current SEO.
+
+### Page metadata
+
+- A clear, unique title such as `Prabhat Karlekar | Software Engineer, AI/ML & Secure Systems`.
+- A concise meta description that reflects your actual work.
+- A canonical URL pointing to the preferred HTTPS address.
+- A suitable social-sharing image, with Open Graph and Twitter card metadata.
+- A favicon and appropriate browser theme color.
+
+### Content structure
+
+- One clear main heading that identifies you and your professional focus.
+- A logical hierarchy of section headings.
+- Descriptive link text instead of repeated “Click here” labels.
+- Text that explains projects and research without relying entirely on images.
+- Structured data only where it accurately represents your identity and work.
+
+### Technical discoverability
+
+I would also verify that:
+
+- The page returns a successful HTTP response.
+- Important content is present in the HTML rather than requiring fragile JavaScript execution.
+- The sitemap and `robots.txt`, if provided, are correct.
+- The résumé and public research links work.
+- External links do not lead to broken or outdated destinations.
+- Search and social previews show the intended title, description, and image.
+
+A custom domain could be worth considering if you want a stable professional identity independent of a hosting platform, but it is not a prerequisite for a strong portfolio. Your existing GitHub Pages URL is perfectly usable while the website is being improved.
+
+## 15. Contact and conversion: help visitors take the next step
+
+Your page says you are open to research collaborations and engineering opportunities and offers direct contact options and a quick-message form.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+I would simplify this section rather than add more functionality.
+
+### Recommended contact section
+
+# Let's discuss engineering and research
+
+I welcome relevant conversations about secure systems, privacy-preserving AI, distributed infrastructure, and engineering opportunities.
+
+&#x20;Copy email addressGitHub profile
+
+Illustrative contact design using your currently published email and GitHub profile. No message has been sent.
+
+### Should you keep the contact form?
+
+Keep it if you genuinely want visitors to contact you through the website and can maintain a reliable, privacy-conscious submission mechanism.
+
+Otherwise, a direct email link and professional profile links may be enough. A nonfunctional form is worse than no form.
+
+If you retain the form, I would ensure that it has:
+
+- Proper field labels and validation.
+- Spam and abuse protection.
+- Clear submission status.
+- Accessible error messages.
+- A privacy notice appropriate to the data collected.
+- No exposed credentials.
+- A usable fallback if the submission service is unavailable.
+
+I would also avoid publishing a phone number, email address, or detailed location in multiple places without a clear purpose.
+
+## 16. Architecture: what should the website be built with?
+
+I would not select a framework based on popularity alone.
+
+For a portfolio that mainly presents text, research, images, links, and a few interactive features, a small static website is often a very good fit.
+
+## Preferred architecture for a lightweight portfolio
+
+Static HTML
+
+Semantic content, headings, links, project details, and metadata
+
+Modern CSS
+
+Responsive layout, design tokens, typography, theme, focus states
+
+Small amount of JavaScript
+
+Only for features that genuinely require interaction
+
+Static hosting / CDN
+
+HTTPS, caching, compression, and reliable asset delivery
+
+This is a proposed baseline, not a recommendation to rewrite your current site before inspecting it.
+
+### When a framework would make sense
+
+A static site generator or a framework with static output could be justified if you have many research pages, reusable project layouts, a blog, search, or a more extensive content system.
+
+The question is whether the additional tooling reduces maintenance enough to justify its complexity.
+
+For a small portfolio, I would generally avoid adding a database, server, authentication system, or API layer unless a real requirement calls for one.
+
+### How I would organize the source
+
+A maintainable structure could separate:
+
+- Page content and project data.
+- Shared layout and navigation.
+- Design tokens and component styles.
+- Small interactive behaviors.
+- Static assets such as images, icons, résumé, and diagrams.
+- Automated checks and deployment configuration.
+
+The exact file structure should follow your existing implementation rather than force an unnecessary rewrite.
+
+### Deployment and maintenance
+
+I would also consider:
+
+- Automated checks for broken links and basic HTML errors.
+- A lightweight build or validation workflow.
+- Version-controlled content changes.
+- Dependabot or equivalent dependency maintenance if dependencies exist.
+- A preview process before publishing changes.
+- A clear rollback path if an update breaks the live site.
+
+These improvements are less visible than a redesign, but they make the website more reliable over time.
+
+## 17. What I would prioritize first
+
+Not every improvement deserves equal effort. I would tackle the highest-impact issues before spending time on decorative refinements.
+
+Priority 1 — Correctness and trust
+
+Highest
+
+Investigate the zero-valued counters, verify numerical claims, test all links, confirm that the résumé works, and ensure that project maturity and publication status are accurate.
+
+Priority 2 — Professional positioning
+
+High
+
+Refine the headline, opening paragraph, primary actions, and the relationship between your engineering, research, and security work.
+
+Priority 3 — Information architecture
+
+High
+
+Improve the order of sections, standardize project cards, distinguish publications from ongoing research, and make the strongest work easy to find.
+
+Priority 4 — Performance and accessibility
+
+High
+
+Measure Core Web Vitals, optimize assets, test keyboard navigation, improve mobile behavior, and eliminate unnecessary third-party dependencies.
+
+Priority 5 — Security and privacy
+
+High
+
+Review hosting behavior, external resources, headers, contact handling, repository hygiene, and public personal information.
+
+Priority 6 — Visual polish
+
+After validation
+
+Refine typography, spacing, color, icons, illustrations, and transitions once the content and behavior are correct.
+
+## 18. The complete testing plan I would use
+
+Before calling the portfolio finished, I would test it from the perspective of a visitor, a browser, a search engine, and a developer maintaining the code.
+
+## Portfolio launch checklist
+
+0 of 16
+
+Content and links
+
+Verify every navigation anchor and external link.
+
+Verify résumé download and publication destinations.
+
+Check project statuses, dates, and numerical claims.
+
+Confirm contact actions work and provide feedback.
+
+Design and usability
+
+Test desktop, tablet, and mobile layouts.
+
+Test keyboard navigation and visible focus.
+
+Check contrast, zoom, and reduced-motion preferences.
+
+Verify no horizontal overflow or hidden section headings.
+
+Performance
+
+Run Lighthouse on desktop and mobile.
+
+Measure LCP, INP, and CLS where data is available.
+
+Inspect network requests, fonts, images, and third-party widgets.
+
+Compare performance before and after each major change.
+
+Security and discoverability
+
+Verify HTTPS and inspect response security headers.
+
+Review external resources and contact-form handling.
+
+Scan the public repository for exposed secrets.
+
+Validate page metadata, canonical URL, and social previews.
+
+Reset checklist
+
+This is a planning checklist, not a report of tests already performed.
+
+## 19. What I would not do
+
+There are several changes I would deliberately avoid:
+
+- I would not blindly rebuild the site in React or Next.js. A framework is not inherently faster or more secure than a well-built static site.
+- I would not add a backend without a requirement. A portfolio does not need a database just to display projects and contact information.
+- I would not add heavy animations, 3D graphics, or a chatbot merely to look modern. Each feature must justify its performance and maintenance cost.
+- I would not invent project metrics or inflate skill levels. Verifiable evidence is more persuasive than impressive but unexplained numbers.
+- I would not redesign everything before auditing the existing code. A few targeted corrections may produce a better result than a complete rewrite.
+- I would not claim the site is secure or exceptionally fast until it has been tested. Those qualities must be demonstrated, not inferred from appearance.
+
+## 20. My final verdict
+
+Your portfolio already communicates a broad technical background and includes substantive engineering and research topics. Its strongest potential is to present those topics as a coherent body of work, supported by implementations, research evidence, and clear explanations.&#x20;
+
+[image](https://www.google.com/s2/favicons?domain=https://prabhatkarlekar.github.io\&sz=32)
+
+Software Engineer & AI/ML Researcher
+
+
+
+I would build the improvement around five principles:
+
+Clarity first
+
+Visitors should understand your specialization and strongest work almost immediately.
+
+Evidence over decoration
+
+Repositories, publications, architecture, experiments, and accurate contributions should carry the portfolio.
+
+Performance by design
+
+Keep the initial page lightweight, minimize dependencies, and measure the deployed result.
+
+Security and privacy by default
+
+Minimize unnecessary data collection, inspect external dependencies, and avoid exposing sensitive information.
+
+Usability for everyone
+
+Make every important section readable, navigable, responsive, and accessible without unnecessary effects.
+
+The goal is not to make your portfolio resemble Google, Cloudflare, or GitHub. It is to borrow the right principles from each: Google's simplicity, Cloudflare's engineering-minded approach to security and performance, and GitHub's emphasis on inspectable technical work.
+
+### What I need for the next stage
+
+The next step should be a source-level audit, so I can move from recommendations to precise findings about your actual implementation.
+
+Please upload a ZIP of your portfolio's GitHub repository, or share the source files if that is easier. Ideally, include the HTML, CSS, JavaScript, asset files, and any build or deployment configuration. Exclude credentials, `.env` files, and other secrets.
+
+With the source available, I can identify specific code to retain, remove, or improve; trace the zero-valued counters; examine dependencies and external resources; recommend concrete performance and accessibility fixes; and propose an implementation plan that preserves what is already working.
+
+I would then move through three stages: audit the existing implementation, agree on the design and technical direction, and implement and validate the improvements — without making unnecessary changes to your live website before you approve them.
+
+
+Stepping back from writing code, here is a complete, ground-up breakdown of **"what is what"** across your repository structure, your updated resume data, and the engineering/design principles required to align them without breaking what you already have.
+
+---
+
+### 1. Repository & File Audit: What Exists Right Now
+
+When a `.zip` file is uploaded here, the system exposes the raw binary archive stream and directory headers (`PK` zip headers) rather than extracting the readable text inside compressed files. From inspecting the archive structure of `prabhatkarlekar.github.io-main_2.zip`, here is the exact anatomy of your repository:
+
+* **`.github/workflows/pages.yml` & `.github/README.md` (CI/CD Layer):** Your automated GitHub Actions deployment workflow that publishes your site to GitHub Pages whenever changes are pushed to `main`.
+
+
+* **`deployments/README.md` (Infrastructure Placeholder):** Currently contains `# Docker, IaC (later), K8s, Terraform scripts`, reserved for future containerization and Infrastructure-as-Code experiments.
+
+
+* **`docs/` (The Production Web Root):** GitHub Pages serves your live website from this folder. Inside it are four core artifacts:
+
+
+1. **`docs/index.html`:** Your structural DOM containing your existing bio, project cards, experience entries, and your full list of old certificates. (Note: Notice that between your first zip and second zip upload, `docs/index.html`, `docs/css/style.css`, `docs/js/script.js`, and the PDF changed in byte stream/hash, meaning you have active custom logic and layout in those files that should be preserved rather than overwritten).
+
+
+2. **`docs/css/style.css`:** Your styling rules governing layout, colors, responsiveness, and animations.
+
+
+3. **`docs/js/script.js`:** Your client-side interactivity (navigation handling, scroll effects, or UI toggles).
+
+
+4. **`docs/Prabhat Karlekar RTJ 26.pdf`:** The downloadable resume file currently sitting inside your live `docs/` folder. This needs special attention because your newly uploaded resume is named `Karlekar_Prabhat_June_26.pdf`.
+
+
+
+
+
+---
+
+### 2. Content Audit: What Your Updated Resume (`Karlekar_Prabhat_June_26.pdf`) Represents
+
+Comparing your live GitHub profile footprint with your updated June 2026 resume reveals a major evolution in your professional identity that the portfolio needs to reflect accurately:
+
+#### A. Professional Identity & Summary
+
+* **What Changed:** You are no longer positioned as an entry-level/aspiring developer or pure QA engineer. You are positioned as a **Software Engineer with 3+ years of experience** spanning **AI/ML, cryptographic systems, distributed computing, and HPC**, and an **IEEE-published researcher** in federated learning with homomorphic encryption.
+
+
+* **Core Value Proposition:** Building production-grade systems across distributed infrastructure, network protocol simulation, privacy-preserving ML frameworks, and blockchain.
+
+
+
+#### B. Technical Skills Taxonomy (6 Distinct Pillars)
+
+Instead of a flat list of keywords, your skills now divide cleanly into six architectural domains:
+
+1. **Languages:** Python, C/C++, Rust, Bash/Shell.
+
+
+2. **AI/ML & HPC:** TensorFlow, Keras, GRU/LSTM, Scikit-learn, NumPy, Pandas, OpenFHE (CKKS HE), Federated Learning, Apache Kafka, HPC.
+
+
+3. **Blockchain & Cryptography:** Smart Contracts, PKI, Merkle Trees, Homomorphic Encryption, Ed25519, SHA.
+
+
+4. **Systems & Networking:** Linux, ns-3, Distributed Systems, Computer Networking, CI/CD, GitLab/GitHub, WebAssembly.
+
+
+5. **Backend & Infra:** Rust/Axum, Yew/WASM, PostgreSQL, Mongoose HTTP.
+
+
+6. **QA & Testing:** STLC, Postman, Pytest, Charles Proxy, UAT, Log Analysis.
+
+
+
+#### C. Experience Spine (3 Roles Showing Clear Upward Trajectory)
+
+* **Role 1 (Current R&D Role): Project Engineer – HPC Infrastructure & Ecosystem | C-DAC, Pune (Oct 2024 – Present)**
+
+
+* *What it shows:* Deep protocol and systems architecture—decentralized architectures combining blockchain marketplaces with QoS resource allocation; authoring IDFs, whitepapers, and IETF-RFC style specs; architecting a Two-Proof Model privacy-preserving registry with Merkle commitments; building a multi-key CKKS federated learning framework across a 2-client HPC cluster; and developing the PAYF ns-3 protocol simulation with Ed25519-signed shim headers.
+
+
+
+
+* **Role 2: Quality Analyst – Jio Cloud | Reliance Jio Platforms Limited, Navi Mumbai (Dec 2023 – Sep 2024)**
+
+
+* *What it shows:* Distributed systems reliability—Agile test scenario design, regression reduction, defect triage, root-cause analysis (RCA), and release stabilization.
+
+
+
+
+* **Role 3: Graduate Engineer Trainee | Reliance Jio Platforms Limited, Navi Mumbai (Dec 2022 – Nov 2023)**
+
+
+* *What it shows:* Foundational production engineering—cloud platforms, DevOps workflows, production monitoring, UAT, and API testing.
+
+
+
+
+
+#### D. Research & Projects (6 Projects Grouped into 3 Logical Tiers)
+
+Your projects are no longer just coding exercises; they are a mix of **systems protocols, published research, and full-stack cryptographic implementations**:
+
+* **Tier 1 — Flagship Protocol & HPC Systems (2025–2026):**
+* **PAYF (Pay As You Forward)** *(Apr 2026 | ns-3, Rust, PostgreSQL, Ed25519)*: Cryptographically verifiable packet-forwarding monetization protocol with signed QoS shim headers, FlowCache, settlement engines, Rust/Axum APIs, and a Yew/WebAssembly visualization dashboard.
+
+
+* **GreyMisnomer** *(2026 | Rust, RFC Design)*: Open-source verifiable carbon credit registry SDK preventing double counting and greenwashing at the protocol level via the Two-Proof Model (Proof-of-Integrity `PoI` and Proof-of-Offset `PoO`).
+
+
+* **Privacy-Preserving Quantum-Secure Federated Learning Framework** *(Sep 2025 | OpenFHE, TensorFlow/Keras)*: End-to-end federated learning integrating Multikey CKKS homomorphic encryption, encrypted model aggregation across HPC nodes, and encrypted communication pipelines via Apache Kafka and Mongoose HTTP server.
+
+
+
+
+* **Tier 2 — Published Academic & Cryptographic Research (2024–2025):**
+* **Parameter Optimisation & Feature Engineering for Time-Series ML on HPC** *(May 2025)*: IEEE-published research presented at SCI 2025.
+
+
+* **Blockchain via Stealth Addresses: A PKI Approach** *(Nov 2024)*: PKI-based stealth address architecture for transaction privacy and unlinkability in decentralized networks.
+
+
+
+
+* **Tier 3 — Foundational Blockchain Engineering (2021–2022):**
+* **Blockchain-Based E-Voting System** *(Jul 2021 – Jul 2022)*: Tamper-proof, publicly verifiable remote voting platform.
+
+
+
+
+
+#### E. Education & Certifications (Append-Only Strategy)
+
+* **Education:** B.Tech in Computer Science & Engineering, Dr. Babasaheb Ambedkar Technological University (DBATU), Lonere (Jul 2018 – Aug 2022) with **CGPA: 9.06/10**.
+
+
+* **New 2025–2026 Certifications (To be appended at the top of your existing certificates section):**
+* *Microsoft Coursera:* Advanced Data Analysis with Generative AI (May 2026)
+
+
+* *CDAC Pune:* Officer Training Basic on Artificial Intelligence (Jan 2026)
+
+
+* *Qualcomm Academy:* AI Upskilling Technical Foundation (Jan 2026)
+
+
+* *CDAC Hyderabad:* Machine Learning for Cyber Security (Oct 2025)
+
+
+
+
+* **Existing 2022–2023 Certifications (To remain untouched in your DOM):**
+* *Google Coursera (2023):* Agile PM, Git & GitHub, Computer Networking, Crash Course Python.
+
+
+* *IBM Coursera (2022–2023):* Blockchain Essentials, Intro to DevOps, Data Analysis with Python.
+
+
+* *Coursera (2023):* Linux Fundamentals, Python Programming.
+
+
+
+
+
+---
+
+### 3. Architectural Breakdown: What "Tuning to the Google Standard" Actually Means for Your Portfolio
+
+When we look at why **Google.com** (and Google's broader design language across *Google Research*, *Material 3*, and *web.dev*) is universally respected, it comes down to five strict engineering and design pillars. Here is what each pillar means when mapped to your specific portfolio:
+
+| Pillar | What Google Does | What It Means for `prabhatkarlekar.github.io` |
+| --- | --- | --- |
+| **1. Cognitive Clarity & Information Hierarchy** | Zero visual clutter; the user knows what they are looking at in under 0.5 seconds. | When a Principal Engineer, Scientist, or Recruiter lands on your page, they shouldn't have to hunt through decorative animations. The top viewport must immediately communicate: **Who you are** (Software Engineer / Systems & Protocol Researcher), **Where you are** (C-DAC Pune), **Your 6 core domains** (HPC, FHE, Rust, ns-3, AI/ML, Blockchain), and direct action links (GitHub, LinkedIn, Resume PDF, Email).
+
+ |
+| **2. Surface & Token Discipline (Visual Design)** | High-contrast typography (`#202124`), restrained secondary grays (`#5f6368`), crisp 1px borders (`#dadce0`), subtle pill chips (`#f1f3f4`), and zero heavy neon gradients. | Instead of redesigning your HTML layout from scratch, we refine your **CSS variables and card surfaces**. Cards for *PAYF*, *GreyMisnomer*, and *Quantum-Secure FL* should look like clean Google Research / Scholar publication cards: crisp borders, clear date badges, distinct tech-stack pills, and subtle elevation on hover.
+
+ |
+| **3. Non-Destructive DOM Evolution** | Backwards compatibility and modular structure. | Your existing certificate cards/links and structural sections stay intact. We only **update** the Summary/Experience/Skills nodes and **prepend** the new 2025–2026 Projects and 2025–2026 Certifications above the older 2021–2023 ones.
+
+ |
+| **4. Ultra-Lightweight Performance** | Instant First Contentful Paint (FCP), zero unnecessary JS frameworks, minimal network requests, zero layout shift (CLS = 0). | Since your site already uses vanilla `index.html`, `style.css`, and `script.js` inside `docs/`, it already has the right foundational architecture. Tuning it means removing render-blocking CSS/JS overhead, using `font-display: swap`, and keeping `script.js` strictly event-driven.
+
+ |
+| **5. Security & Link Integrity** | Default HTTPS, strict Content Security Policy (CSP), safe external navigation, no third-party tracker bloat. | Every external link (GitHub repos, LinkedIn, Coursera verification links) gets `rel="noopener noreferrer"`. Meta security headers (`Content-Security-Policy`, `X-Content-Type-Options`) are placed cleanly in `<head>`, and the resume download button points accurately to your updated PDF in `docs/`.
+
+ |
+
+---
+
+### How We Proceed Without Guessing Your Existing Code
+
+Because the `.zip` archive keeps `docs/index.html`, `docs/css/style.css`, and `docs/js/script.js` compressed as binary streams in this chat, I have not seen the exact lines of HTML/CSS inside those three files yet—which is why my previous response generated generic replacement files instead of surgically updating yours.
+
+To make sure we **only append and update** while keeping your existing certificates, structure, and custom touches 100% intact:
+
+1. **Upload or paste `docs/index.html`, `docs/css/style.css`, and `docs/js/script.js` directly** (as individual files rather than inside a `.zip`).
+2. Once I can read your exact HTML classes and CSS rules line-by-line, I will first walk you through a **file-by-file diff plan** of what stays untouched, what gets appended, and how the styling tokens will be tuned before we change a single line of code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The plan is strong and matches the audit. I found one wrong fix, several gaps, and some items to cut or merge.
+
+## 1. Wrong or needs correction
+
+- **4.2 "Dark: white on #3b82f6 → lighter blue" is backwards.** Lighter blue lowers contrast with white text.
+  - For white text, darken the background: `#2563eb` gives 5.17:1, and `#7c3aed` gives 5.7:1 for the violet.
+  - Alternatively, use dark text (`#0f172a`) on the light accent.
+- **2.3 "3 Patent-Track IDFs"** is a number that appears nowhere, and it conflicts with your own disclosure caution (decision 10). Drop it and use "1 IEEE publication".
+- **1.4 "SHA-256"** assumes the variant. Name whatever the project actually used.
+- **1.7 fix is a band-aid.** Don't hide-then-reveal with a `<noscript>` patch.
+  - Content should be visible by default.
+  - JS adds `html.js`, and the hiding applies only under `@media (prefers-reduced-motion: no-preference)` (or CSS `animation-timeline: view()` with an `@supports` fallback).
+  - Then `<noscript>` is unnecessary.
+- **1.3 fix:** use `data-suffix` and `data-decimals`. Right now `toFixed(1)` also turns "12" into "12.0".
+- **2.5 and 2.4 assume the Oct-26 resume.** I only read the old one (Sep 2025 date, "Infrastructure & Ecosystem", no team-lead line). I haven't seen the new resume, so Phase 2's tables may be stale. Please upload it so I can diff it against the site.
+- **6.5 `rel="noopener noreferrer"`** is cosmetic, since browsers already imply `noopener`. Don't count it as a security fix.
+- **6.4 location:** "Based in Pune" must match the resume's location line, or you create a new mismatch.
+
+## 2. Missing: add
+
+**P0 (not in plan):**
+- **Guard `localStorage`** (`script.js:41`) and isolate each init step in try/catch. One throw currently aborts `init()` and leaves Experience and Projects invisible.
+- **Observer risk on tall sections:** the 10% visibility threshold can fail on short phones. Use `threshold: 0` or the CSS-only reveal above.
+- **FOUC fix:** theme is set after DOMContentLoaded, so there is a wrong-theme flash. Add a tiny inline head script (hash it in the CSP), a `color-scheme` meta, and a `prefers-color-scheme` CSS fallback.
+
+**P1:**
+- **Hero ≤1024px:** `.hero-visual{order:-1}` puts the floating card above your name. Also fix `100vh` → `svh` and the ~1.8s staggered reveal.
+- **Typewriter:** it loops forever, ignores reduced motion, and is empty without JS. Remove it (static role line).
+- **Count-up animations:** drop them, not just fix them. 1.6 still flashes "0".
+- **Scroll-spy:** replace it with IntersectionObserver, not just de-duplicated listeners (5.4). That also removes the `offsetTop` layout reads.
+- **Mobile menu accessibility:** `aria-controls`, Escape to close, focus return, close on link tap, `inert` on the page behind.
+- **Public PDF still has phone and Gmail** while 6.4 removes the phone from the page. Publish a public resume without the phone.
+  - Also set PDF Title and Author metadata.
+  - Use a **stable filename** (`resume.pdf`) instead of a date-stamped one. Deleting the old file breaks any link you've already shared.
+- **Gmail in plain text:** obfuscate it, or use a dedicated alias.
+- **Form hardening:** honeypot or Turnstile, a domain allowlist, `autocomplete` attributes, and a CSP `form-action` for the endpoint.
+- **Fonts:** decide between self-hosting Inter (variable, latin), a system stack, or Google Fonts. Self-hosting removes a third-party origin and its IP leak.
+- **Heading semantics:** the 21 `h4` labels should be `<dl>`/`<strong>`. This isn't in 6.3.
+- **Assets to produce:** og:image (1200×630), apple-touch-icon, `favicon.svg`, and `.ico`. Nobody owns these in the plan.
+- **Content:** the plan says "reflect the new resume" but lists only edits. Add a resume-to-site matrix (every bullet maps to a site element), including any new projects such as VeriAuth, if public and cleared.
+- **Evidence register:** keep a private table mapping every public number to its method and source.
+
+**P2:**
+- Print stylesheet.
+- Dependabot for pinned Actions.
+- `body{overflow-x:hidden}` masks overflow bugs.
+- Optional privacy-friendly analytics (off by default).
+
+## 3. Missing: process
+
+- **Phase 0:** tag the current state (`v1-before-tuning`), work on a branch, and capture baselines (Lighthouse, axe).
+- **Acceptance gate (no phase for this today):**
+  - Lighthouse ≥95 in all categories.
+  - axe: 0 violations.
+  - Keyboard-only pass.
+  - No-JS pass.
+  - Reduced-motion pass.
+  - Real phone at 360px and 375×667.
+  - Print preview.
+  - Link check.
+  - LinkedIn Post Inspector and OG preview.
+- **Add to CI:** html-validate, a link check, and Lighthouse CI (6.5 covers only SHA pins and `concurrency`).
+
+## 4. Reconsider or cut
+
+- **3.5 separate detail pages:** defer. Without a build step, multi-page means duplicated header, footer and nav.
+  - Alternative: one inline SVG diagram per featured project, inside an expandable `<details>`.
+  - Diagrams are the real gap.
+- **5.1 "static background or optimize heavily":** decide. Remove the canvas. Then drop "canvas respects reduced motion" from "Preserve".
+- **3.1 reorder:** it depends on audience. If the link also goes to government/PSU screening, education and X/XII matter. Add an "At a glance" strip in the hero (role, org, years, education, 1 IEEE paper) so both audiences are served.
+- **1.5 "Coming soon" for GreyMisnomer:** use "RFC draft / in design", and link the spec repo only if public.
+
+## 5. Redundant: merge
+
+- **1.5 and 2.1** (resume filename).
+- **1.6 and 2.3** (hero stats).
+- **1.3, 2.6, 4.3, 5.7:** the metric and skill-bar fixes become moot if those blocks are rewritten or removed. Keep 1.3 for the hotfix only. Delete 5.7.
+- **Decisions 4 and 10** (PAYF disclosure).
+
+## 6. Resequence
+
+1. **Hotfix track first (~3 hours, patch release):**
+   - Fake form.
+   - Mobile nav.
+   - SHA wording.
+   - Dead links.
+   - Suffix bug.
+   - `localStorage` guard.
+   - Visible-by-default content.
+2. **Rebuild track** on a branch: decisions → content → IA → design with icons and performance **together** → SEO, accessibility, security → acceptance gate.
+
+Phases 4 and 5 touch the same markup (icons, canvas, nav). Doing them separately means rewriting the same markup twice.
+
+**Effort:** 17–24h is light. Add roughly 8–12h for diagrams, copy, asset production, QA, and waiting on decisions.
+
+## 7. Extra decisions
+
+- Primary audience (research and industry, or also government/PSU).
+- Custom domain (gives real headers via Cloudflare and an email alias).
+- Motion level (none, minimal, current).
+- Public vs application resume.
+- Analytics (yes/no).
+
+## 8. Keep out (non-goals)
+
+Frameworks, PWA or service worker, WebGL or 3D, chatbot, blog engine, testimonials, third-party widgets.
+
+Can you upload the Oct-26 resume so I can diff it against the site and fix Phase 2 with exact changes?
+
+
+
+This audit and plan is remarkably thorough—catching the `"SHA encryption"` terminology slip, the `85.0x` metric suffix bug, the `O(n²)` canvas + `backdrop-filter` GPU bottleneck, and the no-JS opacity trap will immediately elevate your site's engineering credibility.
+
+However, when evaluated against your two core goals—**(1) updating/appending without tearing down your existing content (keeping old certificates intact)** and **(2) tuning toward an ultra-lightweight, secure, Google-grade minimalist architecture**—there are internal contradictions in the plan, a few scope-creep traps to cut, and a few technical details missing.
+
+---
+
+### 1. What Should NOT Be There (Cut or Modify These)
+
+* **Contradiction Between Phase 4.3 and Phase 5.7 (Skill Bars):**
+* *The Conflict:* **Phase 4.3** rightly recommends replacing the arbitrary skill percentage bars (`Python — 85%`, `Rust — 78%`) with grouped skill tags, while **Phase 5.7** plans engineering time to fix the JS/CSS animation timing of those very same skill bars.
+* *Action:* **Delete Phase 5.7 entirely.** Drop the percentage bars and use clean, grouped pill chips matching the exact 6 categories on your resume (`Languages`, `AI/ML & HPC`, `Blockchain & Cryptography`, `Systems & Networking`, `Backend & Infra`, `QA & Testing`).
+
+
+
+
+* **Phase 2.8 & Decision #9: Collapsing/Removing Old Certificates & Education:**
+* *The Conflict:* You explicitly noted earlier that all old certificates and foundational records should remain intact. Collapsing them behind a toggle or deleting Class X/XII violates your non-destructive update rule.
+* *Action:* **Keep every certificate visible**, just refine the CSS grid/list density (compact padding, subtle `#dadce0` 1px borders, clear year badges) so the newly appended 2025–2026 certifications (Microsoft, C-DAC Pune, Qualcomm, C-DAC Hyderabad) sit at the top and the 2022–2023 Google/IBM/Coursera certificates flow cleanly below without taking up excessive vertical scroll.
+
+
+
+
+* **Phase 3.5: Creating Separate Detail Pages for PAYF & FL:**
+* *Why to Cut:* Splitting a single-page portfolio into multi-page HTML files adds navigation complexity, duplicates headers/footers to maintain, and inflates that 17–24 hour estimate.
+* *Better Alternative:* Keep it a fast single-page site. If you want deep architectural detail (protocol sequences, CKKS aggregation flowcharts, or ns-3 shim header diagrams), use a native, zero-dependency HTML `<details><summary>View Architecture & Protocol Spec</summary>...</details>` drawer inside the card, or link directly to your technical walkthroughs/whitepapers.
+
+
+* **Phase 1.2 (Option A): Third-Party Contact Forms (Formspree / Web3Forms):**
+* *Why to Cut:* Adding a third-party form endpoint introduces an external network dependency, weakens your Content Security Policy (`connect-src` / `form-action`), and invites spam.
+* *Better Alternative:* Go strictly with **Option B**. Replace the fake form with a clean, high-contrast action bar: a direct `mailto:pritvikarlekar@gmail.com` button, a one-click **"Copy Email"** button (5 lines of vanilla JS using `navigator.clipboard.writeText`), and direct links to LinkedIn and GitHub. Recruiters and researchers strongly prefer copying an email address over filling out a web form.
+
+
+
+
+
+---
+
+### 2. What Is Missing (Add These to the Plan)
+
+* **Timeless Resume Filename Strategy (Fixes Phase 1.5 & 2.1 permanently):**
+* *The Gap:* Your repo currently has `Prabhat Karlekar RTJ 26.pdf`, you attached `Karlekar_Prabhat_June_26.pdf`, and your plan references `Prabhat_Karlekar_Resume_Oct_26.pdf`. Every time you update your resume with a new month in the filename, all 3 links in `index.html` break.
+
+
+* *The Fix:* Rename the PDF inside `docs/` to a permanent, URL-safe canonical name without spaces or dates: **`docs/Prabhat_Karlekar_Resume.pdf`**. Point lines 69, 700, and 775 to that single filename so future resume updates only require dropping in the new PDF.
+
+
+* **CSP vs. Inline Styles / JS Animations Conflict (Phase 6.5 vs. Phase 1.7):**
+* *The Gap:* Phase 6.5 proposes adding a `<meta http-equiv="Content-Security-Policy">` tag, while Phase 1.7 proposes a `<noscript><style>` block and JS-driven style changes. If you add a strict CSP without `'unsafe-inline'` in `style-src`, browser security will block both `<noscript><style>` and any `element.style.*` manipulations in `script.js`.
+* *The Fix:* Instead of using JS to set `.section { opacity: 0 }` or using `<noscript>`, add `document.documentElement.classList.add('js')` at the top of `script.js` and scope any CSS entry transitions to `.js .reveal-item`. If JS fails or is disabled, everything remains at `opacity: 1` naturally with zero `<noscript>` needed.
+
+
+* **Full-Stack Systems Depth in the PAYF & GreyMisnomer Cards (Phase 2 & 3.4):**
+* *The Gap:* Make sure the **PAYF** card doesn't read purely like an academic simulation—explicitly highlight the **Rust/Axum APIs, PostgreSQL persistence, FlowCache, and Yew/WebAssembly settlement visualization dashboard** from your resume. Similarly, for **GreyMisnomer**, highlight the **RFC-style protocol design** and the **Two-Proof Model (`PoI` + `PoO`)**.
+
+
+
+
+* **Highlighting Your Patent-Track IDFs & RFC Specs:**
+* *The Gap:* Your C-DAC experience explicitly includes authoring **Invention Disclosure Forms (IDFs), whitepapers, and IETF-RFC style protocol specifications**. In Phase 3.3 (Project Status Badges), add a specific badge for **`IDF Filed / RFC Spec`** alongside `Published (IEEE SCI 2025)`.
+
+
+
+
+
+---
+
+### 3. Pre-Resolving Your "Blocking Decisions" Table
+
+You don't actually have 11 blockers holding up Phase 2—several are already answered by your resume and your target design philosophy:
+
+| Decision # | Status | Recommended Resolution |
+| --- | --- | --- |
+| **#1 Display Name** | **Resolved** | Use **Prabhat Vilas Karlekar** in the hero/title (matches your resume header and IEEE publication identity), and keep `pritvikarlekar` strictly as the email/GitHub handle.
+
+ |
+| **#2 Positioning Line** | **Resolved** | **"Software Engineer — HPC, Cryptographic Systems & Distributed Infrastructure"** (captures both your 3+ years of software engineering and your C-DAC R&D work without sounding narrow).
+
+ |
+| **#6 I&E Expansion** | **Resolved** | **"HPC Infrastructure & Ecosystem"** (explicitly stated on your resume under Experience).
+
+ |
+| **#7 Phone Number** | **Resolved** | **Remove from the public HTML DOM** (keep it only inside the downloadable PDF resume) to prevent scraper spam.
+
+ |
+| **#8 Contact Form** | **Resolved** | **`mailto:` + "Copy Email" button** (drops broken JS form, zero third-party dependencies). |
+| **#9 Class X/XII & Old Certs** | **Resolved** | **Keep all intact**, styled compactly. |
+| **#11 Design Direction** | **Resolved** | **Clean Editorial Light Default + Refined High-Contrast Dark Toggle** using your existing CSS variable architecture, stripping out the 70-particle canvas and heavy neon blurs in favor of crisp 1px borders and fast typography. |
+
+---
+
+### 4. The Only 3 Real Questions Left Before Execution
+
+Instead of 11 questions, you only need to decide on these 3 items regarding your research and IP:
+
+1. **C-DAC IP / Repo Visibility (#4 & #10):** Is the **PAYF** code internal to C-DAC (meaning the button should say *"Request Access / Architecture Spec"*), while **GreyMisnomer** links directly to your public GitHub repository?
+2. **Hero & Project Metrics (#3):** Do you want to drop the unverified percentages (`85% accuracy`, `80% leakage reduction`, `2.5x speedup`, `40% regression`) and replace them with verifiable architectural facts from your resume (e.g., `2-Client HPC Cluster`, `Ed25519 + CKKS HE`, `IEEE SCI 2025`, `9.06 CGPA`)?
+
+
+3. **Research Paper Count (#5):** For the hero stat counter, should it read **1 IEEE Publication (SCI 2025)** + your **IDFs/Whitepapers**, or do you have a second paper currently under review/published to cite?
+
+
+
+# My review of your comprehensive portfolio improvement plan
+
+My verdict: this is a strong plan, and I would use it as the basis for the redesign. I would keep the six-phase structure, fix the functional defects first, and preserve your lightweight HTML/CSS/JavaScript architecture.
+
+What makes this plan good is that it goes beyond visual polish. It addresses technical correctness, research credibility, accessibility, privacy, performance, and deployment quality. That is the right approach for a portfolio representing both engineering and research work.
+
+However, I would make several changes before implementation. Some recommendations need more nuance, a few important items are missing, and some proposed fixes could introduce new problems if implemented literally.
+
+My overall recommendation is: keep roughly 85–90% of the plan, but refine the technical details, add a validation phase, and resolve the decisions that affect factual accuracy before rewriting the content.
+
+I am reviewing the plan you provided against our previous source-code audit. I have not independently rerun the browser tests or re-examined every line of the ZIP in this turn, so I will distinguish technical recommendations from findings that still need verification.
+
+## 1. The most important changes I would make to your plan
+
+Keep: the six-phase structure
+
+Fix broken functionality first, establish factual accuracy, improve information architecture, refine the design, optimize performance, and finish with security and accessibility validation.
+
+Change: do not treat every numerical claim as automatically removable
+
+Verify each figure against the underlying experiment or work record. Retain defensible measurements with context; remove unsupported numbers rather than replacing them with different unsupported claims.
+
+Change: refine the security recommendations
+
+Pinning GitHub Actions, adding a CSP, and adding `noopener noreferrer` are not interchangeable security fixes. Each has a specific purpose and should be implemented in the appropriate place.
+
+Change: measure performance instead of assuming the biggest file is the biggest problem
+
+The canvas and external dependencies deserve review, but actual network measurements, rendering metrics, and interaction tests should determine the final optimization priorities.
+
+Add: a seventh phase for verification and release
+
+Test the production build, mobile behavior, keyboard accessibility, links, form submission, reduced motion, and rollback before declaring the portfolio complete.
+
+## 2. Phase-by-phase review
+
+### Phase 1 — Fix what's broken
+
+Keep this phase first. I would add two things and refine one proposed fix.
+
+1.1 Mobile navigation — essential
+
+Implement the hamburger menu, `aria-expanded`, keyboard support, Escape-to-close behavior, and closing on navigation. Also prevent the background page from scrolling if the menu overlays the viewport, where appropriate.
+
+Do not make the menu visually elaborate. A small, accessible drawer or dropdown is enough.
+
+1.2 Contact form — essential
+
+I prefer a real form only if you want to maintain one. If you do, add labels, `name` attributes, a genuine submission endpoint, loading state, success state, error state, and spam protection.
+
+If the form is not important to you, use a direct email link. A simple, honest contact route is better than a form that falsely claims to have sent a message.
+
+1.3 Metric suffix bug — essential
+
+A `data-suffix` attribute is the cleaner solution. For example, a metric can explicitly declare `%`, `×`, or no suffix. Do not infer the unit from the initial text or the metric label.
+
+1.4 SHA terminology — essential
+
+Replace “SHA encryption” with “SHA-256 hashing” only if SHA-256 is actually the algorithm used. If the implementation uses another SHA-family algorithm, name the correct one. Hashing, encryption, and digital signatures are different operations.
+
+1.5 Dead links — essential
+
+Correct or remove the placeholder links. Add a repository URL only if it is public and cleared for disclosure. If a project is not ready for public release, use an honest status label rather than a fake demo.
+
+### Two additions to Phase 1
+
+Add a baseline content and functionality check. Before editing, record which sections exist, which links work, and which metrics are supposed to be displayed. Otherwise, you could fix the visual symptoms while accidentally removing valid content.
+
+Make the website work without JavaScript. I agree with your finding that content should not remain invisible when JavaScript fails. However, a `<noscript>` style block alone is not the most robust fix. The better default is to keep all important content visible and use JavaScript only to progressively enhance animations. If the script fails, the page should still be readable and navigable.
+
+### One change to your stats proposal
+
+The “3+ years” claim is reasonable only if it matches the verified start date of your professional experience. You mention December 2022 as the starting point; as of October 2026, that is approaching four years.
+
+I would either calculate the value from the correct date or use a stable label such as “3+ years of experience” only if that remains accurate under your chosen convention. Do not let a counter become stale.
+
+### Phase 2 — Align content with your résumé
+
+This is arguably the most consequential phase for professional credibility.
+
+Your proposed positioning is strong, but I would not publish it unchanged until the facts are verified.
+
+Your draft says:
+
+> Software Engineer with 3+ years building secure, privacy-preserving systems across HPC, cryptography, federated learning, and distributed infrastructure. IEEE-published researcher. Currently leading protocol design and R&D at C-DAC Pune.
+
+I would retain the core idea, but scrutinize three phrases:
+
+- “3+ years” — use a verified employment timeline and a consistent counting method.
+- “IEEE-published researcher” — appropriate if the linked publication is indeed published by IEEE and your authorship is confirmed.
+- “Currently leading protocol design and R&D” — use “leading” only if it accurately describes your responsibility and is consistent with your role and résumé.
+
+A safer alternative while those details are being confirmed is:
+
+Software Engineer working across high-performance computing, privacy-preserving machine learning, cryptography, and distributed systems. My work combines systems engineering, protocol design, and applied research, with an emphasis on building and evaluating secure, scalable solutions.
+
+This is less dependent on titles and numerical claims while still being technically distinctive.
+
+#### Numerical claims: don't confuse omission with verification
+
+Your plan correctly identifies five claims that deserve scrutiny. I would use a simple evidence rule:
+
+| Claim                              | What I would require                                                   |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| 85%+ accuracy                      | The actual metric, dataset, evaluation protocol, and baseline          |
+| 80% lower privacy leakage          | The defined leakage measure, comparison baseline, and methodology      |
+| 40% reduction in regression effort | The before/after effort or time measurement                            |
+| 2.5× speedup                       | The reference implementation, workload, and test conditions            |
+| 12 features analyzed               | A clear definition of the counted features and evidence in the project |
+
+If the evidence exists, keep the claim and make it understandable. If it does not, remove the number or replace it with a qualitative description that is still accurate.
+
+For regression effort, for example, “automated regression checks to reduce repetitive manual testing” is a defensible type of statement if that work occurred, without asserting a particular percentage.
+
+#### Your proposed replacement for “Agile Projects”
+
+I would not replace “3 Agile Projects” with “3 Patent-Track IDFs” merely because the latter sounds more impressive.
+
+Internal invention disclosure forms can reveal sensitive or unpublished work. Before including them, confirm that disclosure is authorized, that the count is accurate, and that the wording does not imply granted patents when only invention disclosures exist.
+
+A stronger option may be to remove the counter entirely and use a short evidence-based highlight such as “IEEE publication” or “HPC & secure systems engineering,” depending on what you can substantiate.
+
+#### Research and cryptography terminology
+
+Your proposed changes here are important, with a few technical nuances:
+
+- SHA-256: a hash function, not encryption.
+- Ed25519: a signature scheme that is not considered post-quantum secure against a sufficiently capable quantum adversary.
+- CKKS: an approximate homomorphic encryption scheme based on lattice assumptions, commonly discussed in the context of quantum-resistant cryptography. Do not imply an unconditional security guarantee; implementation, parameters, and threat model matter.
+- “Quantum-secure”: too absolute for a portfolio title unless you clearly qualify what is meant. “Lattice-based privacy-preserving federated learning” is more specific, provided that it accurately describes the implementation.
+- “Unlinkable and untraceable”: avoid absolute claims. Describe the intended privacy property and the conditions under which it holds.
+
+I would also replace “large-scale” with “multi-party prototype” if the work was evaluated with only two clients and that is representative of the current implementation. That is not diminishing the work; it is describing its maturity accurately.
+
+#### Publications and certifications
+
+Your plan is correct to request a complete IEEE citation and more precise certification dates.
+
+I would additionally verify the DOI or official publisher record, author order, venue name, publication year, and whether the second paper is published, accepted, submitted, or still in preparation.
+
+For certifications, use the issuer's exact title and completion date. Keep older certifications if they contribute to your professional narrative; otherwise, collapse them into a compact list rather than giving each equal visual weight.
+
+### Phase 3 — Information architecture and UX
+
+I agree with moving research and projects earlier in the page, with one qualification: the first section should still introduce you clearly before presenting the work.
+
+My recommended order would be:
+
+### 01
+
+Hero / Introduction
+
+Identity, specialization, key actions
+
+### 02
+
+Selected Work
+
+Best engineering and research projects
+
+### 03
+
+Experience
+
+Career progression and impact
+
+### 04
+
+Publications
+
+Verified citations and research outputs
+
+### 05
+
+Technical Skills
+
+Grouped capabilities linked to evidence
+
+### 06
+
+Education & Certifications
+
+Compact supporting credentials
+
+### 07
+
+Contact
+
+A reliable, accessible way to reach you
+
+I would keep Education before Publications if you are targeting roles where formal qualifications are a primary screening factor. The order is a strategic choice, not a universal rule.
+
+#### Project statuses need precise definitions
+
+Your proposed badges are useful, but I would define their meaning before using them:
+
+- Published: use for an actual published research output, not automatically for every project associated with a publication.
+- Active R&D: only for work you are currently developing and authorized to describe.
+- Research prototype: for an implemented prototype that has not reached production maturity.
+- Academic project: for work completed as part of formal education.
+- Exploratory work: for a study or investigation that is not a complete implementation.
+
+For PAYF and GreyMisnomer, I would not use “Active R&D” or publish a repository link until the current status and disclosure permission are confirmed.
+
+#### Separate project detail pages
+
+I support this for PAYF and the federated-learning framework, if the material is substantial enough to justify separate pages.
+
+A detailed page should contain the problem, architecture, threat model where relevant, your contribution, implementation details, evaluation methodology, limitations, and evidence links. It should not be a long marketing page filled with technology logos.
+
+Keep the main portfolio lightweight and use detail pages for visitors who want to investigate further.
+
+### Phase 4 — Design system and visual refinement
+
+I agree with consolidating the color palette, removing arbitrary skill percentages, and improving contrast. But I would adjust three recommendations.
+
+First, verify the seven contrast failures before fixing them. The ratios in your plan are useful leads, not a substitute for checking the exact foreground/background pairs in the final design. Contrast can change depending on opacity, gradient position, theme, and text size. WCAG AA generally requires 4.5:1 for normal text, 3:1 for large text, and 3:1 for visual information in relevant interface components.
+
+For the focus ring, use a clearly visible outline with sufficient contrast against adjacent colors. Do not simply make every focus ring solid white or blue; the appropriate color depends on the surrounding surface.
+
+Second, replace hardcoded colors without overengineering CSS. Centralize the primary palette and reusable design tokens, but do not turn every one-off decorative color into a complicated variable system. The aim is consistency and maintainability.
+
+Third, preserve your visual identity. A restrained blue accent, a distinctive typography pairing, and subtle technical diagrams could work very well. You do not need to eliminate every gradient or rounded card to avoid looking like a template. The problem is repetition without purpose, not gradients themselves.
+
+I would also add a typography and spacing audit that checks long project titles, code labels, text wrapping, and the mobile layout.
+
+### Phase 5 — Performance and technical optimization
+
+This is the right phase, but some of your estimates and recommendations need validation.
+
+| Proposed change                  | My recommendation                                                                                                                          |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Replace the neural canvas        | Prefer a static background unless testing shows the animation adds meaningful value.                                                       |
+| Replace Font Awesome             | Good candidate for optimization, but measure actual transfer size before claiming a 250 KB saving.                                         |
+| Add `defer` to JavaScript        | Useful when a classic script is in the document head; if the script already appears at the end of the body, the benefit may be negligible. |
+| Remove duplicate scroll handlers | Yes, after confirming their behavior and merging the logic safely.                                                                         |
+| Remove dead code                 | Yes, but verify each function has no callers before deleting it.                                                                           |
+| Fix `transition: all`            | Replace it where broad transitions create unnecessary work or unintended animation.                                                        |
+| Fix skill-bar animation          | Yes, but use one animation mechanism rather than having JavaScript and CSS compete over the same property.                                 |
+| Replace GitHub statistics image  | Sensible if it is unreliable or visually unhelpful; a simple profile link may be enough.                                                   |
+
+#### A correction to the canvas cost estimate
+
+The figure of approximately 144,900 pair checks per second assumes 70 particles, 60 frames per second, and all unique pairs being evaluated on every frame. That is a useful theoretical estimate, but it does not prove that the animation is a significant bottleneck on the devices visitors actually use.
+
+I would keep the canvas optimization high on the list because it runs continuously and is decorative. I would not claim a specific CPU or battery improvement until the optimized version is tested.
+
+#### Add explicit performance budgets
+
+This is missing from your plan. Set practical targets for the deployed site, then check them after each major change.
+
+I would track:
+
+- Compressed initial HTML, CSS, JavaScript, font, and image payloads.
+- Total initial network requests and third-party requests.
+- LCP, INP, and CLS.
+- Lighthouse performance and accessibility results.
+- The behavior of the page on a slower mobile connection.
+
+For Core Web Vitals, use the standard good thresholds of LCP ≤ 2.5 seconds, INP ≤ 200 milliseconds, and CLS ≤ 0.1 at the 75th percentile when real-user data is available.
+
+Do not optimize only for a Lighthouse score. A good score is helpful, but the actual experience and content quality matter too.
+
+### Phase 6 — SEO, security, accessibility, and polish
+
+This phase is good, but it combines several distinct disciplines. I would keep the overall phase and treat the following as separate checklists.
+
+#### SEO: what I would keep and what I would add
+
+I agree with adding a proper favicon, Open Graph metadata, canonical URL, social card metadata, `robots.txt`, a sitemap, and a 404 page where useful.
+
+I would make JSON-LD optional rather than a blocking task. A simple `Person` schema can be useful if it accurately describes you and points to real profiles, but it will not automatically improve rankings.
+
+Also, `robots.txt` and `sitemap.xml` should be validated rather than added mechanically. A sitemap is useful for discovery, but it is not a substitute for crawlable page content and correct metadata.
+
+One important repository correction: if you want a proper GitHub repository landing page, create or update the root-level `README.md`. A `.github/README.md` file does not serve the same purpose as the repository's main README. The `.github` directory is appropriate for contribution templates, issue templates, and certain community-health files.
+
+#### Security: three details I would change
+
+1\. Do not rely on a meta CSP as a complete security-header solution.
+
+GitHub Pages has limitations on configuring arbitrary HTTP response headers. A Content Security Policy delivered through a meta element can provide some protections, but it does not support every directive available in an HTTP header and can break legitimate resources if configured too aggressively.
+
+Before adding a CSP, inventory the actual scripts, styles, fonts, and images. Test the policy carefully, and use hosting-level header configuration if you later move to a platform that supports it.
+
+2\. Pin GitHub Actions to full commit SHAs.
+
+This is a sensible supply-chain security improvement. Use verified commit SHAs for third-party actions, review updates deliberately, and retain the workflow's least-privilege permissions.
+
+Concurrency control is also useful to avoid overlapping deployments, but it is a reliability measure rather than a substitute for pinning actions or limiting permissions.
+
+3\. Apply `rel="noopener noreferrer"` selectively.
+
+Use `noopener` for links opening new tabs when appropriate; modern browsers already provide implicit `noopener` behavior for many `target="_blank"` links. Add `noreferrer` when you also intend to suppress referrer information. It is a privacy choice, not a requirement for every ordinary external link.
+
+#### Accessibility: additions I would make
+
+Your plan already covers skip links, labels, focus indicators, icon accessibility, theme state, and reduced motion. I would add:
+
+- Verify the accessible name and state of the mobile menu and theme toggle.
+- Test screen-reader announcements for form validation and submission.
+- Ensure animated numbers have sensible accessible text.
+- Confirm the content order remains logical when CSS layout changes.
+- Test the page at 200% zoom and on narrow viewports.
+- Validate contrast in every supported theme.
+- Test that content remains visible when JavaScript fails.
+- Check the résumé PDF for selectable text, reading order, and basic accessibility.
+
+Not all 44 icons should automatically receive `aria-hidden="true"`. Decorative icons should be hidden from assistive technology; meaningful icons need an accessible name or accompanying text, and interactive icons must be part of correctly labeled controls.
+
+#### Privacy: I support the proposed cleanup
+
+Removing the phone number and using a less precise location is a sensible default for a public portfolio. I would keep a dedicated professional contact route and ensure the location is accurate if you choose to display it.
+
+For identity consistency, choose the name used in your résumé and professional profiles as the main display name. You do not need to force your GitHub username or email address to match your display name, as long as the identity is clear and the links lead to the correct person.
+
+#### Repository hygiene: one important caveat
+
+Delete obsolete résumé files from the current published directory once the new file is verified and all links have been updated. But remember that deleting a file in a new commit does not necessarily remove earlier copies from Git history. If a file ever contained sensitive information, the appropriate response is different from ordinary cleanup.
+
+## 3. What is missing from your plan?
+
+These are the additions I would make before implementation. I consider the first three especially important.
+
+### A. Automated testing and regression checks
+
+Missing priority
+
+Your plan fixes bugs but does not fully define how to prove they stay fixed.
+
+Add HTML validation, JavaScript syntax checks, broken-link checks, and a small browser test suite. Test the mobile menu, theme toggle, anchor navigation, résumé download, metrics, and contact flow. Re-run the tests after major CSS and JavaScript changes.
+
+### B. Résumé and publication verification
+
+Missing priority
+
+Treat the résumé as a source of truth, but not as unquestionable proof of every claim.
+
+Verify dates, titles, authorship, publication status, project contributions, and metrics against the relevant records. Confirm the new PDF is present in the published directory and that every résumé link points to the correct file.
+
+### C. Safe release and rollback strategy
+
+Missing priority
+
+Make changes in a separate branch or working copy, preview them before publishing, and keep the current production version recoverable.
+
+Deploy only after checks pass. Verify the published site after deployment instead of assuming a successful workflow means the website is correct.
+
+### D. Project evidence and technical documentation
+
+Your plan mentions detail pages, but it should explicitly require a clear evidence strategy for each featured project.
+
+Decide which projects have a public repository, technical report, architecture diagram, paper, reproducible experiment, or demo. Clearly label anything unavailable because of confidentiality or incomplete implementation.
+
+### E. Résumé PDF and download experience
+
+Test the actual PDF, not just its link. Check text extraction, reading order, document title, file size, page layout, and whether it is accessible and readable on mobile. The filename should be consistent across the repository and links.
+
+### F. A post-launch review
+
+After deployment, check for broken links, rendering issues, console errors, accessibility regressions, and any new network dependencies. Recheck the published résumé and contact route.
+
+Analytics are optional. If you add them later, use a privacy-conscious approach and collect only what you genuinely need.
+
+## 4. What I would remove or change in the plan
+
+I would make these specific edits to avoid unnecessary work.
+
+| Plan item                                                       | My decision        | Reason                                                                           |
+| --------------------------------------------------------------- | ------------------ | -------------------------------------------------------------------------------- |
+| “3 Patent-Track IDFs” as a hero statistic                       | Change             | Potentially confidential and not equivalent to granted patents.                  |
+| JSON-LD as a required SEO task                                  | Make optional      | Helpful when accurate, but not essential to launch.                              |
+| Add `defer` automatically                                       | Conditional        | Little benefit if the script is already after the page content.                  |
+| Replace Font Awesome based on a 250 KB estimate                 | Measure first      | Confirm actual downloaded size and whether unused icons are included.            |
+| Replace all gradients                                           | Do not do this     | Retain a small number of intentional visual accents.                             |
+| Delete all old résumé references immediately                    | Sequence carefully | Update, verify, and test the new PDF first.                                      |
+| Treat every contrast ratio as final                             | Recalculate        | Validate exact color pairs and states in the finished design.                    |
+| Treat “SHA-based integrity verification” as universally correct | Verify algorithm   | Use the exact hash algorithm actually implemented.                               |
+| Add CSP without testing                                         | Do not do this     | An overly restrictive policy can break fonts, styles, scripts, or images.        |
+| Build detailed pages for every project                          | Avoid              | Reserve them for work with enough evidence and depth to justify the extra pages. |
+
+I would also remove the generic footer sentence about being passionate and continuously learning, as your plan proposes. A simple footer with your name, copyright year, and professional links will feel more confident.
+
+## 5. The decisions I would make now
+
+Your eleven questions are sensible. Here is my suggested default for each, based on the professional positioning and technical goals in your plan.
+
+## Recommended decisions
+
+0 of 11 reviewed
+
+1
+
+Display name
+
+Prabhat Karlekar
+
+Use consistently in the hero and site title. Use the full name in formal metadata or citations where appropriate.
+
+Reviewed
+
+2
+
+Professional positioning
+
+Software Engineer & AI/ML Researcher
+
+Best broad starting point. Emphasize secure systems, HPC, and privacy-preserving AI in the supporting sentence.
+
+Reviewed
+
+3
+
+Numerical claims
+
+Keep only verifiable claims
+
+Require a metric definition, baseline, and supporting evidence. Remove unsupported percentages and speedups.
+
+Reviewed
+
+4
+
+PAYF repository
+
+Link only after verification
+
+Confirm the actual repository URL, public availability, and authorization to disclose the work.
+
+Reviewed
+
+5
+
+Second paper
+
+Confirm publication status
+
+Do not count a paper as published until its status and official citation are verified.
+
+Reviewed
+
+6
+
+HPC I&E
+
+Infrastructure & Ecosystem, if confirmed
+
+Use the expansion from your résumé or official organizational terminology.
+
+Reviewed
+
+7
+
+Phone number
+
+Remove by default
+
+A professional email link is usually sufficient for a public portfolio.
+
+Reviewed
+
+8
+
+Contact form
+
+Working form or email link
+
+Choose the simplest reliable option. Never show a success state without a successful submission.
+
+Reviewed
+
+9
+
+Class X/XII
+
+Keep compact or remove
+
+Retain if relevant to your career stage or requested by employers; otherwise prioritize higher education and work.
+
+Reviewed
+
+10
+
+IP disclosure
+
+Obtain approval before publishing
+
+Do not expose internal invention disclosures, confidential protocol details, or employer-owned work without authorization.
+
+Reviewed
+
+11
+
+Design direction
+
+Clean editorial with both themes
+
+Use a neutral, restrained palette, strong typography, accessible contrast, and a working light/dark toggle.
+
+Reviewed
+
+&#x20;Copy decision summary
+
+These are defaults, not decisions I would make on your behalf. The publication status, intellectual property clearance, project metrics, and exact employment dates must be verified by you.
+
+## 6. Revised implementation order
+
+I would preserve your phases but add a final verification phase and adjust the dependencies slightly.
+
+01
+
+Functional corrections
+
+Mobile navigation, metric units, form behavior, dead links, no-JavaScript fallback.
+
+02
+
+Content verification
+
+Résumé alignment, experience dates, publications, research claims, disclosure permissions.
+
+03
+
+Information architecture
+
+Section order, project status, card structure, evidence links, selected detail pages.
+
+04
+
+Design system
+
+Colors, contrast, typography, spacing, responsive layout, theme consistency.
+
+05
+
+Performance and maintainability
+
+Animation cost, dependencies, duplicate listeners, resource optimization, workflow cleanup.
+
+06
+
+SEO, security, privacy, and accessibility
+
+Metadata, favicon, headers, public information, keyboard and screen-reader behavior.
+
+07
+
+Testing and release
+
+Automated checks, browser testing, performance measurements, deployment verification, and rollback.
+
+## 7. Is the 17–24-hour estimate realistic?
+
+It is plausible for an experienced developer making a focused set of changes, provided the content decisions are resolved quickly and the two detail pages remain small.
+
+However, I would not treat 17–24 hours as a guaranteed end-to-end estimate. The time can grow if you need to establish the contact service, prepare research diagrams, verify experimental claims, obtain IP clearance, create a polished responsive design, or investigate deployment issues.
+
+I would track work by completed outcomes rather than trying to finish every phase within a fixed number of hours.
+
+## Final recommendation
+
+Your plan is comprehensive and technically thoughtful. I would not replace it with a different plan; I would strengthen it with the additions and corrections above.
+
+The highest-priority issues remain:
+
+1. Fix mobile navigation and the false contact-form success state.
+2. Correct the research metric suffixes and cryptography terminology.
+3. Replace dead links and update the résumé safely.
+4. Verify every numerical research claim and publication detail.
+5. Simplify unnecessary JavaScript and optimize based on measured performance.
+6. Improve accessibility, privacy, and deployment reliability.
+7. Validate the final site before publishing.
+
+The most important principle is this: make the portfolio trustworthy before making it impressive. A clear, fast, accessible site with accurate research claims and working links will serve you better than a visually elaborate site whose numbers, navigation, or contact functionality cannot be trusted.

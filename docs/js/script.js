@@ -53,7 +53,7 @@ class PortfolioApp {
     initThemeToggle() {
         const themeToggle = document.getElementById('theme-toggle');
         if (!themeToggle) return;
-        const themeIcon = themeToggle.querySelector('i');
+        const themeIcon = themeToggle.querySelector('.icon, i');
         
         // Check for saved theme or prefer-color-scheme
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
@@ -83,7 +83,14 @@ class PortfolioApp {
     }
 
     updateThemeIcon(theme, icon) {
-        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        if (icon.tagName.toLowerCase() === 'svg') {
+            const useEl = icon.querySelector('use');
+            if (useEl) {
+                useEl.setAttribute('href', theme === 'dark' ? '#icon-sun' : '#icon-moon');
+            }
+        } else {
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
     }
 
     initNavigation() {
@@ -416,146 +423,10 @@ class PortfolioApp {
 }
 
 // Initialize the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.portfolioApp = new PortfolioApp();
+    });
+} else {
     window.portfolioApp = new PortfolioApp();
-});
-
-// Handle page visibility changes
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && window.portfolioApp) {
-        // Refresh animations when page becomes visible
-        window.portfolioApp.init();
-    }
-});
-
-// Add keyboard navigation support
-document.addEventListener('keydown', (e) => {
-    // Escape key closes any modals (if added later)
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.active').forEach(modal => {
-            modal.classList.remove('active');
-        });
-    }
-});
-
-// Performance optimization: Debounce scroll events
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-        // Update active navigation
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.clientHeight;
-            
-            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            const href = link.getAttribute('href');
-            if (href === `#${current}` || (current === 'hero' && href === '#')) {
-                link.classList.add('active');
-            }
-        });
-    }, 100);
-});
-
-// Add smooth scrolling polyfill for older browsers
-if (!('scrollBehavior' in document.documentElement.style)) {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js';
-    script.onload = () => smoothscroll.polyfill();
-    document.head.appendChild(script);
 }
-
-/* ===== Neural Background Animation ===== */
-(function initNeuralBackground() {
-  const canvas = document.getElementById('neural-bg');
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d');
-  let width, height, particles;
-
-  const MAX_PARTICLES = window.innerWidth < 768 ? 40 : 70;
-  const CONNECT_DISTANCE = 120;
-
-  function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  }
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
-    }
-
-    move() {
-      this.x += this.vx;
-      this.y += this.vy;
-
-      if (this.x <= 0 || this.x >= width) this.vx *= -1;
-      if (this.y <= 0 || this.y >= height) this.vy *= -1;
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 1.6, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(99,102,241,0.6)';
-      ctx.fill();
-    }
-  }
-
-  function initParticles() {
-    particles = Array.from({ length: MAX_PARTICLES }, () => new Particle());
-  }
-
-  function connect() {
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < CONNECT_DISTANCE) {
-          ctx.strokeStyle = `rgba(99,102,241,${1 - dist / CONNECT_DISTANCE})`;
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => {
-      p.move();
-      p.draw();
-    });
-    connect();
-    requestAnimationFrame(animate);
-  }
-
-  // Respect reduced motion
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    resize();
-    initParticles();
-    animate();
-    window.addEventListener('resize', () => {
-      resize();
-      initParticles();
-    });
-  }
-})();
