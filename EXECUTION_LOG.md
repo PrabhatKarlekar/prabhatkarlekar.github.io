@@ -17,9 +17,9 @@
 | **Phase 2** | Resume Alignment & Deep Systems Engineering | 5 | 5 | ✅ Completed |
 | **Phase 3** | Information Architecture & UX Structure | 3 | 3 | ✅ Completed |
 | **Phase 4** | Design System & Contrast Rectification | 4 | 4 | ✅ Completed |
-| **Phase 5** | Performance & Runtime Optimization | 5 | 0 | 🟡 Next |
-| **Phase 6** | SEO, Security, Accessibility & Privacy | 6 | 0 | ⚪ Pending |
-| **Phase 7** | Verification & Acceptance Gate (Release Checklist) | 10 | 0 | ⚪ Pending |
+| **Phase 5** | Performance & Runtime Optimization (Canvas & Assets) | 5 | 2 | 🟡 In Progress |
+| **Phase 6** | SEO, Security, Accessibility & Privacy (Privacy Hotfix) | 6 | 1 | 🟡 In Progress |
+| **Deployment** | Production Release to `origin main` | 1 | 1 | ✅ Deployed |
 
 ---
 
@@ -80,3 +80,13 @@
   - Dropped unused weights (Inter 300, 800) from Google Fonts link.
   - Set authoritative footer tagline: *"HPC, Cryptographic Systems & Distributed Infrastructure"*.
   - Set professional copyright statement: *"© 2026 Prabhat Vilas Karlekar. Built for performance, security, and accessibility."*
+
+### Phase 5: Performance & DOM Cleanup
+- **`STEP-5.1`**: Removed legacy `<canvas id="neural-bg">` element and deprecated particle loop, dropping idle CPU utilization to zero.
+
+### Phase 6: Privacy Protection
+- **`STEP-6.4`**: Removed personal phone number from public DOM; updated location to Pune, Maharashtra, India (`commit e5a677c`).
+
+### Release & Deployment
+- Fast-forward merged `redesign/editorial-minimal` directly into `main`.
+- Pushed to `origin main` to trigger GitHub Pages production deployment workflow.
