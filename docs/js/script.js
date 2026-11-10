@@ -23,30 +23,28 @@ class PortfolioApp {
         }
     }
 
+    prefersReducedMotion() {
+        return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
     init() {
         if (this.initialized) return;
-        
+
         try { this.setCurrentYear(); } catch (e) { console.error('Year init:', e); }
         try { this.initThemeToggle(); } catch (e) { console.error('Theme init:', e); }
         try { this.initMobileNav(); } catch (e) { console.error('Mobile nav init:', e); }
         try { this.initNavigation(); } catch (e) { console.error('Nav init:', e); }
         try { this.initAnimations(); } catch (e) { console.error('Animations init:', e); }
         try { this.initContactForm(); } catch (e) { console.error('Contact init:', e); }
-        try { this.initTypewriter(); } catch (e) { console.error('Typewriter init:', e); }
         try { this.initScrollAnimations(); } catch (e) { console.error('Scroll anims init:', e); }
-        
-        // Initial animations
-        setTimeout(() => {
-            try { this.animateStats(); } catch (e) { console.error('Stats anim:', e); }
-        }, 1000);
-        
+
         this.initialized = true;
     }
 
     setCurrentYear() {
         const yearEl = document.getElementById('currentYear');
         if (yearEl) {
-            yearEl.textContent = new Date().getFullYear();
+            yearEl.textContent = String(new Date().getFullYear());
         }
     }
 
@@ -54,25 +52,22 @@ class PortfolioApp {
         const themeToggle = document.getElementById('theme-toggle');
         if (!themeToggle) return;
         const themeIcon = themeToggle.querySelector('.icon, i');
-        
-        // Check for saved theme or prefer-color-scheme
+
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-        const savedTheme = this.getStoredTheme() || 
-            (prefersDark.matches ? 'dark' : 'light');
-        
+        const savedTheme = this.getStoredTheme() || (prefersDark.matches ? 'dark' : 'light');
+
         document.documentElement.setAttribute('data-theme', savedTheme);
         if (themeIcon) this.updateThemeIcon(savedTheme, themeIcon);
-        
+
         themeToggle.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+
             document.documentElement.setAttribute('data-theme', newTheme);
             this.setStoredTheme(newTheme);
             if (themeIcon) this.updateThemeIcon(newTheme, themeIcon);
         });
-        
-        // Listen for system theme changes
+
         prefersDark.addEventListener('change', (e) => {
             if (!this.getStoredTheme()) {
                 const newTheme = e.matches ? 'dark' : 'light';
@@ -95,33 +90,33 @@ class PortfolioApp {
 
     initNavigation() {
         const aliasMap = {
-            'projects': 'work',
-            'skills': 'capabilities',
-            'education': 'credentials'
+            projects: 'work',
+            skills: 'capabilities',
+            education: 'credentials'
         };
+        const scrollBehavior = () => (this.prefersReducedMotion() ? 'auto' : 'smooth');
 
-        // Smooth scroll for internal links
+        // Smooth scroll for internal links (supporting legacy anchors)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', (e) => {
                 const href = anchor.getAttribute('href');
                 if (href === '#' || href === '') return;
-                
+
                 const targetId = href.substring(1);
                 const resolvedId = aliasMap[targetId] || targetId;
                 const targetElement = document.getElementById(resolvedId) || document.querySelector(href);
-                
+
                 if (targetElement) {
                     e.preventDefault();
                     const navHeight = 75;
                     const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
                     const offsetPosition = elementPosition - navHeight;
-                    
+
                     window.scrollTo({
                         top: resolvedId === 'hero' ? 0 : offsetPosition,
-                        behavior: 'smooth'
+                        behavior: scrollBehavior()
                     });
-                    
-                    // Update active nav link
+
                     document.querySelectorAll('.nav-link').forEach(link => {
                         link.classList.remove('active');
                     });
@@ -129,13 +124,11 @@ class PortfolioApp {
                     if (activeNavLink && activeNavLink.classList.contains('nav-link')) {
                         activeNavLink.classList.add('active');
                     }
-                    
-                    // Update URL without jump
+
                     if (history.pushState) {
                         history.pushState(null, null, `#${resolvedId}`);
                     }
-                    
-                    // Close mobile menu if open
+
                     this.closeMobileMenu();
                 }
             });
@@ -152,65 +145,82 @@ class PortfolioApp {
                     const offsetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight;
                     window.scrollTo({
                         top: resolvedHash === 'hero' ? 0 : offsetPosition,
-                        behavior: 'smooth'
+                        behavior: scrollBehavior()
                     });
                 }, 150);
             }
         }
-        
-        // High-performance IntersectionObserver Scroll-Spy
+
         this.initScrollSpy();
     }
 
     initScrollSpy() {
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = Array.from(document.querySelectorAll('section[id]'));
+        const navLinks = Array.from(document.querySelectorAll('.nav-link'));
         if (!sections.length || !navLinks.length) return;
-        
-        const observerOptions = {
-            root: null,
-            rootMargin: '-20% 0px -65% 0px',
-            threshold: 0
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const currentId = entry.target.getAttribute('id');
-                    
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        const href = link.getAttribute('href');
-                        if (href === `#${currentId}`) {
-                            link.classList.add('active');
-                        }
-                    });
+
+        let ticking = false;
+
+        const updateActiveSection = () => {
+            ticking = false;
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight;
+            const winHeight = window.innerHeight;
+
+            let currentId = sections[0].getAttribute('id');
+
+            // If user reached the bottom of the page, highlight the final section
+            if (scrollTop > 0 && winHeight + scrollTop >= docHeight - 40) {
+                currentId = sections[sections.length - 1].getAttribute('id');
+            } else {
+                const offsetThreshold = 140;
+                for (const section of sections) {
+                    if (section.getBoundingClientRect().top <= offsetThreshold) {
+                        currentId = section.getAttribute('id');
+                    }
                 }
+            }
+
+            navLinks.forEach(link => {
+                const isActive = link.getAttribute('href') === `#${currentId}`;
+                link.classList.toggle('active', isActive);
             });
-        }, observerOptions);
-        
-        sections.forEach(section => observer.observe(section));
+        };
+
+        const onScroll = () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(updateActiveSection);
+            }
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        updateActiveSection();
     }
 
     initAnimations() {
-        // Add scroll-triggered animation class
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
+        const elements = document.querySelectorAll('.timeline-item, .project-card, .capability-card');
+        if (!elements.length) return;
+
+        if (this.prefersReducedMotion() || !('IntersectionObserver' in window)) {
+            elements.forEach(el => el.classList.add('visible'));
+            return;
+        }
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
-        
-        // Observe elements
-        document.querySelectorAll('.timeline-item, .project-card, .skill-category').forEach(el => {
-            observer.observe(el);
+        }, {
+            threshold: 0.05,
+            rootMargin: '0px 0px -30px 0px'
         });
+
+        elements.forEach(el => observer.observe(el));
     }
 
     initContactForm() {
@@ -220,17 +230,32 @@ class PortfolioApp {
 
         copyBtn.addEventListener('click', async () => {
             const email = 'pritvikarlekar@gmail.com';
-            try {
-                if (navigator.clipboard && window.isSecureContext) {
+            let copied = false;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                try {
                     await navigator.clipboard.writeText(email);
-                } else {
+                    copied = true;
+                } catch (e) {
+                    // Fall through to execCommand fallback
+                }
+            }
+
+            if (!copied) {
+                try {
                     const tempInput = document.createElement('input');
                     tempInput.value = email;
+                    tempInput.setAttribute('readonly', '');
                     document.body.appendChild(tempInput);
                     tempInput.select();
-                    document.execCommand('copy');
+                    copied = document.execCommand('copy');
                     document.body.removeChild(tempInput);
+                } catch (e) {
+                    copied = false;
                 }
+            }
+
+            if (copied) {
                 const originalText = textSpan.textContent;
                 textSpan.textContent = 'Copied to Clipboard!';
                 copyBtn.classList.add('btn-copied');
@@ -239,91 +264,17 @@ class PortfolioApp {
                     textSpan.textContent = originalText;
                     copyBtn.classList.remove('btn-copied');
                 }, 2000);
-            } catch (err) {
-                console.error('Clipboard copy failed, opening mailto:', err);
+            } else {
                 window.location.href = `mailto:${email}`;
             }
         });
     }
 
-    initTypewriter() {
-        const roles = [
-            document.querySelector('.typewriter'),
-            document.querySelector('.typewriter-delay'),
-            document.querySelector('.typewriter-delay-2')
-        ].filter(Boolean);
-        
-        if (roles.length === 0) return;
-        
-        let current = 0;
-        const typeNext = () => {
-            const el = roles[current];
-            const text = el.getAttribute('data-text');
-            if (!text) return;
-            
-            el.textContent = '';
-            el.style.borderRight = '2px solid var(--accent-primary)';
-            let i = 0;
-            const type = () => {
-                if (i < text.length) { 
-                    el.textContent += text[i]; 
-                    i++; 
-                    setTimeout(type, 60); 
-                }
-                else {
-                    setTimeout(() => {
-                        el.style.borderRight = 'none';
-                        current = (current + 1) % roles.length;
-                        setTimeout(typeNext, 2000); // pause before next
-                    }, 1000);
-                }
-            };
-            type();
-        };
-        typeNext();
-    }
-
-    animateStats() {
-        const statNumbers = document.querySelectorAll('.stat-number[data-target]');
-        
-        statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target'), 10);
-            const suffix = stat.getAttribute('data-suffix') !== null ? stat.getAttribute('data-suffix') : (stat.textContent.includes('+') ? '+' : '');
-            const duration = 2000;
-            const startTime = Date.now();
-            
-            const animate = () => {
-                const currentTime = Date.now();
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                // Easing function
-                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-                
-                const currentValue = Math.floor(easeOutQuart * target);
-                stat.textContent = currentValue + suffix;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    stat.textContent = target + suffix;
-                }
-            };
-            
-            animate();
-        });
-    }
-
-    animateSkillBars() {
-        // Deprecated in Phase 4: Replaced by grouped semantic capability chips
-    }
-
     initScrollAnimations() {
-        // Add progressive reveal animation for sections
         const fadeElements = document.querySelectorAll('.section');
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        
-        if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+        if (!fadeElements.length) return;
+
+        if (!this.prefersReducedMotion() && 'IntersectionObserver' in window) {
             fadeElements.forEach(el => el.classList.add('reveal-item'));
             const fadeObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -336,46 +287,9 @@ class PortfolioApp {
                 threshold: 0,
                 rootMargin: '0px 0px -40px 0px'
             });
-            
+
             fadeElements.forEach(el => fadeObserver.observe(el));
         }
-        
-        // Animate project metrics
-        const metricValues = document.querySelectorAll('.metric-value[data-target]');
-        
-        metricValues.forEach(metric => {
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    const target = parseFloat(metric.getAttribute('data-target'));
-                    const suffix = metric.getAttribute('data-suffix') !== null ? metric.getAttribute('data-suffix') : (metric.textContent.includes('%') ? '%' : '');
-                    const decimals = parseInt(metric.getAttribute('data-decimals') || '0', 10);
-                    const duration = 1500;
-                    const startTime = Date.now();
-                    
-                    const animate = () => {
-                        const currentTime = Date.now();
-                        const elapsed = currentTime - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        
-                        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-                        const currentValue = easeOutCubic * target;
-                        
-                        metric.textContent = currentValue.toFixed(decimals) + suffix;
-                        
-                        if (progress < 1) {
-                            requestAnimationFrame(animate);
-                        } else {
-                            metric.textContent = target.toFixed(decimals) + suffix;
-                        }
-                    };
-                    
-                    animate();
-                    observer.unobserve(metric);
-                }
-            });
-            
-            observer.observe(metric);
-        });
     }
 
     initMobileNav() {
@@ -391,7 +305,6 @@ class PortfolioApp {
             document.body.classList.toggle('nav-open', nextState);
         });
 
-        // Close on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && navLinks.classList.contains('open')) {
                 this.closeMobileMenu();
@@ -399,7 +312,6 @@ class PortfolioApp {
             }
         });
 
-        // Close when clicking outside nav
         document.addEventListener('click', (e) => {
             if (navLinks.classList.contains('open') &&
                 !navLinks.contains(e.target) &&
@@ -422,7 +334,6 @@ class PortfolioApp {
     }
 }
 
-// Initialize the app when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         window.portfolioApp = new PortfolioApp();
