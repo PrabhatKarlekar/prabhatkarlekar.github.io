@@ -178,7 +178,7 @@
                 <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
                     <svg class="icon" aria-hidden="true"><use href="#icon-moon"/></svg>
                 </button>
-                <a href="./Prabhat_Karlekar_Resume.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">
+                <a href="./Prabhat_Karlekar_Resume_Oct_26.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">
                     <svg class="icon" aria-hidden="true"><use href="#icon-download"/></svg>
                     Resume
                 </a>
@@ -205,7 +205,7 @@
                 </div>
 
                 <p class="hero-description">
-                    Software Engineer with <span class="highlight">3+ years</span> building high-performance, 
+                    Software Engineer with <span class="highlight">3.5+ years</span> building high-performance, 
                     privacy-preserving systems across <span class="highlight">HPC</span>, 
                     <span class="highlight">cryptography</span>, <span class="highlight">federated learning</span>, and 
                     <span class="highlight">distributed infrastructure</span>. IEEE-published researcher. Currently leading 
@@ -217,7 +217,7 @@
                         <svg class="icon" aria-hidden="true"><use href="#icon-microscope"/></svg>
                         View Work &amp; Research
                     </a>
-                    <a href="./Prabhat_Karlekar_Resume.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                    <a href="./Prabhat_Karlekar_Resume_Oct_26.pdf" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
                         <svg class="icon" aria-hidden="true"><use href="#icon-file-pdf"/></svg>
                         Resume
                     </a>
@@ -229,18 +229,18 @@
 
                 <div class="hero-stats">
                     <div class="stat">
-                        <div class="stat-number">3+</div>
+                        <div class="stat-number">3.5+</div>
                         <div class="stat-label">Years Systems Eng</div>
                     </div>
                     <div class="stat-divider" aria-hidden="true"></div>
                     <div class="stat">
                         <div class="stat-number">2</div>
-                        <div class="stat-label">Research Papers <span class="stat-sublabel">(1 Published, 1 Under Review)</span></div>
+                        <div class="stat-label">Research Papers <span class="stat-sublabel">(1 Published, 1 Manuscript Under Submission)</span></div>
                     </div>
                     <div class="stat-divider" aria-hidden="true"></div>
                     <div class="stat">
                         <div class="stat-number">1</div>
-                        <div class="stat-label">IEEE Publication <span class="stat-sublabel">(SCI 2025)</span></div>
+                        <div class="stat-label">IEEE Publication <span class="stat-sublabel">(SCI 2025 · IEEE Xplore)</span></div>
                     </div>
                 </div>
             </div>
@@ -289,27 +289,28 @@
             <div class="projects-grid">
                 <div class="project-card featured enhanced">
                     <div class="project-badge">
-                        <svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg>
-                        Active R&amp;D (C-DAC Internal)
+                        <svg class="icon" aria-hidden="true"><use href="#icon-network"/></svg>
+                        Active R&amp;D (C-DAC)
                     </div>
 
                     <div class="project-header">
                         <h3>PAYF — Pay As You Forward Protocol</h3>
-                        <div class="project-meta">2025–2026 | ns-3, Rust, Axum, PostgreSQL, Ed25519, WASM</div>
+                        <div class="project-meta">Apr 2026 | ns-3, Rust, Axum, PostgreSQL, Yew/WASM</div>
                     </div>
 
                     <p class="project-description">
-                        Designed and implemented a cryptographically verifiable packet-forwarding and monetisation protocol
-                        using ns-3 network simulation. Incorporates Ed25519-signed QoS shim headers, high-throughput FlowCache transactional caching,
-                        and PostgreSQL persistence with asynchronous Rust/Axum APIs and a Yew/WebAssembly settlement visualization dashboard.
+                        Designed and implemented a cryptographically verifiable network-layer economic framework for
+                        authenticated packet forwarding and both centralized and distributed settlement using ns-3 simulation
+                        and Rust. Built modular networking components with signed QoS shim headers, FlowCache, forwarding/accounting
+                        logic, PostgreSQL persistence, Rust/Axum APIs, and a Yew/WebAssembly dashboard.
                     </p>
 
                     <div class="project-impact">
                         <h4><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg> Systems Architecture Highlights</h4>
                         <ul>
-                            <li>Ed25519-signed QoS shim headers enabling cryptographically verifiable, per-packet billing</li>
-                            <li>High-throughput FlowCache transactional caching layer minimizing database contention</li>
-                            <li>PostgreSQL schema with asynchronous Rust/Axum REST APIs and Yew/WASM real-time settlement dashboard</li>
+                            <li>Signed QoS shim headers and authenticated packet forwarding for verifiable flow-based billing</li>
+                            <li>Modular FlowCache, forwarding/accounting logic, and centralized &amp; distributed settlement engines</li>
+                            <li>Integrated PostgreSQL persistence, Rust/Axum APIs, and a Yew/WebAssembly visualization dashboard</li>
                         </ul>
                     </div>
 
@@ -321,23 +322,23 @@
                         <div class="spec-content">
                             <h4>Protocol Pipeline</h4>
                             <div class="spec-pipeline">
-                                <span class="spec-step">ns-3 Packet Gen</span>
+                                <span class="spec-step">ns-3 Topology Sim</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">Ed25519 Shim Header</span>
+                                <span class="spec-step">Signed QoS Shim Header</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">FlowCache Layer</span>
+                                <span class="spec-step">FlowCache &amp; Accounting</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">Axum REST API</span>
+                                <span class="spec-step">Settlement Engines</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">PostgreSQL Ledger</span>
+                                <span class="spec-step">PostgreSQL / Axum API</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">Yew/WASM UI</span>
+                                <span class="spec-step">Yew/WASM Dashboard</span>
                             </div>
-                            <h4>Security &amp; Concurrency Highlights</h4>
+                            <h4>Framework Components</h4>
                             <ul>
-                                <li><strong>Cryptographic Non-Repudiation:</strong> 18-byte shim header carries Ed25519 digital signature per QoS flow, preventing spoofed delivery claims.</li>
-                                <li><strong>Lock-Free Cache:</strong> In-memory FlowCache ring buffer absorbs line-rate simulation bursts, reducing PostgreSQL write lock contention.</li>
-                                <li><strong>Deterministic Settlement:</strong> WASM dashboard executes client-side cryptographic signature verification against batch settlement state.</li>
+                                <li><strong>Authenticated Forwarding:</strong> Signed QoS shim headers validate forwarding correctness across multi-topology ns-3 network simulations.</li>
+                                <li><strong>Modular Settlement:</strong> Decoupled FlowCache and accounting components feed both centralized and distributed settlement engines.</li>
+                                <li><strong>Visualization &amp; Storage:</strong> PostgreSQL storage exposed via asynchronous Rust/Axum APIs and rendered in a Yew/WebAssembly settlement UI.</li>
                             </ul>
                         </div>
                     </details>
@@ -346,31 +347,32 @@
                         <span class="tech-badge">Rust</span>
                         <span class="tech-badge">Axum</span>
                         <span class="tech-badge">ns-3</span>
-                        <span class="tech-badge">Ed25519</span>
+                        <span class="tech-badge">Signed QoS Headers</span>
                         <span class="tech-badge">PostgreSQL</span>
                         <span class="tech-badge">WebAssembly (Yew)</span>
                         <span class="tech-badge">FlowCache</span>
                     </div>
                     <div class="project-links">
-                        <a href="#contact" class="project-link"><svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg> Request Access / Architecture Spec</a>
+                        <a href="#contact" class="project-link"><svg class="icon" aria-hidden="true"><use href="#icon-envelope"/></svg> Discuss Protocol Architecture</a>
                     </div>
                 </div>
 
                 <div class="project-card enhanced">
                     <div class="project-badge">
                         <svg class="icon" aria-hidden="true"><use href="#icon-file-code"/></svg>
-                        RFC Specification Draft
+                        Open Source · Live Demo
                     </div>
 
                     <div class="project-header">
                         <h3>GreyMisnomer — Verifiable Carbon Credit Registry SDK</h3>
-                        <div class="project-meta">2026 | Open-Source, Rust, RFC Protocol Design</div>
+                        <div class="project-meta">Jan 2026 | Open-Source, Rust, WebAssembly, Protocol Design</div>
                     </div>
 
                     <p class="project-description">
-                        Architecting an open-source, Rust-based registry SDK for voluntary carbon markets with
-                        protocol-level prevention of double-counting and greenwashing. Implements a Two-Proof Model
-                        combining Proof-of-Integrity (PoI) and Proof-of-Offset (PoO) with Merkle commitments and strict registry-market separation.
+                        Designed an open-source, Rust-based registry protocol for verifiable carbon-credit lifecycle
+                        management with protocol-level prevention of double counting and greenwashing. Implements a Two-Proof
+                        Model using Proof-of-Integrity (PoI) and Proof-of-Offset (PoO) with Merkle commitments for verifiable
+                        project and offset lifecycle guarantees.
                     </p>
 
                     <details class="project-spec-drawer">
@@ -381,20 +383,20 @@
                         <div class="spec-content">
                             <h4>Two-Proof Verification Pipeline</h4>
                             <div class="spec-pipeline">
-                                <span class="spec-step">MRV IoT Telemetry</span>
+                                <span class="spec-step">Project Issuance</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
                                 <span class="spec-step">Proof-of-Integrity (PoI)</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">Sparse Merkle Tree</span>
+                                <span class="spec-step">Merkle Commitments</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
                                 <span class="spec-step">Proof-of-Offset (PoO)</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">Irreversible State Transition</span>
+                                <span class="spec-step">Verifiable Lifecycle</span>
                             </div>
                             <h4>Integrity Guarantees</h4>
                             <ul>
-                                <li><strong>Double-Counting Prevention:</strong> PoI binds cryptographic commitments of physical sequestration to unique geospatial epochs before credit minting.</li>
-                                <li><strong>Permanent Retirement:</strong> PoO enforces atomic, non-fungible retirement certificates with cryptographic zero-state proofs.</li>
+                                <li><strong>Double-Counting Prevention:</strong> Protocol-level invariants prevent double counting and greenwashing across issuance and retirement.</li>
+                                <li><strong>Two-Proof Model (PoI + PoO):</strong> Proof-of-Integrity and Proof-of-Offset provide verifiable project and offset lifecycle guarantees.</li>
                                 <li><strong>Registry-Market Separation:</strong> Decouples core registry state transitions from secondary market financial mechanics.</li>
                             </ul>
                         </div>
@@ -402,88 +404,91 @@
 
                     <div class="project-tech">
                         <span class="tech-badge">Rust</span>
-                        <span class="tech-badge">RFC Protocol Design</span>
+                        <span class="tech-badge">WebAssembly</span>
                         <span class="tech-badge">Two-Proof Model (PoI+PoO)</span>
                         <span class="tech-badge">Merkle Trees</span>
                         <span class="tech-badge">Open Source</span>
                     </div>
                     <div class="project-links">
-                        <a href="https://github.com/PrabhatKarlekar/GreyMisnomer" class="project-link github-link" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg> View Specification Draft</a>
+                        <a href="https://github.com/GreyMisnomer/GreyMisnomer" class="project-link github-link" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-github"/></svg> View Repository</a>
+                        <a href="https://greymisnomer.github.io/GreyMisnomer/" class="project-link" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#icon-external"/></svg> Live Demo</a>
                     </div>
                 </div>
 
                 <div class="project-card">
                     <div class="project-badge">
                         <svg class="icon" aria-hidden="true"><use href="#icon-flask"/></svg>
-                        Research Prototype (Paper Under Review)
+                        Manuscript Under Submission
                     </div>
 
                     <div class="project-header">
-                        <h3>Privacy-Preserving Federated Learning via Lattice-Based CKKS Homomorphic Encryption</h3>
-                        <div class="project-meta">Sep 2025 | C-DAC, HPC Infrastructure &amp; Ecosystem</div>
+                        <h3>Privacy-Preserving Quantum-Secure Federated Learning Framework</h3>
+                        <div class="project-meta">Sep 2025 | OpenFHE (Multi-Key CKKS), TensorFlow/Keras, HPC</div>
                     </div>
 
                     <p class="project-description">
-                        Built a privacy-preserving framework integrating distributed Federated Learning with lattice-based
-                        multikey CKKS Homomorphic Encryption on a multi-party HPC cluster testbed, eliminating raw model parameter
-                        leakage while ensuring high predictive accuracy in cross-institutional collaborations.
+                        Built an end-to-end Federated Learning framework integrating Multi-Key CKKS Homomorphic Encryption
+                        with Proxy Re-Encryption using TensorFlow/Keras for secure distributed model aggregation across HPC nodes.
+                        Implemented encrypted communication pipelines using Apache Kafka and Mongoose HTTP server alongside
+                        MPI-based HPC aggregation for secure model-weight exchange.
                     </p>
 
                     <div class="project-impact">
-                        <h4><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg> Research Impact &amp; Verified Metrics</h4>
+                        <h4><svg class="icon" aria-hidden="true"><use href="#icon-target"/></svg> Architecture &amp; Security Highlights</h4>
                         <ul>
-                            <li>Achieved 85%+ accuracy via walk-forward split validation and feature engineering</li>
-                            <li>Reduced privacy leakage by 80% against membership inference and model inversion attacks</li>
-                            <li>2.5x aggregation speedup using MPI and optimized polynomial multiplication on HPC nodes</li>
+                            <li>Multi-Key CKKS Homomorphic Encryption with Proxy Re-Encryption over TensorFlow/Keras models</li>
+                            <li>Encrypted weight-exchange pipelines built on Apache Kafka and Mongoose HTTP server</li>
+                            <li>Distributed ciphertext aggregation across multi-party HPC cluster nodes via MPI</li>
                         </ul>
                     </div>
 
                     <details class="project-spec-drawer">
                         <summary class="spec-toggle-btn">
-                            <span><svg class="icon" aria-hidden="true"><use href="#icon-shield"/></svg> Lattice CKKS &amp; HPC Architecture Spec</span>
+                            <span><svg class="icon" aria-hidden="true"><use href="#icon-shield"/></svg> Multi-Key CKKS &amp; Encrypted Pipeline Spec</span>
                             <svg class="icon spec-chevron" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
                         </summary>
                         <div class="spec-content">
                             <h4>Privacy-Preserving Training Pipeline</h4>
                             <div class="spec-pipeline">
-                                <span class="spec-step">Edge Model Weights</span>
+                                <span class="spec-step">TensorFlow/Keras Weights</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">OpenFHE CKKS Encryption</span>
+                                <span class="spec-step">OpenFHE (Multi-Key CKKS)</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">MPI Aggregation Nodes</span>
+                                <span class="spec-step">Kafka + Mongoose HTTP</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">Ciphertext Polynomial Ops</span>
+                                <span class="spec-step">Proxy Re-Encryption &amp; MPI</span>
                                 <span class="spec-arrow" aria-hidden="true">→</span>
-                                <span class="spec-step">Collective Decryption</span>
+                                <span class="spec-step">Encrypted Aggregation</span>
                             </div>
-                            <h4>Lattice Cryptography &amp; HPC Cluster Performance</h4>
+                            <h4>Cryptographic &amp; Systems Architecture</h4>
                             <ul>
-                                <li><strong>Zero Parameter Leakage:</strong> Aggregator computes weighted polynomial addition and rescale operations directly over ciphertexts without private key access.</li>
-                                <li><strong>Inference Defense:</strong> 80% privacy leakage reduction against membership inference and model inversion attacks.</li>
-                                <li><strong>HPC Acceleration:</strong> Distributed polynomial multiplication parallelized via MPI on HPC nodes, delivering 2.5x aggregation speedup.</li>
+                                <li><strong>Encrypted Model Exchange:</strong> Apache Kafka streams and Mongoose HTTP server transport encrypted weight payloads without exposing plaintext tensors.</li>
+                                <li><strong>Multi-Key CKKS + Proxy Re-Encryption:</strong> Enables cross-party encrypted model aggregation across independent participants without shared raw keys.</li>
+                                <li><strong>HPC Cluster Execution:</strong> Coordinates multi-node distributed aggregation across HPC cluster resources with MPI.</li>
                             </ul>
                         </div>
                     </details>
 
                     <div class="project-tech">
                         <span class="tech-badge">Python</span>
-                        <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">TensorFlow / Keras</span>
                         <span class="tech-badge">OpenFHE (CKKS)</span>
+                        <span class="tech-badge">Proxy Re-Encryption</span>
+                        <span class="tech-badge">Apache Kafka</span>
+                        <span class="tech-badge">Mongoose HTTP</span>
                         <span class="tech-badge">HPC / MPI</span>
-                        <span class="tech-badge">Federated Learning</span>
-                        <span class="tech-badge">Lattice Cryptography</span>
                     </div>
                 </div>
 
                 <div class="project-card">
                     <div class="project-badge">
                         <svg class="icon" aria-hidden="true"><use href="#icon-paper"/></svg>
-                        Published — IEEE SCI 2025
+                        Published — IEEE Xplore (SCI 2025)
                     </div>
 
                     <div class="project-header">
                         <h3>Time-Series Machine Learning Optimization on HPC</h3>
-                        <div class="project-meta">May 2025 | IEEE System, Cybernetics, and Informatics (SCI 2025)</div>
+                        <div class="project-meta">May 2025 | Supercomputing India (SCI 2025), Bengaluru — IEEE Xplore</div>
                     </div>
 
                     <p class="project-description">
@@ -593,12 +598,12 @@
                             <span class="company-badge">C-DAC, Pune</span>
                         </div>
                         <ul class="timeline-points">
-                            <li><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg> Lead a 4–5 person R&amp;D team driving protocol design, architecture specifications, and implementation across secure distributed systems.</li>
+                            <li><svg class="icon" aria-hidden="true"><use href="#icon-users"/></svg> Lead a 4–5 person R&amp;D team designing distributed system architectures for privacy-preserving AI, cryptographic networking, and decentralized infrastructure.</li>
+                            <li><svg class="icon" aria-hidden="true"><use href="#icon-bolt"/></svg> Architected and simulated PAYF across multiple network topologies and traffic conditions using ns-3 and Rust for authenticated packet forwarding and distributed billing verification.</li>
+                            <li><svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg> Designed and developed a privacy-preserving Federated Learning framework integrating Multi-Key CKKS Homomorphic Encryption and Proxy Re-Encryption with TensorFlow/Keras across HPC nodes.</li>
                             <li><svg class="icon" aria-hidden="true"><use href="#icon-sitemap"/></svg> Designed a decentralized architecture integrating blockchain marketplaces with QoS-driven resource allocation for low-latency network services.</li>
-                            <li><svg class="icon" aria-hidden="true"><use href="#icon-signature"/></svg> Authored Invention Disclosure Forms (IDFs), whitepapers, and IETF-RFC style protocol specifications for privacy-preserving data exchange and patent-track initiatives.</li>
-                            <li><svg class="icon" aria-hidden="true"><use href="#icon-shield"/></svg> Architected a privacy-preserving decentralized registry using a Two-Proof Model (Proof-of-Integrity + Proof-of-Offset) with Merkle commitments and registry-market separation.</li>
-                            <li><svg class="icon" aria-hidden="true"><use href="#icon-lock"/></svg> Built a federated learning framework integrating multikey CKKS homomorphic encryption with TensorFlow/Keras across a multi-party HPC cluster testbed.</li>
-                            <li><svg class="icon" aria-hidden="true"><use href="#icon-bolt"/></svg> Developed PAYF, an ns-3 and Rust-based protocol implementing Ed25519-signed shim headers, FlowCache, and WebAssembly settlement dashboard for verifiable per-packet billing.</li>
+                            <li><svg class="icon" aria-hidden="true"><use href="#icon-shield"/></svg> Architected an open-source verifiable carbon-credit registry protocol using a Two-Proof Model (PoI + PoO) and Merkle commitments.</li>
+                            <li><svg class="icon" aria-hidden="true"><use href="#icon-signature"/></svg> Authored HLDs, LLDs, IETF Internet-Draft-style protocol specifications, whitepapers, and patent-oriented Invention Disclosure Forms (IDFs) for AI, networking, and cryptographic systems.</li>
                         </ul>
                         <div class="tech-stack-small">
                             <span class="tech-tag-sm">Python</span>
@@ -606,9 +611,10 @@
                             <span class="tech-tag-sm">C/C++</span>
                             <span class="tech-tag-sm">TensorFlow</span>
                             <span class="tech-tag-sm">OpenFHE</span>
+                            <span class="tech-tag-sm">Proxy Re-Encryption</span>
+                            <span class="tech-tag-sm">Apache Kafka</span>
                             <span class="tech-tag-sm">ns-3</span>
                             <span class="tech-tag-sm">Merkle Trees</span>
-                            <span class="tech-tag-sm">Ed25519</span>
                             <span class="tech-tag-sm">IETF/RFC</span>
                             <span class="tech-tag-sm">HPC</span>
                             <span class="tech-tag-sm">Linux/Bash</span>
@@ -701,7 +707,11 @@
                         <span class="cap-tag">CKKS Homomorphic Encryption</span>
                         <span class="cap-tag">Federated Learning</span>
                         <span class="cap-tag">TensorFlow / Keras</span>
-                        <span class="cap-tag">Time-Series ML</span>
+                        <span class="cap-tag">LSTM / GRU</span>
+                        <span class="cap-tag">Scikit-learn</span>
+                        <span class="cap-tag">FinBERT</span>
+                        <span class="cap-tag">Time-Series Forecasting</span>
+                        <span class="cap-tag">NumPy / Pandas</span>
                         <span class="cap-tag">MPI (HPC Clustering)</span>
                         <span class="cap-tag">OpenFHE</span>
                     </div>
@@ -713,8 +723,9 @@
                         <h3>Blockchain &amp; Cryptography</h3>
                     </div>
                     <div class="capability-tags">
+                        <span class="cap-tag">Proxy Re-Encryption</span>
                         <span class="cap-tag">Zero-Knowledge Proofs</span>
-                        <span class="cap-tag">Ed25519 Signatures</span>
+                        <span class="cap-tag">PKI &amp; SHA</span>
                         <span class="cap-tag">Stealth Addresses</span>
                         <span class="cap-tag">Smart Contracts</span>
                         <span class="cap-tag">IETF-RFC Specs</span>
@@ -728,11 +739,12 @@
                         <h3>Systems &amp; Networking</h3>
                     </div>
                     <div class="capability-tags">
+                        <span class="cap-tag">System Design</span>
+                        <span class="cap-tag">Network Protocols</span>
                         <span class="cap-tag">Linux Systems &amp; Shell</span>
                         <span class="cap-tag">ns-3 Simulation</span>
                         <span class="cap-tag">Socket Programming</span>
                         <span class="cap-tag">FlowCache</span>
-                        <span class="cap-tag">Protobuf</span>
                         <span class="cap-tag">Distributed Systems</span>
                     </div>
                 </div>
@@ -743,12 +755,12 @@
                         <h3>Backend &amp; Infrastructure</h3>
                     </div>
                     <div class="capability-tags">
-                        <span class="cap-tag">Axum (Async REST)</span>
+                        <span class="cap-tag">Rust / Axum</span>
                         <span class="cap-tag">PostgreSQL</span>
                         <span class="cap-tag">WebAssembly (Yew)</span>
                         <span class="cap-tag">Apache Kafka</span>
-                        <span class="cap-tag">Redis</span>
-                        <span class="cap-tag">Git / CI-CD</span>
+                        <span class="cap-tag">Mongoose HTTP</span>
+                        <span class="cap-tag">GitLab / GitHub CI-CD</span>
                         <span class="cap-tag">Cloud Platforms</span>
                     </div>
                 </div>
@@ -759,6 +771,8 @@
                         <h3>QA &amp; Systems Verification</h3>
                     </div>
                     <div class="capability-tags">
+                        <span class="cap-tag">Pytest</span>
+                        <span class="cap-tag">Postman</span>
                         <span class="cap-tag">Test Architecture &amp; STLC</span>
                         <span class="cap-tag">UAT Execution</span>
                         <span class="cap-tag">REST API Testing</span>
@@ -774,10 +788,10 @@
                 <div class="shield-grid">
                     <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-rust"/></svg> Rust</span>
                     <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-network"/></svg> ns-3</span>
-                    <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-key"/></svg> Ed25519</span>
+                    <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-key"/></svg> Proxy Re-Encryption</span>
                     <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-sitemap"/></svg> Apache Kafka</span>
                     <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-database"/></svg> PostgreSQL</span>
-                    <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-chip"/></svg> HPC</span>
+                    <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-chip"/></svg> HPC / MPI</span>
                     <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-brain"/></svg> TensorFlow</span>
                     <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-lock-open"/></svg> OpenFHE</span>
                     <span class="shield"><svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg> Python</span>
@@ -880,6 +894,16 @@
                                 <p class="cert-meta">Coursera • Oct 2022 – Sep 2023</p>
                             </div>
                         </div>
+
+                        <div class="cert-card">
+                            <div class="cert-icon" aria-hidden="true">
+                                <svg class="icon" aria-hidden="true"><use href="#icon-code"/></svg>
+                            </div>
+                            <div class="cert-info">
+                                <h4>Linux Fundamentals &amp; Python Programming</h4>
+                                <p class="cert-meta">Coursera • 2023</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -926,7 +950,7 @@
                             <svg class="icon" aria-hidden="true"><use href="#icon-file-pdf"/></svg>
                             <dl>
                                 <dt class="info-label">Resume</dt>
-                                <dd><a href="./Prabhat_Karlekar_Resume.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a></dd>
+                                <dd><a href="./Prabhat_Karlekar_Resume_Oct_26.pdf" target="_blank" rel="noopener noreferrer">Download PDF</a></dd>
                             </dl>
                         </div>
                     </div>
@@ -961,7 +985,7 @@
                             </a>
                         </div>
                         <div class="gh-repo-pills">
-                            <a href="https://github.com/PrabhatKarlekar/GreyMisnomer" class="gh-repo-badge" target="_blank" rel="noopener noreferrer">
+                            <a href="https://github.com/GreyMisnomer/GreyMisnomer" class="gh-repo-badge" target="_blank" rel="noopener noreferrer">
                                 <span class="repo-name">GreyMisnomer</span>
                                 <span class="repo-lang">Rust</span>
                             </a>
@@ -1019,7 +1043,7 @@
 
                 <div class="footer-column">
                     <p class="footer-heading">Resources</p>
-                    <a href="./Prabhat_Karlekar_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+                    <a href="./Prabhat_Karlekar_Resume_Oct_26.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
                     <a href="https://github.com/PrabhatKarlekar" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://medium.com/@pritvikarlekar" target="_blank" rel="noopener noreferrer">Medium</a>
                 </div>

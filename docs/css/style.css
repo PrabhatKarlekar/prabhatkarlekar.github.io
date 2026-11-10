@@ -1830,10 +1830,14 @@ img {
 }
 .project-links {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     margin-top: 1.25rem;
     padding-top: 1rem;
     border-top: 1px solid var(--border-color);
+}
+.project-links .project-link {
+    margin-top: 0;
 }
 .github-link i,
 .github-link .icon {
