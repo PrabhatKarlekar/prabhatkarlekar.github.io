@@ -2,9 +2,8 @@
 ## Live Tracking & Verification Record
 
 > **Local Server URL**: [http://localhost:8000/](http://localhost:8000/)  
-> **Target Browser**: Brave Browser (`brave.exe` at `C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe`)  
-> **Master Roadmap**: [IMPLEMENTATION_ROADMAP.md](file:///c:/Users/Other/Desktop/projects/portfolio/IMPLEMENTATION_ROADMAP.md)  
-> **Execution Status**: In Progress (Baby Steps Protocol)
+> **Master Roadmap**: [IMPLEMENTATION_ROADMAP.md](./IMPLEMENTATION_ROADMAP.md)  
+> **Execution Status**: Audit Hotfixes & Phases 5–6 Completed on Branch (`fix/audit-hardening-and-phase5-6`); Pending Content Sign-Off & Final Merge
 
 ---
 
@@ -17,9 +16,9 @@
 | **Phase 2** | Resume Alignment & Deep Systems Engineering | 5 | 5 | ✅ Completed |
 | **Phase 3** | Information Architecture & UX Structure | 3 | 3 | ✅ Completed |
 | **Phase 4** | Design System & Contrast Rectification | 4 | 4 | ✅ Completed |
-| **Phase 5** | Performance & Runtime Optimization (Canvas & Assets) | 5 | 2 | 🟡 In Progress |
-| **Phase 6** | SEO, Security, Accessibility & Privacy (Privacy Hotfix) | 6 | 1 | 🟡 In Progress |
-| **Deployment** | Production Release to `origin main` | 1 | 1 | ✅ Deployed |
+| **Phase 5** | Performance & Runtime Optimization | 5 | 5 | ✅ Completed |
+| **Phase 6** | SEO, Security, Accessibility & Privacy | 6 | 5 | 🟡 Pending PDF & Repo Decisions |
+| **Phase 7** | Automated Headless Chromium + axe-core Gate | 10 | 9 | 🟡 Passed Local Gate; Pending Real-Net Lighthouse |
 
 ---
 
@@ -81,12 +80,21 @@
   - Set authoritative footer tagline: *"HPC, Cryptographic Systems & Distributed Infrastructure"*.
   - Set professional copyright statement: *"© 2026 Prabhat Vilas Karlekar. Built for performance, security, and accessibility."*
 
-### Phase 5: Performance & DOM Cleanup
+### Phase 5: Performance & Runtime Optimization
 - **`STEP-5.1`**: Removed legacy `<canvas id="neural-bg">` element and deprecated particle loop, dropping idle CPU utilization to zero.
+- **`STEP-5.2`**: Removed external Font Awesome 6.4.0 CDN link and replaced all 79 `<i>` tags with a zero-dependency inline `<svg class="svg-sprite-defs">` sprite defining 51 vector symbols (including proper `#icon-moon`/`#icon-sun` and custom IBM/Rust marks).
+- **`STEP-5.3`**: Added `defer` to `./js/script.js`, removed dead `initTypewriter()` / `animateSkillBars()` / reset-to-zero metric count-up animations, updated selector to `.capability-card`, added `document.execCommand('copy')` fallback when Clipboard API rejects, and replaced narrow scroll-spy with `requestAnimationFrame`-throttled scroll tracker.
+- **`STEP-5.4`**: Replaced all remaining `transition: all` declarations with explicit property transitions; eliminated 320px/360px/375px horizontal overflow via `minmax(min(..., 100%), 1fr)`, `minmax(0, 1fr)` on `.contact-content` and `.two-column-section`, and `min-width: 0`.
+- **`STEP-5.5`**: Removed external `gh-stats-card.vercel.app` image embed and wired static native `.github-highlight-card` linking to `@PrabhatKarlekar` and verified public repositories.
 
-### Phase 6: Privacy Protection
-- **`STEP-6.4`**: Removed personal phone number from public DOM; updated location to Pune, Maharashtra, India (`commit e5a677c`).
+### Phase 6: SEO, Security, Accessibility & Privacy
+- **`STEP-6.1`**: Added canonical URL, OpenGraph image/URL tags (`1200×630` `og-image.png`), Twitter Card tags, `theme-color`, `Person` JSON-LD schema, `docs/robots.txt`, `docs/sitemap.xml`, and branded `docs/404.html`; removed obsolete `meta name="keywords"`.
+- **`STEP-6.2`**: Added modern favicon suite (`docs/favicon.svg`, `docs/favicon.ico`, `docs/apple-touch-icon.png`).
+- **`STEP-6.3`**: Added strict hash-pinned Content Security Policy (`script-src 'self' 'sha256-O3P76+0xub1svuRvqUxn+w5CvBwBo3bf7HLaC0kM3iw='`, zero `unsafe-inline`), `referrer` policy, `rel="noopener noreferrer"` on all 11 outbound `_blank` links, and pinned `.github/workflows/pages.yml` actions to verified full commit SHAs with `concurrency` guard.
+- **`STEP-6.4`**: Removed personal phone number from public DOM and updated location to `Pune, Maharashtra, India` (public resume PDF cleanup awaiting user sign-off).
+- **`STEP-6.5`**: Fixed mobile drawer background (`var(--bg-card)`), moved hamburger breakpoint to `1024px`, removed mobile `.hero-visual { order: -1 }`, gated `.timeline-item` and pulse/float/entrance animations strictly behind `prefers-reduced-motion: no-preference`, fixed dark-mode contrast (`#60a5fa` / `--accent-solid` / `--accent-text-gradient`), added static `2026` copyright fallback, added `.skip-link`, and unified heading hierarchy across all 44 headings (0 skips, 0 `axe-core` violations).
+- **`STEP-6.6`**: Added clean root `README.md`.
 
-### Release & Deployment
-- Fast-forward merged `redesign/editorial-minimal` directly into `main`.
-- Pushed to `origin main` to trigger GitHub Pages production deployment workflow.
+### Phase 7: Automated Headless Chromium + axe-core Verification (Branch `fix/audit-hardening-and-phase5-6`)
+- Verified zero console/CSP errors, 0 `axe-core` violations across Desktop Light (1280px), Desktop Dark (1280px), and Mobile Dark (375px), 0 horizontal overflow across `320px`, `360px`, `375px`, `769px`, `900px`, `1024px`, and `1280px`, accurate mobile scroll-spy, 3/3 timeline + 6/6 project cards visible with JS disabled, and 0 infinite animations under `prefers-reduced-motion: reduce`.
+- Pending user sign-off on Step B content/privacy/repo decisions and real-network Lighthouse check before merging to `main`.
